@@ -39,7 +39,7 @@ include "../inc/header.php";
                     <div class="col-md-6 grid-margin stretch-card">
                         <div class="card tale-bg">
                             <div class="card-people mt-auto">
-                                <img src="asset/image/logo/jle.png" alt="people">
+                                <img src="http://localhost/jannSeva/asset/image/logo/jle.png" alt="people">
 
                                 <div class="card-body">
                                     <p class="fs-30 mb-2">
@@ -49,7 +49,7 @@ include "../inc/header.php";
 
                                     <p> Total Give Help : ₹5,150.00</p>
                                     <p> Total PMF : <?php $PMF1 = $user->totalPayedPMF($_SESSION["user"]['UserId']);
-                                        echo round($PMF1, 2) ?></p>
+                                                    echo round($PMF1, 2) ?></p>
                                     <p> Total Tax : <?php echo round($user->totalPayedTax($PMF1), 2); ?></p>
                                     <p class="fs-30 mb-2"><small> <small>Total Received Help : ₹6,700.00</small>
                                         </small></p>
@@ -83,4 +83,3 @@ include "../inc/header.php";
 
 
 <?php include "../inc/footer.php"; ?>
-
