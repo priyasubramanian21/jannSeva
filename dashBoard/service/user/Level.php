@@ -320,18 +320,23 @@ class Level
                 $data['data'][] = $row;
             }
         }
-        $count = count($data);
+        $count = count($data['data']);
         $data['percent'] = $count * 2.5;
-        if ($count == 1)
+        if ($count == 1) {
             $data['st1red'] = 10;
-        if ($count == 2)
+        } elseif ($count == 2) {
+            $data['st1red'] = 10;
             $data['st1orange'] = 10;
-        if ($count == 3)
+        } elseif ($count == 3) {
+            $data['st1red'] = 10;
+            $data['st1orange'] = 10;
             $data['st1yellow'] = 10;
-        if ($count == 4)
+        } elseif ($count == 4) {
+            $data['st1red'] = 10;
+            $data['st1orange'] = 10;
+            $data['st1yellow'] = 10;
             $data['st1green'] = 10;
-
-
+        }
         return $data;
     }
 }

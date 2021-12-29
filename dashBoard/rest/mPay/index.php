@@ -16,7 +16,7 @@ $session = new session();
 $user = new user();
 
 $session->start();
-$session->notSet('login');
+$session->notSet('dashBoard/rest/login');
 
 $totalPMF = 100;
 
@@ -31,23 +31,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($userPayedPMF >= $totalPMF) {
             header('refresh: 5; url=../');
             echo '<br><pre> Hi ' . $_SESSION["user"]['FistName'] . " " . $_SESSION["user"]['LastName'] . '<br> User Maximum PMF Payed now you cannot able to pay. Please contact admin <br> Redirecting in <span id="countdown">10</span>.';
+        } elseif (($userPayedPMF + $cPmf) >= $totalPMF) {
 
-        } elseif (($userPayedPMF+$cPmf) >= $totalPMF) {
-
-            $ablePMF =$totalPMF - $userPayedPMF;
+            $ablePMF = $totalPMF - $userPayedPMF;
 
             pay($api, $ablePMF, $displayCurrency, $keyId);
-
-        }
-        else
-        {
+        } else {
             pay($api, $cPmf, $displayCurrency, $keyId);
         }
-
     } else {
         header('Location: psc');
     }
-
 }
 
 
@@ -87,7 +81,7 @@ function pay($api, $cPmf, $displayCurrency, $keyId)
         "key" => $keyId,
         "amount" => $amount,
         "name" => "JannSeva",
-        "description" => "JannSeva ".$_SESSION['PMF_count']." PMF Payment",
+        "description" => "JannSeva " . $_SESSION['PMF_count'] . " PMF Payment",
         "image" => "asset/image/logo/jle.svg",
         "readonly" => [
             "name" => $_SESSION["user"]['FistName'] . $_SESSION["user"]['LastName'],
@@ -124,12 +118,11 @@ function pay($api, $cPmf, $displayCurrency, $keyId)
 ?>
 
 <script type="text/javascript">
-
-    (function () {
+    (function() {
         var timeLeft = 10,
             cinterval;
 
-        var timeDec = function () {
+        var timeDec = function() {
             timeLeft--;
             document.getElementById('countdown').innerHTML = timeLeft;
             if (timeLeft === 0) {
@@ -139,6 +132,4 @@ function pay($api, $cPmf, $displayCurrency, $keyId)
 
         cinterval = setInterval(timeDec, 1000);
     })();
-
-
 </script>

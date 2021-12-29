@@ -5,19 +5,20 @@ include '../../service/user/UserServiceImpl.php';
 require('config.php');
 require('../../core/lib/razorpay/Razorpay.php');
 
+
 use core\support\session as session;
 use service\user\UserServiceImpl as user;
 use Razorpay\Api\Api;
 
-
 $session = new session();
+
 $user = new user();
 $api = new Api($keyId, $keySecret);
 
 $session->start();
 
-if (!isset($_SESSION["user"])){
-    header("location: login");
+if (!isset($_SESSION["user"])) {
+    header("location: dashBoard/rest/login");
     unset($_SESSION["login"]);
     unset($_SESSION["signup"]);
     unset($_SESSION["user"]);
@@ -25,7 +26,7 @@ if (!isset($_SESSION["user"])){
 
 $session->notSetS('login', "pay");
 
-$_SESSION["Pay1-re"] = "t:".time()."- V:1st-PMF -";
+$_SESSION["Pay1-re"] = "t:" . time() . "- V:1st-PMF -";
 
 $orderData = [
     'receipt' => $_SESSION["Pay1-re"],
@@ -39,7 +40,7 @@ $razorpayOrder = $api->order->create($orderData);
 $razorpayOrderId = $razorpayOrder['id'];
 
 $_SESSION['razorpay_order_id'] = $razorpayOrderId;
-$_SESSION['PMF1_amount'] = $orderData['amount']/100;
+$_SESSION['PMF1_amount'] = $orderData['amount'] / 100;
 
 $displayAmount = $amount = $orderData['amount'];
 
@@ -60,12 +61,12 @@ $data = [
     "description" => "JLE MARKETING PRIVATE LIMITED 1st PMF Payment",
     "image" => "asset/image/logo/jle.svg",
     "readonly" => [
-        "name" => $_SESSION["user"]['FistName'].$_SESSION["user"]['LastName'],
+        "name" => $_SESSION["user"]['FistName'] . $_SESSION["user"]['LastName'],
         "email" => $_SESSION["user"]['EmailId'],
         "contact" => $_SESSION["user"]['UserPhone'],
     ],
     "prefill" => [
-        "name" => $_SESSION["user"]['FistName'].$_SESSION["user"]['LastName'],
+        "name" => $_SESSION["user"]['FistName'] . $_SESSION["user"]['LastName'],
         "email" => $_SESSION["user"]['EmailId'],
         "contact" => $_SESSION["user"]['UserPhone'],
     ],
@@ -89,4 +90,3 @@ if ($displayCurrency !== 'INR') {
 $json = json_encode($data);
 
 require("checkout.php");
-

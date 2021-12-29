@@ -10,7 +10,7 @@ $session = new session();
 $user = new user();
 
 $session->start();
-$session->notSet('login');
+$session->notSet('dashBoard/rest/login');
 include "../inc/header.php";
 // $connectID = $session['user']['UserID'];
 $connectID = 1009;

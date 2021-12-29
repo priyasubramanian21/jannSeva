@@ -1,4 +1,6 @@
-<?php include '../../core/config/inc.php'; ?>
+<?php include '../../core/config/inc.php';
+$siteUrl = soPath;
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,8 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?= $titleName; ?> - Login</title>
 
-    <link rel="stylesheet" href="http://localhost/jannSeva/asset/css/vertical-layout-light/style.css">
-    <link rel="shortcut icon" href="http://localhost/jannSeva/asset/image/logo/jle.svg" />
+    <link rel="stylesheet" href="<?php echo $siteUrl; ?>asset/css/vertical-layout-light/style.css">
+    <link rel="shortcut icon" href="<?php echo $siteUrl; ?>asset/image/logo/jle.svg" />
 </head>
 
 
@@ -30,7 +32,7 @@ $user = new user();
 $session = new session();
 
 $session->start();
-$session->set('home');
+$session->set('dashBoard/rest/home');
 $message = null;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -47,11 +49,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["login"] = true;
             $_SESSION["user"] = $res["user"];
             $message = $res["message"];
-            header("location: home");
+            header("location: " . $siteUrl . "dashBoard/rest/home");
         } elseif ($res['pay'] == true) {
             $_SESSION["pay"] = true;
             $_SESSION["user"] = $res["user"];
-            header("location: payment");
+            header("location: " . $siteUrl . "dashBoard/rest/payment");
         } else {
             $message = $res["message"];
         }

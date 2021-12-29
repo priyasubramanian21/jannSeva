@@ -5,11 +5,13 @@ namespace Service\user;
 
 use database\connection as conn;
 use Level\Level as level;
+use Helpher\Helpher as Helpher;
 
 include 'UserService.php';
 
 include "../../core/config/dataBase/connection.php";
 include "Level.php";
+include "Helpher.php";
 
 class UserServiceImpl
 {
@@ -358,73 +360,110 @@ class UserServiceImpl
 
     public function myHelp($UserId)
     {
-        $getsubData = $userArray = array();
+
         $myConnectionTable = mysqli_query($this->conn, "SELECT connect FROM customer Where `user_id` = '$UserId';");
         if (mysqli_num_rows($myConnectionTable) > 0) {
             $myConnectionData = mysqli_fetch_array($myConnectionTable);
             $MyConn = $myConnectionData['connect'];
         }
+        $Helpher = new Helpher();
         #Connected To
-        $Data = $this->getConnect($MyConn);
-
-        if (!empty($Data)) {
-            $res = "<tr>
-                        <td> </td>
-                        <td>" . $Data['user_first_name'] . " " . $Data['user_last_name'] . " </td>
-                        <td>" . $Data['user_id'] . "</td>
-                        <td> ₹ 800 </td>
-                        <td> <label class='badge badge-primary'>Open  </label> </td>
-                        <td>" . $Data['user_phone'] . " </td>
-                        </tr>";
-            echo $res;
-        }
-
-
+        $siteUrl = 'http://localhost/jannSeva/';
 
         #GET All Connect below us
         #level 1
-        $getData = $this->getAllConnect($UserId);
+        $getData = $this->getAllConnect($MyConn);
+
+        $getDataID = $Helpher->checknotify($UserId);
+
+        if (!empty($getData)) {
+
+            for ($x = 1; $x <= count($getData); $x++) {
+
+                $status = $Helpher->getStatus($getData[$x]['user_id'], $getDataID);
+
+                #set Amount  #Status 
+                if ($x == 5) {
+                    $getData[5]['amount'] = 800;
+                    $Redirecturl = $siteUrl . 'dashBoard/rest/User?userID=' . $getData[$x]['user_id'] . '&amount=' . $getData[$x]['amount'];
+
+
+                    if ($status == 'Pending') {
+                        $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
+                    } else {
+                        $statushtml = $status;
+                    }
+                } else {
+                    $getData[$x]['amount'] = 500;
+                    #redirect URL
+                    $Redirecturl = $siteUrl . 'dashBoard/rest/User?userID=' . $getData[$x]['user_id'] . '&amount=' . $getData[$x]['amount'];
+
+                    if ($status == 'Pending') {
+                        $statushtml = " <a href=''><label class='badge badge-warning' > Pending </label></a> ";
+                    } else {
+                        $statushtml = $status;
+                    }
+
+                    if (!empty($getDataID)) {
+                        if ($getDataID['status'] == 1) {
+                            $resetX = 5 - count($getDataID);
+                            if ($x == $resetX)
+                                $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
+                        }
+                    }
+                }
+
+                #check pmf for user 
+                $checkPSC = $Helpher->checkPSC($getData[$x]['user_id']);
+
+                if ($checkPSC >= 3000) {
+                    $statushtml = " <a href=''><label class='badge badge-warning' > Pending </label></a> ";
+                } elseif ($total_amount == 50000) {
+                    $statushtml = " <a href=''><label class='badge badge-warning' > Pending </label></a> ";
+                }
+
+                $res = "<tr>
+                        <td> </td>
+                        <td>" . $getData[$x]['user_first_name'] . " " . $getData[$x]['user_last_name'] . " </td>
+                        <td>" . $getData[$x]['user_id'] . "</td>
+                        <td> " . $getData[$x]['amount'] . " </td>
+                        <td>" . $statushtml . " </td>
+                        <td>" . $getData[$x]['user_phone'] . " </td>
+                        </tr>";
+                echo $res;
+            }
+        }
     }
 
     public function getAllConnect($connectID)
     {
-        #Immediate sub
-        $getConnect = $this->conQuery($connectID);
-        $addConnect = array();
+        $data = array();
 
-        if (mysqli_num_rows($getConnect) > 0) {
-            while ($row = mysqli_fetch_array($getConnect)) {
+        #ref 1
+        $data[1] = $this->conQuery($connectID);
+        if (empty($data[1])) return false;
+        #ref 2
+        $data[2] = $this->conQuery($data[1]['connect']);
+        #ref 3
+        $data[3] = $this->conQuery($data[2]['connect']);
+        #ref 4
+        $data[4] = $this->conQuery($data[3]['connect']);
+        #ref 5
+        $data[5] = $this->conQuery($data[4]['connect']);
 
-                $res = "<tr>
-                        <td></td>
-                        <td>" . $row['user_first_name'] . " " . $row['user_last_name'] . " </td>
-                        <td>" . $row['user_id'] . "</td>
-                        <td> ₹ 500 </td>
-                        <td> <label class='badge badge-success'>Pending</label> </td>
-                        <td>" . $row['user_phone'] . " </td>
-                        </tr>";
-                echo $res;
-
-                $getsubData = $this->getAllConnect($row['user_id']);
-            }
-        }
+        return $data;
     }
     public function conQuery($connectID)
     {
-        $getConnect = mysqli_query($this->conn, "SELECT *  FROM customer Where `connect` = '$connectID'");
-        return $getConnect;
+        $getConnect = mysqli_query($this->conn, "SELECT *  FROM customer Where `user_id` = '$connectID' AND user_status =1");
+        if (mysqli_num_rows($getConnect) > 0) {
+            $row = mysqli_fetch_array($getConnect);
+        }
+
+        return $row;
     }
 
-    public function getConnect($Connect_id)
-    {
-        $ConnectVal = mysqli_query($this->conn, "SELECT user_first_name, user_last_name , user_phone, connect, `user_id`  FROM customer Where `user_id` = '$Connect_id';");
-        if (mysqli_num_rows($ConnectVal) > 0) {
-            $ConnectValue = mysqli_fetch_array($ConnectVal);
-        } else {
-            $ConnectValue = 0;
-        }
-        return $ConnectValue;
-    }
+
     public function getPercentageConnect($connectID)
     {
         $stage = array();

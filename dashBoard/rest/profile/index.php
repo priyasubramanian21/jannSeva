@@ -20,7 +20,7 @@ $session->start();
 $session->notSetS('login', "login");
 
 if (!isset($_SESSION["user"]["UserId"])) {
-    header("location: login");
+    header("location: dashBoard/rest/login");
     unset($_SESSION["login"]);
     unset($_SESSION["signup"]);
     unset($_SESSION["user"]);

@@ -98,7 +98,7 @@
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item <?php echo $MHome; ?>">
-                        <a class="nav-link" href="home">
+                        <a class="nav-link" href="http://localhost/jannSeva/dashBoard/rest/home">
                             <i class="icon-grid menu-icon"></i>
                             <span class="menu-title">Dashboard</span>
                         </a>
@@ -117,8 +117,8 @@
                         </a>
                         <div class="collapse" id="form-elements">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"><a class="nav-link" href="GiveHelp">Give Help</a></li>
-                                <li class="nav-item"><a class="nav-link" href="rhelp">Receive Help</a></li>
+                                <li class="nav-item"><a class="nav-link" href="http://localhost/jannSeva/dashBoard/rest/ghelp">Give Help</a></li>
+                                <li class="nav-item"><a class="nav-link" href="http://localhost/jannSeva/dashBoard/rest/rhelp">Receive Help</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#">Open Help</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#">Transaction History</a></li>
                             </ul>
@@ -126,9 +126,16 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="myConnects">
+                        <a class="nav-link" href="http://localhost/jannSeva/dashBoard/rest/referees">
                             <i class="icon-bar-graph menu-icon"></i>
                             <span class="menu-title">My Referees</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost/jannSeva/dashBoard/rest/notify">
+                            <i class="icon-eye menu-icon"></i>
+                            <span class="menu-title">My Notification</span>
                         </a>
                     </li>
 
