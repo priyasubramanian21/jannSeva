@@ -22,7 +22,7 @@ class session
         }
 
         if (!isset($_SESSION["login"]) or $_SESSION["login"] == false) {
-            header("location:" . soPath . $Path);
+            header("location:" . $Path);
             unset($_SESSION["login"]);
             unset($_SESSION["signup"]);
             unset($_SESSION["user"]);
@@ -37,7 +37,7 @@ class session
         }
 
         if (!isset($_SESSION[$key]) or $_SESSION[$key] == false) {
-            header("location:" . soPath . $Path);
+            header("location:" . $Path);
             unset($_SESSION["login"]);
             unset($_SESSION["signup"]);
             unset($_SESSION["user"]);
@@ -52,7 +52,7 @@ class session
         }
 
         if (isset($_SESSION["login"])) {
-            header("location:" . soPath . $Path);
+            header("location:" . $Path);
         }
     }
 
@@ -64,6 +64,6 @@ class session
         unset($_SESSION["login"]);
         unset($_SESSION["signup"]);
         unset($_SESSION["user"]);
-        header("location:" . soPath . $Path);
+        header("location:" . $Path);
     }
 }

@@ -380,14 +380,17 @@ class UserServiceImpl
         if (!empty($getData)) {
 
             for ($x = 1; $x <= count($getData); $x++) {
+                #set Amount
+                $getData[$x]['amount'] = 500;
+                if (isset($getData[5])) {
+                    $getData[5]['amount'] = 800;
+                }
+
 
                 $status = $Helpher->getStatus($getData[$x]['user_id'], $getDataID);
-
-                #set Amount  #Status 
-                if ($x == 5) {
-                    $getData[5]['amount'] = 800;
+                #Status 
+                if ($x == 1) {
                     $Redirecturl = $siteUrl . 'dashBoard/rest/User?userID=' . $getData[$x]['user_id'] . '&amount=' . $getData[$x]['amount'];
-
 
                     if ($status == 'Pending') {
                         $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
@@ -395,7 +398,6 @@ class UserServiceImpl
                         $statushtml = $status;
                     }
                 } else {
-                    $getData[$x]['amount'] = 500;
                     #redirect URL
                     $Redirecturl = $siteUrl . 'dashBoard/rest/User?userID=' . $getData[$x]['user_id'] . '&amount=' . $getData[$x]['amount'];
 
@@ -404,23 +406,26 @@ class UserServiceImpl
                     } else {
                         $statushtml = $status;
                     }
+                    if (isset($getDataID) && !empty($getDataID)) {
 
-                    if (isset($getDataID)) {
+                        $resetX = 1 + count($getDataID);
+                        $num = count($getDataID) - 1;
 
-                        $resetX = count($getData) - count($getDataID);
-                        if ($x == $resetX)
+                        if ($x == $resetX && $getDataID[$num]['deleted'] == 1)
                             $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
                     }
                 }
+
 
                 #check pmf for user 
                 $checkPSC = $Helpher->checkPSC($getData[$x]['user_id']);
 
                 if ($checkPSC >= 3000) {
                     $statushtml = " <a href=''><label class='badge badge-warning' > Pending </label></a> ";
-                } elseif ($getData[$x]['user_id'] == 1006 && $status == 'Pending') {
-                    $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
                 }
+                // elseif ($getData[$x]['user_id'] == 1006 && $status == 'Pending') {
+                //     $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
+                // }
 
                 $res = "<tr>
                         <td> </td>
