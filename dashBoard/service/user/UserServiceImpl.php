@@ -405,10 +405,12 @@ class UserServiceImpl
                     }
 
                     if (!empty($getDataID)) {
-                        if ($getDataID['status'] == 1) {
-                            $resetX = 5 - count($getDataID);
-                            if ($x == $resetX)
-                                $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
+                        if (isset($getDataID['status'])) {
+                            if ($getDataID['status'] == 1) {
+                                $resetX = 5 - count($getDataID);
+                                if ($x == $resetX)
+                                    $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
+                            }
                         }
                     }
                 }
@@ -417,8 +419,6 @@ class UserServiceImpl
                 $checkPSC = $Helpher->checkPSC($getData[$x]['user_id']);
 
                 if ($checkPSC >= 3000) {
-                    $statushtml = " <a href=''><label class='badge badge-warning' > Pending </label></a> ";
-                } elseif ($total_amount == 50000) {
                     $statushtml = " <a href=''><label class='badge badge-warning' > Pending </label></a> ";
                 }
 
@@ -430,7 +430,11 @@ class UserServiceImpl
                         <td>" . $statushtml . " </td>
                         <td>" . $getData[$x]['user_phone'] . " </td>
                         </tr>";
-                echo $res;
+                if ($checkPSC == 50000) {
+                    continue;
+                } else {
+                    echo $res;
+                }
             }
         }
     }

@@ -13,7 +13,10 @@ $Helper = new Helper();
 
 $session->start();
 $session->notSet('dashBoard/rest/login');
-if ($_GET['message']) $message = $_GET['message'];
+$message = '';
+if (isset($_GET['message'])) {
+    $message = $_GET['message'];
+}
 
 $siteURL = 'http://localhost/jannSeva/';
 
@@ -40,8 +43,6 @@ include "../inc/header.php";
     <div class="content-wrapper">
         <div class="row">
             <br>
-            <div class="text-center"><?php echo $message;  ?> </div> <br>
-
             <div class="col-md-12 grid-margin">
 
 

@@ -136,6 +136,7 @@ class Helpher
 
     public function checkPSC($userID)
     {
+        $total_amount = 0;
         $Query = mysqli_query($this->conn, "SELECT Amount FROM `payment` WHERE `user_id` = $userID  AND status ='Paid'");
         if (mysqli_num_rows($Query) > 0) {
             while ($row = mysqli_fetch_assoc($Query)) {

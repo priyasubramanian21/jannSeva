@@ -12,14 +12,8 @@ $user = new user();
 $session->start();
 $session->notSet('dashBoard/rest/login');
 include "../inc/header.php";
-// $connectID = $session['user']['UserID'];
-$connectID = 1009;
+$connectID = $_SESSION['user']['UserId'];
 $arrayVal = $user->getPercentageConnect($connectID);
-
-
-// echo "<pre>";
-// print_r($arrayVal);
-
 
 ?>
 <style>
@@ -61,106 +55,117 @@ $arrayVal = $user->getPercentageConnect($connectID);
                                     </thead>
                                     <tbody>
 
-                                        <?php if ($_GET['level'] == 1) { ?>
+                                        <?php if ($_GET['level'] == 1) {
+                                        ?>
 
                                             <?php
-                                            for ($x = 0; $x < count($arrayVal['level1']['data']); $x++) {  ?>
-                                                <tr>
-                                                    <td></td>
-                                                    <td> <?php
+                                            if (isset($arrayVal['level1']['data'])) {
+                                                for ($x = 0; $x < count($arrayVal['level1']['data']); $x++) {  ?>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td> <?php
 
-                                                            echo $arrayVal['level1']['data'][$x]['user_first_name'] . " " . $arrayVal['level1']['data'][$x]['user_last_name'] ?> </td>
-                                                    <td> <?php
+                                                                echo $arrayVal['level1']['data'][$x]['user_first_name'] . " " . $arrayVal['level1']['data'][$x]['user_last_name'] ?> </td>
+                                                        <td> <?php
 
-                                                            echo $arrayVal['level1']['data'][$x]['user_id'] ?></td>
-                                                    <td> ₹ 500 </td>
-                                                    <td> <label class='badge badge-success'>Pending</label> </td>
-                                                    <td> <?php
+                                                                echo $arrayVal['level1']['data'][$x]['user_id'] ?></td>
+                                                        <td> ₹ 500 </td>
+                                                        <td> <label class='badge badge-success'>Pending</label> </td>
+                                                        <td> <?php
 
-                                                            echo $arrayVal['level1']['data'][$x]['user_phone'] ?></td>
-                                                </tr>
+                                                                echo $arrayVal['level1']['data'][$x]['user_phone'] ?></td>
+                                                    </tr>
 
-                                            <?php  }  ?>
+                                            <?php  }
+                                            } ?>
                                         <?php } elseif ($_GET['level'] == 2) { ?>
 
                                             <?php
-                                            for ($x = 0; $x < count($arrayVal['level2']['data']); $x++) {  ?>
-                                                <tr>
-                                                    <td></td>
-                                                    <td> <?php
+                                            if (isset($arrayVal['level2']['data'])) {
+                                                for ($x = 0; $x < count($arrayVal['level2']['data']); $x++) {  ?>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td> <?php
 
-                                                            echo $arrayVal['level2']['data'][$x]['user_first_name'] . " " . $arrayVal['level2']['data'][$x]['user_last_name'] ?> </td>
-                                                    <td> <?php
+                                                                echo $arrayVal['level2']['data'][$x]['user_first_name'] . " " . $arrayVal['level2']['data'][$x]['user_last_name'] ?> </td>
+                                                        <td> <?php
 
-                                                            echo $arrayVal['level2']['data'][$x]['user_id'] ?></td>
-                                                    <td> ₹ 500 </td>
-                                                    <td> <label class='badge badge-success'>Pending</label> </td>
-                                                    <td> <?php
+                                                                echo $arrayVal['level2']['data'][$x]['user_id'] ?></td>
+                                                        <td> ₹ 500 </td>
+                                                        <td> <label class='badge badge-success'>Pending</label> </td>
+                                                        <td> <?php
 
-                                                            echo $arrayVal['level2']['data'][$x]['user_phone'] ?></td>
-                                                </tr>
+                                                                echo $arrayVal['level2']['data'][$x]['user_phone'] ?></td>
+                                                    </tr>
 
-                                            <?php  }  ?>
+                                            <?php  }
+                                            } ?>
                                         <?php } elseif ($_GET['level'] == 3) { ?>
 
                                             <?php
-                                            for ($x = 0; $x < count($arrayVal['level3']['data']); $x++) {  ?>
-                                                <tr>
-                                                    <td></td>
-                                                    <td> <?php
+                                            if (isset($arrayVal['level3']['data'])) {
+                                                for ($x = 0; $x < count($arrayVal['level3']['data']); $x++) {  ?>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td> <?php
 
-                                                            echo $arrayVal['level3']['data'][$x]['user_first_name'] . " " . $arrayVal['level3']['data'][$x]['user_last_name'] ?> </td>
-                                                    <td> <?php
+                                                                echo $arrayVal['level3']['data'][$x]['user_first_name'] . " " . $arrayVal['level3']['data'][$x]['user_last_name'] ?> </td>
+                                                        <td> <?php
 
-                                                            echo $arrayVal['level3']['data'][$x]['user_id'] ?></td>
-                                                    <td> ₹ 500 </td>
-                                                    <td> <label class='badge badge-success'>Pending</label> </td>
-                                                    <td> <?php
+                                                                echo $arrayVal['level3']['data'][$x]['user_id'] ?></td>
+                                                        <td> ₹ 500 </td>
+                                                        <td> <label class='badge badge-success'>Pending</label> </td>
+                                                        <td> <?php
 
-                                                            echo $arrayVal['level3']['data'][$x]['user_phone'] ?></td>
-                                                </tr>
+                                                                echo $arrayVal['level3']['data'][$x]['user_phone'] ?></td>
+                                                    </tr>
 
-                                            <?php  }  ?>
+                                            <?php  }
+                                            } ?>
                                         <?php } elseif ($_GET['level'] == 4) { ?>
 
                                             <?php
-                                            for ($x = 0; $x < count($arrayVal['level4']['data']); $x++) {  ?>
-                                                <tr>
-                                                    <td></td>
-                                                    <td> <?php
+                                            if (isset($arrayVal['level4']['data'])) {
+                                                for ($x = 0; $x < count($arrayVal['level4']['data']); $x++) {  ?>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td> <?php
 
-                                                            echo $arrayVal['level4']['data'][$x]['user_first_name'] . " " . $arrayVal['level4']['data'][$x]['user_last_name'] ?> </td>
-                                                    <td> <?php
+                                                                echo $arrayVal['level4']['data'][$x]['user_first_name'] . " " . $arrayVal['level4']['data'][$x]['user_last_name'] ?> </td>
+                                                        <td> <?php
 
-                                                            echo $arrayVal['level4']['data'][$x]['user_id'] ?></td>
-                                                    <td> ₹ 500 </td>
-                                                    <td> <label class='badge badge-success'>Pending</label> </td>
-                                                    <td> <?php
+                                                                echo $arrayVal['level4']['data'][$x]['user_id'] ?></td>
+                                                        <td> ₹ 500 </td>
+                                                        <td> <label class='badge badge-success'>Pending</label> </td>
+                                                        <td> <?php
 
-                                                            echo $arrayVal['level4']['data'][$x]['user_phone'] ?></td>
-                                                </tr>
+                                                                echo $arrayVal['level4']['data'][$x]['user_phone'] ?></td>
+                                                    </tr>
 
-                                            <?php  }  ?>
+                                            <?php  }
+                                            } ?>
                                         <?php } elseif ($_GET['level'] == 5) { ?>
 
                                             <?php
-                                            for ($x = 0; $x < count($arrayVal['level5']['data']); $x++) {  ?>
-                                                <tr>
-                                                    <td></td>
-                                                    <td> <?php
+                                            if (isset($arrayVal['level5']['data'])) {
+                                                for ($x = 0; $x < count($arrayVal['level5']['data']); $x++) {  ?>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td> <?php
 
-                                                            echo $arrayVal['level5']['data'][$x]['user_first_name'] . " " . $arrayVal['level5']['data'][$x]['user_last_name'] ?> </td>
-                                                    <td> <?php
+                                                                echo $arrayVal['level5']['data'][$x]['user_first_name'] . " " . $arrayVal['level5']['data'][$x]['user_last_name'] ?> </td>
+                                                        <td> <?php
 
-                                                            echo $arrayVal['level5']['data'][$x]['user_id'] ?></td>
-                                                    <td> ₹ 500 </td>
-                                                    <td> <label class='badge badge-success'>Pending</label> </td>
-                                                    <td> <?php
+                                                                echo $arrayVal['level5']['data'][$x]['user_id'] ?></td>
+                                                        <td> ₹ 500 </td>
+                                                        <td> <label class='badge badge-success'>Pending</label> </td>
+                                                        <td> <?php
 
-                                                            echo $arrayVal['level5']['data'][$x]['user_phone'] ?></td>
-                                                </tr>
+                                                                echo $arrayVal['level5']['data'][$x]['user_phone'] ?></td>
+                                                    </tr>
 
-                                            <?php  }  ?>
+                                            <?php  }
+                                            } ?>
                                         <?php } ?>
                                     </tbody>
                                 </table>
