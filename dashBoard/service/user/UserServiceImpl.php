@@ -409,9 +409,8 @@ class UserServiceImpl
                     if (isset($getDataID) && !empty($getDataID)) {
 
                         $resetX = 1 + count($getDataID);
-                        $num = count($getDataID) - 1;
 
-                        if ($x == $resetX && $getDataID[$num]['deleted'] == 1)
+                        if ($x == $resetX && $getDataID[0]['deleted'] == 1)
                             $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
                     }
                 }

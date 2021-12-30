@@ -52,7 +52,6 @@ if (isset($_SESSION['user']['UserId'])) {
                                             <th> Name </th>
                                             <th> User Id </th>
                                             <th> Amount </th>
-                                            <th> Status </th>
                                             <th> Phone Number </th>
                                         </tr>
                                     </thead>
@@ -74,7 +73,7 @@ if (isset($_SESSION['user']['UserId'])) {
 
                                                                 echo $arrayVal['level1']['data'][$x]['user_id'] ?></td>
                                                         <td> ₹ 500 </td>
-                                                        <td> <label class='badge badge-success'>Pending</label> </td>
+
                                                         <td> <?php
 
                                                                 echo $arrayVal['level1']['data'][$x]['user_phone'] ?></td>
@@ -96,7 +95,7 @@ if (isset($_SESSION['user']['UserId'])) {
 
                                                                 echo $arrayVal['level2']['data'][$x]['user_id'] ?></td>
                                                         <td> ₹ 500 </td>
-                                                        <td> <label class='badge badge-success'>Pending</label> </td>
+
                                                         <td> <?php
 
                                                                 echo $arrayVal['level2']['data'][$x]['user_phone'] ?></td>
@@ -118,7 +117,7 @@ if (isset($_SESSION['user']['UserId'])) {
 
                                                                 echo $arrayVal['level3']['data'][$x]['user_id'] ?></td>
                                                         <td> ₹ 500 </td>
-                                                        <td> <label class='badge badge-success'>Pending</label> </td>
+
                                                         <td> <?php
 
                                                                 echo $arrayVal['level3']['data'][$x]['user_phone'] ?></td>
@@ -140,7 +139,7 @@ if (isset($_SESSION['user']['UserId'])) {
 
                                                                 echo $arrayVal['level4']['data'][$x]['user_id'] ?></td>
                                                         <td> ₹ 500 </td>
-                                                        <td> <label class='badge badge-success'>Pending</label> </td>
+
                                                         <td> <?php
 
                                                                 echo $arrayVal['level4']['data'][$x]['user_phone'] ?></td>
@@ -161,8 +160,8 @@ if (isset($_SESSION['user']['UserId'])) {
                                                         <td> <?php
 
                                                                 echo $arrayVal['level5']['data'][$x]['user_id'] ?></td>
-                                                        <td> ₹ 500 </td>
-                                                        <td> <label class='badge badge-success'>Pending</label> </td>
+                                                        <td> ₹ 800 </td>
+
                                                         <td> <?php
 
                                                                 echo $arrayVal['level5']['data'][$x]['user_phone'] ?></td>

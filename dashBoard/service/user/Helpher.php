@@ -88,7 +88,7 @@ class Helpher
                     if ($data[$x]['status'] == 1) {
                         $status = "<label class='badge badge-success'>Completed</label>";
                     } else {
-                        $status = "<label class='badge badge-success'>Waiting for confirmed</label>";
+                        $status = "<label class='badge badge-dark'>Waiting for conformation</label>";
                     }
                     return  $status;
                 } else {
@@ -137,14 +137,20 @@ class Helpher
     public function checkPSC($userID)
     {
         $total_amount = 0;
+        $checkamount = 5000;
+
         $Query = mysqli_query($this->conn, "SELECT Amount FROM `payment` WHERE `user_id` = $userID  AND status ='Paid'");
         if (mysqli_num_rows($Query) > 0) {
             while ($row = mysqli_fetch_assoc($Query)) {
                 $total_amount += $row['Amount'];
             }
 
-            if ($total_amount >= 3000) {
-                $status = $this->setNotification($userID, 500, $userID,);
+            for ($x = 1; $x <= 10; $x++) {
+                $checkval =  $checkamount * $x;
+                if ($total_amount == $checkval) {
+
+                    $status = $this->setNotification($userID, 500, $userID,);
+                }
             }
 
             $res = $total_amount;

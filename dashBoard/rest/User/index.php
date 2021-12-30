@@ -61,27 +61,27 @@ include '../inc/header.php';
                                 </div>
                                 <div class="row mt-2">
 
-                                    <div class="col-md-6"><label class="labels">Name</label><input name="name" type="text" class="form-control" placeholder="first name" value="<?php echo  $res["user"]['FistName']; ?>"></div>
-                                    <div class="col-md-6"><label class="labels">Surname</label><input name="surname" type="text" class="form-control" value="<?php echo  $res["user"]['LastName']; ?>" placeholder="surname"></div>
+                                    <div class="col-md-6"><label class="labels">Name</label><input name="name" type="text" class="form-control" placeholder="first name" value="<?php echo  $res["user"]['FistName']; ?>" readonly></div>
+                                    <div class="col-md-6"><label class="labels">Surname</label><input name="surname" type="text" class="form-control" value="<?php echo  $res["user"]['LastName']; ?>" placeholder="surname" readonly></div>
                                 </div>
 
                                 <div class="row mt-2">
 
-                                    <div class="col-md-6"><label class="labels">Email</label><input name="email" type="text" class="form-control" placeholder="Email" value="<?php echo  $email; ?>"></div>
+                                    <div class="col-md-6"><label class="labels">Email</label><input name="email" type="text" class="form-control" placeholder="Email" value="<?php echo  $email; ?>" readonly></div>
 
-                                    <div class="col-md-6"><label class="labels">Mobile no.</label><input name="mobileno" type="text" class="form-control" placeholder="Contact number" value="<?php echo $res["user"]['user_phone']; ?>"></div>
-
-                                </div>
-
-                                <div class="row mt-2">
-
-                                    <div class="col-md-12"><label class="labels">Amount</label> <input name="amount" type="text" class="form-control" placeholder="amount" value="<?php echo  $Amount; ?>"></div>
+                                    <div class="col-md-6"><label class="labels">Mobile no.</label><input name="mobileno" type="text" class="form-control" placeholder="Contact number" value="<?php echo $res["user"]['user_phone']; ?>" readonly></div>
 
                                 </div>
 
                                 <div class="row mt-2">
 
-                                    <div class="col-md-12"><input type="submit" style=" width: 35%; height: 150%; background: #38738a;"></div>
+                                    <div class="col-md-12"><label class="labels">Amount</label> <input name="amount" type="text" class="form-control" placeholder="amount" value="<?php echo  $Amount; ?>" readonly></div>
+
+                                </div>
+
+                                <div class="row mt-2">
+
+                                    <div class="col-md-12"><input type="submit" style=" width: 35%; height: 150%; background: #0000FF;"></div>
 
                                 </div>
                             </form>
