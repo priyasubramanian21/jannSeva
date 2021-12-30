@@ -1,7 +1,8 @@
 <?php
 
-
 namespace Service\user;
+
+error_reporting(0);
 
 use database\connection as conn;
 use Level\Level as level;
@@ -404,14 +405,11 @@ class UserServiceImpl
                         $statushtml = $status;
                     }
 
-                    if (!empty($getDataID)) {
-                        if (isset($getDataID['status'])) {
-                            if ($getDataID['status'] == 1) {
-                                $resetX = 5 - count($getDataID);
-                                if ($x == $resetX)
-                                    $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
-                            }
-                        }
+                    if (isset($getDataID)) {
+
+                        $resetX = count($getData) - count($getDataID);
+                        if ($x == $resetX)
+                            $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
                     }
                 }
 
@@ -432,7 +430,7 @@ class UserServiceImpl
                         <td>" . $statushtml . " </td>
                         <td>" . $getData[$x]['user_phone'] . " </td>
                         </tr>";
-                if ($checkPSC == 50000) {
+                if ($checkPSC >= 50000) {
                     continue;
                 } else {
                     echo $res;
@@ -457,6 +455,18 @@ class UserServiceImpl
         #ref 5
         $data[5] = $this->conQuery($data[4]['connect']);
 
+        #check pmf for user 
+        $Helpher = new Helpher();
+        $num = 0;
+        $num = count($data) + 1;
+
+        for ($x = 1; $x <= $num; $x++) {
+
+            $checkPSC = $Helpher->checkPSC($data[$x]['user_id']);
+            if ($checkPSC >= 50000) {
+                unset($data[$x]);
+            }
+        }
         return $data;
     }
     public function conQuery($connectID)
