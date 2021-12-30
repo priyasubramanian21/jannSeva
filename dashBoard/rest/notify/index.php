@@ -43,6 +43,8 @@ include "../inc/header.php";
     <div class="content-wrapper">
         <div class="row">
             <br>
+            <div class="text-center"><?php echo $message;  ?> </div> <br>
+
             <div class="col-md-12 grid-margin">
 
 

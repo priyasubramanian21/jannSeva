@@ -48,11 +48,13 @@ include "../inc/header.php";
                                     </p>
                                     <p><small> ID : <?php echo $_SESSION["user"]['UserId'] ?> </small></p>
 
-                                    <p> Total Give Help : ₹5,150.00</p>
+                                    <p> Total Give Help : <?php $giveHelp = $user->totalGiveHelp($_SESSION["user"]['UserId']);
+                                                            echo $giveHelp ?></p>
                                     <p> Total PMF : <?php $PMF1 = $user->totalPayedPMF($_SESSION["user"]['UserId']);
                                                     echo round($PMF1, 2) ?></p>
                                     <p> Total Tax : <?php echo round($user->totalPayedTax($PMF1), 2); ?></p>
-                                    <p class="fs-30 mb-2"><small> <small>Total Received Help : ₹6,700.00</small>
+                                    <p class="fs-30 mb-2"><small> <small>Total Received Help :<?php $receivedHelp = $user->totalReceivedHelp($_SESSION["user"]['UserId']);
+                                                                                                echo $receivedHelp ?></small>
                                         </small></p>
 
 
