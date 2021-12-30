@@ -12,8 +12,11 @@ $user = new user();
 $session->start();
 $session->notSet('dashBoard/rest/login');
 include "../inc/header.php";
-$connectID = $_SESSION['user']['UserId'];
-$arrayVal = $user->getPercentageConnect($connectID);
+if (isset($_SESSION['user']['UserId'])) {
+    $connectID = $_SESSION['user']['UserId'];
+    $arrayVal = $user->getPercentageConnect($connectID);
+}
+
 
 ?>
 <style>
@@ -37,7 +40,7 @@ $arrayVal = $user->getPercentageConnect($connectID);
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">GIVE HELP</h4>
+                            <h4 class="card-title">Level</h4>
                             <p class="card-description"> Date : <code><?php echo Date("d F, y") ?></code> </p>
                             <div class="table-responsive">
 
@@ -59,6 +62,7 @@ $arrayVal = $user->getPercentageConnect($connectID);
                                         ?>
 
                                             <?php
+
                                             if (isset($arrayVal['level1']['data'])) {
                                                 for ($x = 0; $x < count($arrayVal['level1']['data']); $x++) {  ?>
                                                     <tr>

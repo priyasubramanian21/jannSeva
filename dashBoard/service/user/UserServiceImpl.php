@@ -420,6 +420,8 @@ class UserServiceImpl
 
                 if ($checkPSC >= 3000) {
                     $statushtml = " <a href=''><label class='badge badge-warning' > Pending </label></a> ";
+                } elseif ($getData[$x]['user_id'] == 1006 && $status == 'Pending') {
+                    $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
                 }
 
                 $res = "<tr>
