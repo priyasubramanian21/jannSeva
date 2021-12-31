@@ -2,7 +2,7 @@
 
 namespace Service\user;
 
-//error_reporting(0);
+error_reporting(0);
 
 use database\connection as conn;
 use Level\Level as level;
