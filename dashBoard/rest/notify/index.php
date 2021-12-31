@@ -12,13 +12,14 @@ $user = new user();
 $Helper = new Helper();
 
 $session->start();
-$session->notSet('dashBoard/rest/login');
+$session->notSet('login');
+
 $message = '';
-if (isset($_GET['message'])) {
-    $message = $_GET['message'];
+if (isset($_SESSION["permit_id_Message"])) {
+    $message = $_SESSION["permit_id_Message"];
 }
 
-$siteURL = 'http://localhost/jannSeva/';
+$siteURL = getenv("soPath");
 
 
 
@@ -87,10 +88,13 @@ include "../inc/header.php";
                                                 $Data = $Helper->userProfile($data[$x]['sender_id'], $res);
 
                                                 if ($data[$x]['sender_id'] == $data[$x]['receiver_id']) {
-                                                    $redirectUrl = $siteURL . "dashBoard/rest/pmf/index.php";
+                                                    $redirectUrl = "psc";
                                                     $status = "Pay Your PSC";
                                                 } else {
-                                                    $redirectUrl = "permit.php?sender_id=" . $data[$x]['sender_id'];
+
+                                                    $_SESSION["permit_id"] = $data[$x]['sender_id'];
+
+                                                    $redirectUrl = "permit";
                                                     $status = "Click confirmed";
                                                 }
 
@@ -122,4 +126,11 @@ include "../inc/header.php";
 
 </div>
 
-<?php include "../inc/footer.php"; ?>
+<?php include "../inc/footer.php";
+
+if (isset($_SESSION["permit_id_Message"]))
+{
+    $_SESSION["permit_id_Message"] = "";
+}
+
+?>

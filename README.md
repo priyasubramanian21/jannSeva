@@ -1,2 +1,0 @@
-# jannSeva
-Online Helping Platform

@@ -1,6 +1,6 @@
 <?php
 
-function mailBo($id)
+function mailBody($id)
 {
 
     return '<!DOCTYPE html>

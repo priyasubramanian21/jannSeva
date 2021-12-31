@@ -8,7 +8,7 @@ $session = new session();
 
 
 $session->start();
-$session->notSet('dashBoard/rest/login');
+$session->notSet('login');
 
 
-$session->sessionOut('dashBoard/rest/login');
+$session->sessionOut('login');

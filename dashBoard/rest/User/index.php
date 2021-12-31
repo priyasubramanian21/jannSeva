@@ -9,10 +9,19 @@ $profile = new Helper();
 $session = new session();
 
 $session->start();
-$session->notSet('dashBoard/rest/login');
+$session->notSet('login');
 
-$userID = $_GET['userID'];
-$Amount = $_GET['amount'];
+$message = "";
+$userID = "";
+$Amount = "";
+
+if (isset($_SESSION["l_userID"])) {
+    $userID = $_SESSION["l_userID"];
+}
+
+if (isset($_SESSION["l_amount"])) {
+    $Amount = $_SESSION["l_amount"];
+}
 
 include '../inc/header.php';
 
@@ -43,7 +52,7 @@ include '../inc/header.php';
                     $profileImg = $res["user"]['profileImg'];
 
                     if ($profileImg == null or empty($profileImg)) {
-                        $profileImg = 'http://localhost/jannSeva/asset/image/icon/avatar.png';
+                        $profileImg = 'asset/image/icon/avatar.png';
                     }
                 }
 
@@ -53,7 +62,7 @@ include '../inc/header.php';
                     <div class="col-md-4 "></div>
                     <div class="col-md-4 ">
                         <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                            <form method="post" action="sendNotification.php" enctype="multipart/form-data" id="myform">
+                            <form method="post" action="sendNotification" enctype="multipart/form-data" id="myform">
                                 <input type="hidden" name="userID" value="<?php echo $userID; ?>" />
                                 <div class="rounded-circle avatar" id="avatar">
 

@@ -7,14 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>JLE MARKETING PRIVATE LIMITED</title>
 
-    <link rel="stylesheet" href="http://localhost/jannSeva/asset/vendors/feather/feather.css">
-    <link rel="stylesheet" href="http://localhost/jannSeva/asset/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="asset/vendors/feather/feather.css">
+    <link rel="stylesheet" href="asset/vendors/ti-icons/css/themify-icons.css">
 
-    <link rel="stylesheet" href="http://localhost/jannSeva/asset/css/vertical-layout-light/style.css">
+    <link rel="stylesheet" href="asset/css/vertical-layout-light/style.css">
 
-    <link rel="shortcut icon" href="http://localhost/jannSeva/asset/image/logo/jle.svg" />
+    <link rel="shortcut icon" href="asset/image/logo/jle.svg" />
 
-    <link rel="stylesheet" href="http://localhost/jannSeva/asset/css/admin.css" />
+    <link rel="stylesheet" href="asset/css/admin.css" />
 
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 </head>
@@ -25,8 +25,8 @@
 
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <a class="navbar-brand brand-logo mr-5" href="home"><img src="http://localhost/jannSeva/asset/image/logo/jle.svg" width="50px" class="mr-2" alt="logo" /></a>
-                <a class="navbar-brand brand-logo-mini" href="home"><img src="http://localhost/jannSeva/asset/image/logo/jle.svg" width="50px" alt="logo" /></a>
+                <a class="navbar-brand brand-logo mr-5" href="home"><img src="asset/image/logo/jle.svg" width="50px" class="mr-2" alt="logo" /></a>
+                <a class="navbar-brand brand-logo-mini" href="home"><img src="asset/image/logo/jle.svg" width="50px" alt="logo" /></a>
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
 
@@ -45,7 +45,7 @@
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="profileDropdown">
-                            <img src="http://localhost/jannSeva/asset/image/icon/profile.png" alt="profile" />
+                            <img src="asset/image/icon/profile.png" alt="profile" />
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                             <a class="dropdown-item" href="profile">
@@ -98,7 +98,7 @@
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item <?php echo $MHome; ?>">
-                        <a class="nav-link" href="http://localhost/jannSeva/dashBoard/rest/home">
+                        <a class="nav-link" href="home">
                             <i class="icon-grid menu-icon"></i>
                             <span class="menu-title">Dashboard</span>
                         </a>
@@ -111,14 +111,14 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost/jannSeva/dashBoard/rest/ghelp">
+                        <a class="nav-link" href="GiveHelp">
                             <i class="fas fa-hands-helping"></i> &nbsp;&nbsp;
                             <span class="menu-title">Give Help</span>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost/jannSeva/dashBoard/rest/rhelp">
+                        <a class="nav-link" href="rhelp">
                             <i class="far fa-people-carry"></i> &nbsp;&nbsp;
                             <span class="menu-title">Receive Help</span>
                         </a>
@@ -126,14 +126,14 @@
 
 
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost/jannSeva/dashBoard/rest/referees">
+                        <a class="nav-link" href="myConnects">
                             <i class="fas fa-asterisk"></i> &nbsp;&nbsp;
                             <span class="menu-title">My Referees</span>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost/jannSeva/dashBoard/rest/notify">
+                        <a class="nav-link" href="notification">
                             <i class="icon-eye menu-icon"></i>
                             <span class="menu-title">My Notification</span>
                         </a>

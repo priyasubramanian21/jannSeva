@@ -1,0 +1,316 @@
+
+*{
+
+    font-family: auto;
+    /* font-family: 'Cormorant Garamond', serif; */
+    /* font-family: 'Poppins', sans-serif; */
+    /* font-family: 'Eczar', serif; */
+        /* font-family:Georgia, 'Times New Roman', Times, serif; */
+    font-size: 15px;
+}
+
+.navbar-expand-md .navbar-nav .nav-link {
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 20px;
+    color: #FFF;
+}
+
+.navbar-expand-md .navbar-nav .nav-link:hover {
+
+    color: #FFF;
+}
+/* body{
+
+    background-color: PINK;
+} */
+
+.navbar-expand-md {
+
+
+    background-color:  #f0cc65 ;
+    justify-content: center;
+
+}
+
+.navbar-expand-md .navbar-collapse {
+
+    flex: none;
+}
+
+.dropdown-item{
+
+    color:#f0cc65 ;
+}
+.dropdown-item i{
+
+    padding-right: 10px;
+
+}
+
+section{
+
+    margin-top: 50px;
+    margin-bottom: 100px;
+}
+
+.main-heading{
+
+    margin-bottom: 50px;
+    padding-bottom: 10px;
+    display:inline-block;
+}
+
+.main-heading::after {
+    content: "";
+    height: 4px;
+    background: #d8b77c;
+    width: 100%;
+    display: block;
+    position: relative;
+    top: 11px;
+    border-radius: 50%;
+}
+
+.btn-more{
+
+    padding: 10px 30px;
+    margin: 10px;
+    background-color: #995281;
+    color: #FFF;
+    border-radius: 5px;
+    border: solid 2px #FFF;
+
+}
+
+.btn-more:hover{
+
+    color: #995281;
+    border: solid 2px #995281;
+    background-color: #FFF;
+
+
+}
+
+a{
+
+    text-decoration: none;
+    color: #fff;
+}
+
+a:hover{
+
+    text-decoration: none;
+    color: #fff;
+}
+
+.banner{
+
+    height: 500px;
+    background: url('../image/banner/banner.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position:  center;
+}
+.sec2-img{
+
+    height: 100%;
+    width: 100%;
+
+}
+
+.sec2-con{
+
+
+    /* background-color: #bcbcfd; */
+    padding: 50px;
+
+}
+
+/* common */
+
+.list-type-none{
+    list-style-type: none;
+    line-height: 2;
+    font-family: monospace;
+
+
+
+}
+.line{
+
+
+    line-height: 2.5;
+    list-style-type: none;
+    font-family: monospace;
+}
+
+.line i{
+
+    padding-right: 10px;
+}
+
+.sec2-con li{
+
+
+    color: #995281;
+}
+
+
+.abt-card {
+
+    background-color: #f7ebf3;
+    padding: 20px;
+    margin: 50px 0;
+}
+
+.ser-icons{
+
+
+    color: #d291bc;
+    border-left: solid 1px #d291bc ;
+}
+
+/* .ser-icons .card{
+
+    box-shadow: 5px 5px 10px;
+
+} */
+
+details{
+    margin: 20px;
+}
+
+details summary:focus{
+    padding: 10px;
+    border: solid 1px #d291bc;
+    box-shadow: 0 0 0 0.2rem #95477d85;
+}
+
+
+summary{
+
+    border: solid 1px grey;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px grey;
+
+}
+
+
+details p{
+
+    background-color: #d291bc;
+    color: #FFF;
+    padding: 20px;
+}
+
+
+footer{
+
+    background-color: #995281;
+    color: #FFF;
+}
+
+.contact{
+
+    background-color: #995281;
+}
+
+/* FAQ */
+
+
+.faq-list {
+    list-style: none;
+    padding: 0;
+}
+
+.faq-list li {
+    margin: 30px 0;
+  border: 1px solid rgb(205, 205, 205);
+    padding: 27px 30px;
+    margin: 0px auto 30px;
+    text-align: left;
+    /* width: 800px; */
+}
+
+
+.faq-list .faq-heading::before {
+    content: '+';
+   font-size: 40px;
+    display: block;
+    position: absolute;
+   right:0;
+    top: -15px;
+  color:#c2c2c2;
+}
+
+.faq-list .the-active .faq-heading::before {
+    content: '-';
+  
+}
+
+.faq-heading {
+    position: relative;
+    cursor: pointer;
+    font-size: 18px;
+  font-weight: 400;
+  margin:0;
+}
+
+.faq-heading:hover {
+    color: var(--theme-color);
+}
+
+.faq-text {
+    display: none;
+}
+
+.art-box svg {
+  width:100%;
+}
+
+.read {
+    color: rgb(100, 100, 100);
+    font-size: 16px;
+    line-height: 1.5;
+    margin-top: 25px;
+}
+
+/* @media only screen and (max-width: 768px) {  */
+ @media screen and (max-width:768px){
+
+    .navbar-expand-md {
+        justify-content: space-between;
+        background-color: #995281;
+    }
+
+    span.navbar-toggler-icon {
+    color: #FFF;
+    }
+
+    .navbar-expand-md img {
+
+        width:100px;
+        height: 100px;
+    }
+
+
+    .sec2 img,.sec3 img{
+
+        width: 100%;
+    }
+
+    .sec5 h5{
+        font-size: 15px;
+    }
+
+    .sec5 i{
+        font-size: 30px !important;
+    }
+
+    
+
+     
+} 
+

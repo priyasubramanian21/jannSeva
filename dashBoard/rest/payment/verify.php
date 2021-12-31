@@ -26,7 +26,7 @@ $success = true;
 $error = "Payment Failed";
 
 if (!isset($_SESSION["user"])) {
-    header("location: dashBoard/rest/login");
+    header("location: login");
     unset($_SESSION["login"]);
     unset($_SESSION["signup"]);
     unset($_SESSION["user"]);

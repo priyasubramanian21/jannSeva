@@ -1,0 +1,52 @@
+SetEnv DBServer "localhost"
+SetEnv DBUser "root"
+SetEnv DBPassword ""
+SetEnv DBName "jle"
+SetEnv soPath "http://localhost/jannSeva/"
+
+
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php
+
+
+
+RewriteRule ^$ web/index.html [NC,L]
+RewriteRule ^index web/index.html [NC,L]
+RewriteRule ^about web/about.html [NC,L]
+RewriteRule ^service web/service.html [NC,L]
+RewriteRule ^faq web/faq.html [NC,L]
+RewriteRule ^contact web/contact.html [NC,L]
+RewriteRule ^terms web/terms_condition.html [NC,L]
+
+
+RewriteRule ^login dashBoard/rest/login/index.php [NC,L]
+RewriteRule ^home dashBoard/rest/home/index.php [NC,L]
+RewriteRule ^payment dashBoard/rest/payment/index.php [NC,L]
+RewriteRule ^verify dashBoard/rest/payment/verify.php [NC,L]
+RewriteRule ^profile dashBoard/rest/profile/index.php [NC,L]
+RewriteRule ^logout dashBoard/rest/logout/index.php [NC,L]
+RewriteRule ^profile dashBoard/rest/profile/index.php [NC,L]
+RewriteRule ^myConnects dashBoard/rest/referees/index.php [NC,L]
+RewriteRule ^receipt dashBoard/rest/receipt/index.php [NC,L]
+RewriteRule ^GiveHelp dashBoard/rest/ghelp/index.php [NC,L]
+RewriteRule ^psc dashBoard/rest/pmf/index.php [NC,L]
+RewriteRule ^Pay dashBoard/rest/mPay/index.php [NC,L]
+RewriteRule ^rhelp dashBoard/rest/rhelp/index.php [NC,L]
+RewriteRule ^level dashBoard/rest/level/index.php [NC,L]
+RewriteRule ^notification dashBoard/rest/notify/index.php [NC,L]
+RewriteRule ^pagination dashBoard/rest/pmf/pagination.js [NC,L]
+RewriteRule ^update dashBoard/rest/profile/update.php [NC,L]
+RewriteRule ^upload dashBoard/rest/profile/upload.php [NC,L]
+RewriteRule ^User dashBoard/rest/User/index.php [NC,L]
+RewriteRule ^sendNotification dashBoard/rest/User/sendNotification.php [NC,L]
+RewriteRule ^permit dashBoard/rest/notify/permit.php [NC,L]
+
+RewriteRule ^signUp=([0-9a-zA-Z-_+]*) ./dashBoard/rest/signup/index.php?ReferenceID=$1
+RewriteRule ^signUp dashBoard/rest/signup/index.php [NC,L]
+
+RewriteRule ^level dashBoard/rest/level/index.php [NC,L]
+
+#about

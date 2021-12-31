@@ -1,4 +1,4 @@
 <?php
-define('soPath', 'http://localhost/jannSeva/');
+define('soPath', getenv("soPath"));
 
 $titleName = "JLE MARKETING PRIVATE LIMITED";

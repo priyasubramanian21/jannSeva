@@ -2,8 +2,6 @@
 
 namespace Service\user;
 
-//error_reporting(0);
-
 use database\connection as conn;
 use Level\Level as level;
 use Helpher\Helpher as Helpher;
@@ -191,7 +189,12 @@ class UserServiceImpl
                             $userData = mysqli_fetch_assoc($userLoginQuery);
                             $_POST['conID'] = $userData['user_id'];
 
-                            include "mail.php";
+
+                            $to = $_POST['email'];
+                            $name = $_POST['firstName'] ." ". $_POST['lastName'];
+                            $connect = $_POST['conID'];
+
+                            $mailHub = mailRequest($to, $name, $connect);
 
                             $user = array(
                                 'FistName' => $userData['user_first_name'],
@@ -467,7 +470,7 @@ class UserServiceImpl
         }
         $Helpher = new Helpher();
         #Connected To
-        $siteUrl = 'http://localhost/jannSeva/';
+        $siteUrl = '';
 
         #GET All Connect below us
         #level 1
@@ -488,16 +491,24 @@ class UserServiceImpl
                 $status = $Helpher->getStatus($getData[$x]['user_id'], $getDataID);
                 #Status 
                 if ($x == 1) {
-                    $Redirecturl = $siteUrl . 'dashBoard/rest/User?userID=' . $getData[$x]['user_id'] . '&amount=' . $getData[$x]['amount'];
+                    $RedirectUrl = $siteUrl . 'User';
 
                     if ($status == 'Pending') {
-                        $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
+
+                        $_SESSION["l_userID"] = $getData[$x]['user_id'];
+                        $_SESSION["l_amount"] = $getData[$x]['amount'];
+
+                        $statushtml = " <a href=" . $RedirectUrl . "><label class='badge badge-info' >Open  </label></a> ";
+
                     } else {
                         $statushtml = $status;
                     }
                 } else {
                     #redirect URL
-                    $Redirecturl = $siteUrl . 'dashBoard/rest/User?userID=' . $getData[$x]['user_id'] . '&amount=' . $getData[$x]['amount'];
+                    $Redirecturl = $siteUrl . 'User';
+
+                    $_SESSION["l_userID"] = $getData[$x]['user_id'];
+                    $_SESSION["l_amount"] = $getData[$x]['amount'];
 
                     if ($status == 'Pending') {
                         $statushtml = " <a href=''><label class='badge badge-warning' > Pending </label></a> ";

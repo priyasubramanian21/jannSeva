@@ -40,7 +40,7 @@ include "../inc/header.php";
                     <div class="col-md-6 grid-margin stretch-card">
                         <div class="card tale-bg">
                             <div class="card-people mt-auto">
-                                <img src="http://localhost/jannSeva/asset/image/logo/jle.png" alt="people">
+                                <img src="asset/image/logo/jle.png" alt="people">
 
                                 <div class="card-body">
                                     <p class="fs-30 mb-2">

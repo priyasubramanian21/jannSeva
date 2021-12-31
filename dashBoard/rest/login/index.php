@@ -10,8 +10,8 @@ $siteUrl = soPath;
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?= $titleName; ?> - Login</title>
 
-    <link rel="stylesheet" href="<?php echo $siteUrl; ?>asset/css/vertical-layout-light/style.css">
-    <link rel="shortcut icon" href="<?php echo $siteUrl; ?>asset/image/logo/jle.svg" />
+    <link rel="stylesheet" href="asset/css/vertical-layout-light/style.css">
+    <link rel="shortcut icon" href="asset/image/logo/jle.svg" />
 </head>
 
 
@@ -32,7 +32,7 @@ $user = new user();
 $session = new session();
 
 $session->start();
-$session->set('dashBoard/rest/home');
+$session->set('home');
 $message = null;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -49,11 +49,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["login"] = true;
             $_SESSION["user"] = $res["user"];
             $message = $res["message"];
-            header("location: " . $siteUrl . "dashBoard/rest/home");
+            header("location: " . $siteUrl . "home");
         } elseif ($res['pay'] == true) {
             $_SESSION["pay"] = true;
             $_SESSION["user"] = $res["user"];
-            header("location: " . $siteUrl . "dashBoard/rest/payment");
+            header("location: " . $siteUrl . "payment");
         } else {
             $message = $res["message"];
         }

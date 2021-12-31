@@ -16,7 +16,7 @@ $session = new session();
 $user = new user();
 
 $session->start();
-$session->notSet('dashBoard/rest/login');
+$session->notSet('login');
 
 $totalPMF = 100;
 
@@ -90,8 +90,8 @@ function pay($api, $cPmf, $displayCurrency, $keyId)
     $data = [
         "key" => $keyId,
         "amount" => $amount,
-        "name" => "JannSeva",
-        "description" => "JannSeva " . $_SESSION['PMF_count'] . " PMF Payment",
+        "name" => "B Fit",
+        "description" => "JLE MARKETING PRIVATE LIMITED" . $_SESSION['PMF_count'] . " PMF Payment",
         "image" => "asset/image/logo/jle.svg",
         "readonly" => [
             "name" => $_SESSION["user"]['FistName'] . $_SESSION["user"]['LastName'],

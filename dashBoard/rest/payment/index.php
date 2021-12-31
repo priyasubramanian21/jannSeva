@@ -18,7 +18,7 @@ $api = new Api($keyId, $keySecret);
 $session->start();
 
 if (!isset($_SESSION["user"])) {
-    header("location: dashBoard/rest/login");
+    header("location: login");
     unset($_SESSION["login"]);
     unset($_SESSION["signup"]);
     unset($_SESSION["user"]);
@@ -57,7 +57,7 @@ if (isset($_GET['checkout']) and in_array($_GET['checkout'], ['automatic', 'manu
 $data = [
     "key" => $keyId,
     "amount" => $amount,
-    "name" => "JLE MARKETING PRIVATE LIMITED",
+    "name" => "B Fit",
     "description" => "JLE MARKETING PRIVATE LIMITED 1st PMF Payment",
     "image" => "asset/image/logo/jle.svg",
     "readonly" => [

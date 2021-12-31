@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>JLE MARKETING PRIVATE LIMITED- SignUp</title>
 
-    <link rel="stylesheet" href="http://localhost/jannSeva/asset/css/vertical-layout-light/style.css">
-    <link rel="shortcut icon" href="http://localhost/jannSeva/asset/image/logo/jle.svg" />
+    <link rel="stylesheet" href="asset/css/vertical-layout-light/style.css">
+    <link rel="shortcut icon" href="asset/image/logo/jle.svg" />
 </head>
 
 
@@ -18,7 +18,11 @@
 include '../../core/support/session.php';
 include '../../core/support/postChecker.php';
 include '../../service/user/UserServiceImpl.php';
-
+include '../../core/support/mailTemp.php';
+include '../../core/support/mailRequest.php';
+require '../../core/lib/PHPMailer/src/Exception.php';
+require '../../core/lib/PHPMailer/src/PHPMailer.php';
+require '../../core/lib/PHPMailer/src/SMTP.php';
 
 use core\support\session as session;
 use core\support\postChecker as post;

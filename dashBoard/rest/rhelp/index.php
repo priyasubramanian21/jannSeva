@@ -10,7 +10,7 @@ $session = new session();
 $user = new user();
 
 $session->start();
-$session->notSet('dashBoard/rest/login');
+$session->notSet('login');
 include "../inc/header.php";
 $connectID = $_SESSION['user']['UserId'];
 $arrayVal = $user->getPercentageConnect($connectID);
@@ -193,6 +193,6 @@ $arrayVal = $user->getPercentageConnect($connectID);
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-<script src="http://localhost/jannSeva/asset/js/scriptchart.js"> </script>
+<script src="asset/js/scriptchart.js"> </script>
 
 <?php include "../inc/footer.php"; ?>

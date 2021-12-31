@@ -10,11 +10,17 @@ $session = new session();
 $user = new user();
 
 $session->start();
-$session->notSet('dashBoard/rest/login');
+$session->notSet('login');
 include "../inc/header.php";
 if (isset($_SESSION['user']['UserId'])) {
     $connectID = $_SESSION['user']['UserId'];
     $arrayVal = $user->getPercentageConnect($connectID);
+}
+
+$iLevel = "";
+
+if (isset($_POST['api_url'])) {
+    $iLevel = $_POST['api_url'];
 }
 
 
@@ -57,7 +63,7 @@ if (isset($_SESSION['user']['UserId'])) {
                                     </thead>
                                     <tbody>
 
-                                        <?php if ($_GET['level'] == 1) {
+                                        <?php if ($iLevel == 1) {
                                         ?>
 
                                             <?php
@@ -81,7 +87,7 @@ if (isset($_SESSION['user']['UserId'])) {
 
                                             <?php  }
                                             } ?>
-                                        <?php } elseif ($_GET['level'] == 2) { ?>
+                                        <?php } elseif ($iLevel == 2) { ?>
 
                                             <?php
                                             if (isset($arrayVal['level2']['data'])) {
@@ -103,7 +109,7 @@ if (isset($_SESSION['user']['UserId'])) {
 
                                             <?php  }
                                             } ?>
-                                        <?php } elseif ($_GET['level'] == 3) { ?>
+                                        <?php } elseif ($iLevel == 3) { ?>
 
                                             <?php
                                             if (isset($arrayVal['level3']['data'])) {
@@ -125,7 +131,7 @@ if (isset($_SESSION['user']['UserId'])) {
 
                                             <?php  }
                                             } ?>
-                                        <?php } elseif ($_GET['level'] == 4) { ?>
+                                        <?php } elseif ($iLevel == 4) { ?>
 
                                             <?php
                                             if (isset($arrayVal['level4']['data'])) {
@@ -147,7 +153,7 @@ if (isset($_SESSION['user']['UserId'])) {
 
                                             <?php  }
                                             } ?>
-                                        <?php } elseif ($_GET['level'] == 5) { ?>
+                                        <?php } elseif ($iLevel == 5) { ?>
 
                                             <?php
                                             if (isset($arrayVal['level5']['data'])) {

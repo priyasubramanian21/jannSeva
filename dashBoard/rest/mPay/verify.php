@@ -22,7 +22,7 @@ $api = new Api($keyId, $keySecret);
 $session = new session();
 $user = new user();
 $session->start();
-$session->notSet('dashBoard/rest/login');
+$session->notSet('login');
 
 $success = true;
 

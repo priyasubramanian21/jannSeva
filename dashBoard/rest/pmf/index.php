@@ -12,7 +12,7 @@ $session = new session();
 $user = new user();
 
 $session->start();
-$session->notSet('dashBoard/rest/login');
+$session->notSet('login');
 include "../inc/header.php";
 
 ?>
@@ -74,7 +74,7 @@ include "../inc/header.php";
                                 <br><br>
 
 
-                                <form class="form-inline" method="post" action="http://localhost/jannSeva/dashBoard/rest/mPay/index.php">
+                                <form class="form-inline" method="post" action="Pay">
 
                                     <input value="0.00" readonly type="text" class="form-control" name="total" style="margin-left: 41%;" />
 
@@ -175,7 +175,7 @@ include "../inc/header.php";
 
 </div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="pagination.js"></script>
+<script type="text/javascript" src="pagination"></script>
 
 <script>
     var select = document.getElementById('inlineFormInputName2');

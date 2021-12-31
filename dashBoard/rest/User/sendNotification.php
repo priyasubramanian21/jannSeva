@@ -9,9 +9,9 @@ $helper = new Helper();
 $session = new session();
 
 $session->start();
-$session->notSet('dashBoard/rest/login');
-$siteUrl = 'http://localhost/jannSeva/';
+$session->notSet('login');
+$siteUrl = '';
 
 $status = $helper->setNotification($_POST['userID'], $_POST['amount'], $_SESSION['user']['UserId']);
 
-header("location: " . $siteUrl . "dashBoard/rest/ghelp?status=" . $status);
+header("location: GiveHelp");

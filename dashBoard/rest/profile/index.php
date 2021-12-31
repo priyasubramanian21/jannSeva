@@ -21,13 +21,13 @@ $session->start();
 $session->notSetS('login', "login");
 
 if (!isset($_SESSION["user"]["UserId"])) {
-    header("location: dashBoard/rest/login");
+    header("location: login");
     unset($_SESSION["login"]);
     unset($_SESSION["signup"]);
     unset($_SESSION["user"]);
 }
 
-$referralLink = soPath . "dashBoard/rest/signUp/index.php?ReferenceID=" . $_SESSION["user"]["UserId"];
+$referralLink = soPath . "signUp=" . $_SESSION["user"]["UserId"];
 
 include '../inc/header.php';
 
@@ -41,7 +41,7 @@ include '../inc/header.php';
             <br>
             <div class="text-center"><?php echo $message;  ?> </div> <br>
             <!-- <form > -->
-            <form class="col-md-12 grid-margin" method="post" action="update.php" id="profilerRegister">
+            <form class="col-md-12 grid-margin" method="post" action="update" id="profilerRegister">
 
 
                 <div class="container rounded bg-white mt-5 mb-5">
@@ -63,7 +63,7 @@ include '../inc/header.php';
                         $profileImg = $res["user"]['profileImg'];
 
                         if ($profileImg == null or empty($profileImg)) {
-                            $profileImg = 'http://localhost/jannSeva/asset/image/icon/avatar.png';
+                            $profileImg = 'asset/image/icon/avatar.png';
                         }
                     }
 
@@ -72,7 +72,7 @@ include '../inc/header.php';
                     <div class="row">
                         <div class="col-md-3 border-right">
                             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                                <form method="post" action="" enctype="multipart/form-data" id="myform">
+                                <form method="post" action="upload" enctype="multipart/form-data" id="myform">
 
                                     <div class="rounded-circle avatar" id="avatar">
 

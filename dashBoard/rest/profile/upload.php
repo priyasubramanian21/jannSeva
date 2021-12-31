@@ -12,6 +12,8 @@ $session = new session();
 
 $session->start();
 
+$rootFolder = "../../../";
+
 $userID = $_SESSION['user']['UserId'];
 
 if (isset($_FILES['file']['name'])) {
@@ -20,7 +22,7 @@ if (isset($_FILES['file']['name'])) {
   /* Getting file name */
   $filename = $_FILES['file']['name'];
   /* Location */
-  $location = "/var/www/html/jannSeva/dashBoard/storage/" . $filename;
+  $location = $rootFolder."storage/profile/" . $filename;
   $imageFileType = pathinfo($location, PATHINFO_EXTENSION);
   $imageFileType = strtolower($imageFileType);
 
@@ -34,7 +36,7 @@ if (isset($_FILES['file']['name'])) {
     /* Upload file */
     if (move_uploaded_file($_FILES['file']['tmp_name'], $location)) {
 
-      $response = $updatePath = soPath . "dashBoard/storage/" . $filename;
+      $response = $updatePath = soPath . "storage/profile/" . $filename;
       $Service->updateProfileImage($updatePath, $userID);
     }
   }
