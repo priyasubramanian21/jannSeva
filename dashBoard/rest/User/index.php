@@ -72,6 +72,14 @@ include '../inc/header.php';
                                     <div class="col-md-6"><label class="labels">Mobile no.</label><input name="mobileno" type="text" class="form-control" placeholder="Contact number" value="<?php echo $res["user"]['user_phone']; ?>" readonly></div>
 
                                 </div>
+                                <div class="row mt-2">
+
+                                    <div class="col-md-6"><label class="labels">Gpay or phone pay or Bhim or upi id</label><input name="uid" type="text" class="form-control" placeholder="" value="<?php echo $res["user"]['uid']; ?>" readonly></div>
+
+                                    <div class="col-md-6"><label class="labels">Whatsapp OR Telegram</label><input name="contact_info" type="text" class="form-control" placeholder="" value="<?php echo $res["user"]['contact_info']; ?>" readonly></div>
+
+                                </div>
+
 
                                 <div class="row mt-2">
 
@@ -81,7 +89,7 @@ include '../inc/header.php';
 
                                 <div class="row mt-2">
 
-                                    <div class="col-md-12"><input type="submit" style=" width: 35%; height: 150%; background: #0000FF;"></div>
+                                    <div class="col-md-12"><input type="submit" class="btn btn-primary profile-button" style=" width: 35%; height: 150%;"></div>
 
                                 </div>
                             </form>

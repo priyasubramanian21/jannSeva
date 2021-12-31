@@ -36,8 +36,6 @@ if (isset($_POST['submit'])) {
 
     if ($post->isTheseParametersAvailable(array('firstName', 'lastName', 'phoneNumber', 'email', 'password', 'cpassword', 'state', 'district', 'connect'))) {
 
-
-
         $firstName = $_POST['firstName'];
         $lastName = $_POST['lastName'];
         $phoneNumber = $_POST['phoneNumber'];
@@ -50,7 +48,6 @@ if (isset($_POST['submit'])) {
         $res = array();
 
         if ($password == $cpassword) {
-
 
             $message = $user->userSignUpSystem($firstName, $lastName, $phoneNumber, $email, $password, $state, $district, $connect, null, $res);
 

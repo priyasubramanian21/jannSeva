@@ -2,7 +2,7 @@
 
 namespace Service\user;
 
-error_reporting(0);
+//error_reporting(0);
 
 use database\connection as conn;
 use Level\Level as level;
@@ -181,11 +181,17 @@ class UserServiceImpl
 
                     if ($this->conn->query($sql) === TRUE) {
 
+                        #send mail 
+
+
                         $userLoginQuery = mysqli_query($this->conn, "SELECT user_first_name, user_id, user_last_name, user_email, user_role, user_status, user_phone  FROM `customer` WHERE `user_email` = '$emailI' ");
 
                         if (mysqli_num_rows($userLoginQuery) > 0) {
 
                             $userData = mysqli_fetch_assoc($userLoginQuery);
+                            $_POST['conID'] = $userData['user_id'];
+
+                            include "mail.php";
 
                             $user = array(
                                 'FistName' => $userData['user_first_name'],

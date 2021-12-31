@@ -23,7 +23,7 @@ class Helpher
 
         $res = array();
 
-        $profileQuery = mysqli_query($this->conn, "SELECT user_first_name, user_phone, user_last_name, user_email, profile_img FROM `customer` WHERE `user_id` = $userId;");
+        $profileQuery = mysqli_query($this->conn, "SELECT user_first_name, user_phone, user_last_name, user_email, profile_img, contact_info, uid  FROM `customer` WHERE `user_id` = $userId;");
 
         if (mysqli_num_rows($profileQuery) > 0) {
 
@@ -34,7 +34,9 @@ class Helpher
                 'LastName' => $profileData['user_last_name'],
                 'EmailId' => $profileData['user_email'],
                 'profileImg' => $profileData['profile_img'],
-                'user_phone' => $profileData['user_phone']
+                'user_phone' => $profileData['user_phone'],
+                'contact_info' => $profileData['contact_info'],
+                'uid' => $profileData['uid']
             );
 
             $res["profile"] = true;
