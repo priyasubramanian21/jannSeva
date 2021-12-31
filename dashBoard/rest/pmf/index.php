@@ -74,9 +74,15 @@ include "../inc/header.php";
                                 <br><br>
 
 
-                                <form class="form-inline" method="post" action="Pay">
+                                <form class="form-inline" method="post" action="http://localhost/jannSeva/dashBoard/rest/mPay/index.php">
 
+                                    <input value="0.00" readonly type="text" class="form-control" name="total" style="margin-left: 41%;" />
 
+                                    <?php
+                                    if ($user->numberOfPMF($_SESSION["user"]['UserId']) < 100) {
+                                        echo '<button type="submit" class="btn btn-primary mb-2" style="margin-left: 21%;">Pay</button>';
+                                    }
+                                    ?>
 
                                     <div class="container">
 
@@ -99,6 +105,7 @@ include "../inc/header.php";
 
                                             <thead>
                                                 <tr>
+                                                    <th>Select </th>
                                                     <th>Amount</th>
                                                     <th>Action</th>
 
@@ -111,10 +118,15 @@ include "../inc/header.php";
                                                 <?php for ($x = 0; $x < 100; $x++) { ?>
                                                     <tr>
                                                         <td>
+                                                            <input name="product" value="500" type="checkbox" onclick="totalIt()" />
+                                                            <br>
+
+                                                        </td>
+                                                        <td>
 
                                                             ₹
 
-                                                            <input readonly type="text" class="form-control" id="inlineFormInputGroupUsername2" placeholder="Amount" value="500">
+                                                            <input readonly type="text" class="form-control" id="inlineFormInputGroupUsername2" name="inlineFormInputGroupUsername2" placeholder="Amount" value="500">
                                                         </td>
                                                         <td> <?php
                                                                 if ($user->numberOfPMF($_SESSION["user"]['UserId']) < 100) {
@@ -170,6 +182,17 @@ include "../inc/header.php";
     var input = document.getElementById('inlineFormInputGroupUsername2');
     select.onchange = function() {
         input.value = select.value * 500;
+    }
+
+    function totalIt() {
+        var input = document.getElementsByName("product");
+        var total = 0;
+        for (var i = 0; i < input.length; i++) {
+            if (input[i].checked) {
+                total += parseFloat(input[i].value);
+            }
+        }
+        document.getElementsByName("total")[0].value = total.toFixed(2);
     }
 </script>
 

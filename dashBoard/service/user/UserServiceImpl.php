@@ -53,6 +53,23 @@ class UserServiceImpl
         return $res;
     }
 
+    public function getProfileData($userId)
+    {
+
+        $res = array();
+
+        $profileQuery = mysqli_query($this->conn, "SELECT * FROM `customer` WHERE `user_id` = $userId;");
+
+        if (mysqli_num_rows($profileQuery) > 0) {
+
+            $res = mysqli_fetch_assoc($profileQuery);
+        } else {
+            $res = false;
+        }
+
+        return $res;
+    }
+
     public function userLoginSystem($userName, $password, $post, array &$res)
     {
 
@@ -101,6 +118,38 @@ class UserServiceImpl
         return $res;
     }
 
+    public function updateProfile($dob, $mobile, $state, $district, $uid, $contact_info, $file, $userID)
+    {
+
+        $dobI = mysqli_real_escape_string($this->conn, $dob);
+        $mobileI = mysqli_real_escape_string($this->conn, $mobile);
+
+        $stateI = mysqli_real_escape_string($this->conn, $state);
+        $districtI = mysqli_real_escape_string($this->conn, $district);
+        $uidI = mysqli_real_escape_string($this->conn, $uid);
+        $contact_infoI = mysqli_real_escape_string($this->conn, $contact_info);
+        //`profile_img`=[value-2],
+
+        $sql = "UPDATE `customer` SET `user_phone`='$mobileI',`state`='$stateI',`district`='$districtI',`dob`='$dobI',`contact_info`='$contact_infoI',`uid`='$uidI' WHERE `user_id`=$userID";
+        if ($this->conn->query($sql) === TRUE) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function updateProfileImage($file, $userID)
+    {
+        $fileI = mysqli_real_escape_string($this->conn, $file);
+
+        $sql = "UPDATE `customer` SET `profile_img`='$fileI' WHERE `user_id`=$userID";
+        if ($this->conn->query($sql) === TRUE) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     public function userSignUpSystem($firstName, $lastName, $phoneNumber, $email, $password, $state, $district, $connect, $post, &$res)
     {
@@ -120,17 +169,17 @@ class UserServiceImpl
         $userConnectId = mysqli_query($this->conn, "SELECT user_email FROM `customer` WHERE `user_id` = '$connectI' ");
 
 
+
         if (mysqli_num_rows($userConnectId) == 1) {
 
             if (mysqli_num_rows($userMail) < 1) {
 
                 if (mysqli_num_rows($userPhone) < 5) {
 
+
                     $sql = " INSERT INTO customer(user_first_name,user_last_name,user_email,user_phone,state, district, user_password, connect) VALUES ('$firstNameI','$lastName', '$emailI', '$phoneNumberI', '$stateI', '$districtI', '$passwordI', '$connectI')";
 
                     if ($this->conn->query($sql) === TRUE) {
-
-
 
                         $userLoginQuery = mysqli_query($this->conn, "SELECT user_first_name, user_id, user_last_name, user_email, user_role, user_status, user_phone  FROM `customer` WHERE `user_email` = '$emailI' ");
 
@@ -246,6 +295,49 @@ class UserServiceImpl
             $totalPayedPMF = $walletData['totalAmount'] == null ? $totalPayedPMF : $walletData['totalAmount'];
 
             $res = $totalPayedPMF / 118 * 100;
+        } else {
+            $res = $totalPayedPMF;
+        }
+
+        return $res;
+    }
+
+
+    public function totalGiveHelp($userID)
+    {
+
+        $totalPayedPMFAmount = mysqli_query($this->conn, "SELECT SUM(amount) AS totalAmount  FROM `pay_history` WHERE `sender_id` = '$userID' AND status = 1");
+
+        $totalPayedPMF = 0;
+
+        if (mysqli_num_rows($totalPayedPMFAmount) > 0) {
+
+            $walletData = mysqli_fetch_array($totalPayedPMFAmount);
+
+            $totalPayedPMF = $walletData['totalAmount'] == null ? $totalPayedPMF : $walletData['totalAmount'];
+
+            $res = $totalPayedPMF;
+        } else {
+            $res = $totalPayedPMF;
+        }
+
+        return $res;
+    }
+
+    public function totalReceivedHelp($userID)
+    {
+
+        $totalPayedPMFAmount = mysqli_query($this->conn, "SELECT SUM(amount) AS totalAmount  FROM `pay_history` WHERE `receiver_id` = '$userID' AND status = 1");
+
+        $totalPayedPMF = 0;
+
+        if (mysqli_num_rows($totalPayedPMFAmount) > 0) {
+
+            $walletData = mysqli_fetch_array($totalPayedPMFAmount);
+
+            $totalPayedPMF = $walletData['totalAmount'] == null ? $totalPayedPMF : $walletData['totalAmount'];
+
+            $res = $totalPayedPMF;
         } else {
             $res = $totalPayedPMF;
         }
@@ -465,10 +557,11 @@ class UserServiceImpl
         $num = count($data) + 1;
 
         for ($x = 1; $x <= $num; $x++) {
-
-            $checkPSC = $Helpher->checkPSC($data[$x]['user_id']);
-            if ($checkPSC >= 50000) {
-                unset($data[$x]);
+            if (isset($data[$x]['user_id'])) {
+                $checkPSC = $Helpher->checkPSC($data[$x]['user_id']);
+                if ($checkPSC >= 50000) {
+                    unset($data[$x]);
+                }
             }
         }
         return $data;

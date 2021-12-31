@@ -17,9 +17,9 @@ class Level
         $db = new conn();
         $this->conn = $db->connect();
     }
-    public function conQuery($connectID)
+    public function conQuery($connectID, $limit)
     {
-        $getConnect = mysqli_query($this->conn, "SELECT *  FROM customer Where `connect` = '$connectID'");
+        $getConnect = mysqli_query($this->conn, "SELECT *  FROM customer Where `connect` = '$connectID' LIMIT $limit");
         return $getConnect;
     }
     public function level5($getLevel4)
@@ -30,7 +30,7 @@ class Level
         if (isset($getLevel4[0])) {
             for ($x = 0; $x < count($getLevel4[0]); $x++) {
 
-                $getData = $this->conQuery($getLevel4[0][$x]);
+                $getData = $this->conQuery($getLevel4[0][$x], 256);
                 if (mysqli_num_rows($getData) > 0) {
                     while ($row = mysqli_fetch_array($getData)) {
                         $rowval[] = $row['user_id'];
@@ -50,7 +50,7 @@ class Level
 
             for ($x = 0; $x < count($getLevel4[1]); $x++) {
 
-                $getData = $this->conQuery($getLevel4[1][$x]);
+                $getData = $this->conQuery($getLevel4[1][$x], 256);
                 if (mysqli_num_rows($getData) > 0) {
                     while ($row = mysqli_fetch_array($getData)) {
                         $rowval[] = $row['user_id'];
@@ -69,7 +69,7 @@ class Level
 
             for ($x = 0; $x < count($getLevel4[2]); $x++) {
 
-                $getData = $this->conQuery($getLevel4[2][$x]);
+                $getData = $this->conQuery($getLevel4[2][$x], 256);
                 if (mysqli_num_rows($getData) > 0) {
                     while ($row = mysqli_fetch_array($getData)) {
                         $rowval[] = $row['user_id'];
@@ -88,7 +88,7 @@ class Level
 
             for ($x = 0; $x < count($getLevel4[3]); $x++) {
 
-                $getData = $this->conQuery($getLevel4[3][$x]);
+                $getData = $this->conQuery($getLevel4[3][$x], 256);
                 if (mysqli_num_rows($getData) > 0) {
                     while ($row = mysqli_fetch_array($getData)) {
                         $rowval[] = $row['user_id'];
@@ -103,6 +103,12 @@ class Level
             $data['st5green'] = $count * 0.048828125;
         }
 
+        if (isset($data['data'])) {
+            $data['percent'] = (count($data['data']) / 1024) * 100;
+        } else {
+
+            $data['percent'] = 0;
+        }
         return $data;
     }
 
@@ -115,7 +121,7 @@ class Level
         if (isset($getLevel3[0])) {
             for ($x = 0; $x < count($getLevel3[0]); $x++) {
 
-                $getData = $this->conQuery($getLevel3[0][$x]);
+                $getData = $this->conQuery($getLevel3[0][$x], 64);
                 if (mysqli_num_rows($getData) > 0) {
                     while ($row = mysqli_fetch_array($getData)) {
                         $rowval[] = $row['user_id'];
@@ -135,7 +141,7 @@ class Level
 
             for ($x = 0; $x < count($getLevel3[1]); $x++) {
 
-                $getData = $this->conQuery($getLevel3[1][$x]);
+                $getData = $this->conQuery($getLevel3[1][$x], 64);
                 if (mysqli_num_rows($getData) > 0) {
                     while ($row = mysqli_fetch_array($getData)) {
                         $rowval[] = $row['user_id'];
@@ -154,7 +160,7 @@ class Level
 
             for ($x = 0; $x < count($getLevel3[2]); $x++) {
 
-                $getData = $this->conQuery($getLevel3[2][$x]);
+                $getData = $this->conQuery($getLevel3[2][$x], 64);
                 if (mysqli_num_rows($getData) > 0) {
                     while ($row = mysqli_fetch_array($getData)) {
                         $rowval[] = $row['user_id'];
@@ -173,7 +179,7 @@ class Level
 
             for ($x = 0; $x < count($getLevel3[3]); $x++) {
 
-                $getData = $this->conQuery($getLevel3[3][$x]);
+                $getData = $this->conQuery($getLevel3[3][$x], 64);
                 if (mysqli_num_rows($getData) > 0) {
                     while ($row = mysqli_fetch_array($getData)) {
                         $rowval[] = $row['user_id'];
@@ -187,6 +193,11 @@ class Level
             }
             $data['st4green'] = $count * 0.15625;
         }
+        if (isset($data['data'])) {
+            $data['percent'] = (count($data['data']) / 256) * 100;
+        } else {
+            $data['percent'] = 0;
+        }
 
         return $data;
     }
@@ -198,7 +209,7 @@ class Level
         if (isset($getLevel2[0])) {
             for ($x = 0; $x < count($getLevel2[0]); $x++) {
 
-                $getData = $this->conQuery($getLevel2[0][$x]);
+                $getData = $this->conQuery($getLevel2[0][$x], 16);
                 if (mysqli_num_rows($getData) > 0) {
                     while ($row = mysqli_fetch_array($getData)) {
                         $rowval[] = $row['user_id'];
@@ -218,7 +229,7 @@ class Level
 
             for ($x = 0; $x < count($getLevel2[1]); $x++) {
 
-                $getData = $this->conQuery($getLevel2[1][$x]);
+                $getData = $this->conQuery($getLevel2[1][$x], 16);
                 if (mysqli_num_rows($getData) > 0) {
                     while ($row = mysqli_fetch_array($getData)) {
                         $rowval[] = $row['user_id'];
@@ -237,7 +248,7 @@ class Level
 
             for ($x = 0; $x < count($getLevel2[2]); $x++) {
 
-                $getData = $this->conQuery($getLevel2[2][$x]);
+                $getData = $this->conQuery($getLevel2[2][$x], 16);
                 if (mysqli_num_rows($getData) > 0) {
                     while ($row = mysqli_fetch_array($getData)) {
                         $rowval[] = $row['user_id'];
@@ -256,7 +267,7 @@ class Level
 
             for ($x = 0; $x < count($getLevel2[3]); $x++) {
 
-                $getData = $this->conQuery($getLevel2[3][$x]);
+                $getData = $this->conQuery($getLevel2[3][$x], 16);
                 if (mysqli_num_rows($getData) > 0) {
                     while ($row = mysqli_fetch_array($getData)) {
                         $rowval[] = $row['user_id'];
@@ -270,6 +281,11 @@ class Level
             }
             $data['st3green'] = $count * 0.46875;
         }
+        if (isset($data['data'])) {
+            $data['percent'] = (count($data['data']) / 64) * 100;
+        } else {
+            $data['percent'] = 0;
+        }
 
         return $data;
     }
@@ -280,7 +296,7 @@ class Level
         $count = 0;
         #red 
         if (isset($getLevel1[0])) {
-            $getData = $this->conQuery($getLevel1[0]);
+            $getData = $this->conQuery($getLevel1[0], 4);
             $data = array();
             if (mysqli_num_rows($getData) > 0) {
                 while ($row = mysqli_fetch_array($getData)) {
@@ -297,7 +313,7 @@ class Level
         }
         #Orange 
         if (isset($getLevel1[1])) {
-            $getData = $this->conQuery($getLevel1[1]);
+            $getData = $this->conQuery($getLevel1[1], 4);
             $data = array();
             if (mysqli_num_rows($getData) > 0) {
                 while ($row = mysqli_fetch_array($getData)) {
@@ -313,7 +329,7 @@ class Level
         }
         #Yellow 
         if (isset($getLevel1[2])) {
-            $getData = $this->conQuery($getLevel1[2]);
+            $getData = $this->conQuery($getLevel1[2], 4);
             $data = array();
             if (mysqli_num_rows($getData) > 0) {
                 while ($row = mysqli_fetch_array($getData)) {
@@ -329,7 +345,7 @@ class Level
         }
         #green 
         if (isset($getLevel1[3])) {
-            $getData = $this->conQuery($getLevel1[3]);
+            $getData = $this->conQuery($getLevel1[3], 4);
             $data = array();
             if (mysqli_num_rows($getData) > 0) {
                 while ($row = mysqli_fetch_array($getData)) {
@@ -343,13 +359,18 @@ class Level
             }
             $data['st2green'] = $count * 5;
         }
+        if (isset($data['data'])) {
+            $data['percent'] = (count($data['data']) / 16) * 100;
+        } else {
+            $data['percent'] = 0;
+        }
 
         return $data;
     }
     public function level1($connectID)
     {
         $count = 0;
-        $getData = $this->conQuery($connectID);
+        $getData = $this->conQuery($connectID, 4);
         $data = array();
         if (mysqli_num_rows($getData) > 0) {
             while ($row = mysqli_fetch_array($getData)) {
@@ -361,7 +382,7 @@ class Level
             $count = count($data['data']);
         }
 
-        $data['percent'] = $count * 2.5;
+        $data['percent'] = $count * 25;
         if ($count == 1) {
             $data['st1red'] = 10;
         } elseif ($count == 2) {

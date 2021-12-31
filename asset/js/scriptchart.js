@@ -93,10 +93,22 @@ var st5orange = document.getElementById("st5orange").value;
 var st5yellow = document.getElementById("st5yellow").value;
 var st5green = document.getElementById("st5green").value;
 
+var st1per = document.getElementById("st1per").value;
+var st2per = document.getElementById("st2per").value;
+var st3per = document.getElementById("st3per").value;
+var st4per = document.getElementById("st4per").value;
+var st5per = document.getElementById("st5per").value;
+
 var myChart = new Chart(ctx, {
 	type: "bar",
 	data: {
-		labels: ["1 Stage", "2 Stage", "3 Stage", "4 Stage", "5 Stage"],
+		labels: [
+			"1 Stage -" + st1per + "%",
+			"2 Stage -" + st2per + "%",
+			"3 Stage -" + st3per + "%",
+			"4 Stage -" + st4per + "%",
+			"5 Stage -" + st5per + "%",
+		],
 
 		datasets: [
 			{

@@ -1,6 +1,7 @@
 <?php
 
 include '../../core/support/session.php';
+include '../../core/config/inc.php';
 include '../../core/support/postChecker.php';
 include '../../service/user/UserServiceImpl.php';
 
@@ -25,6 +26,8 @@ if (!isset($_SESSION["user"]["UserId"])) {
     unset($_SESSION["signup"]);
     unset($_SESSION["user"]);
 }
+
+$referralLink = soPath . "dashBoard/rest/signUp/index.php?ReferenceID=" . $_SESSION["user"]["UserId"];
 
 include '../inc/header.php';
 
@@ -85,6 +88,9 @@ include '../inc/header.php';
                                 <span class="font-weight-bold"> <?= $name ?> </span>
                                 <span class="text-black-50"><b>Male</b></span> <span class="text-black-50">
                                     <?= $email ?></span> <span> </span>
+
+                                <span class="font-weight-bold" style="padding-top: 25%;"><b><strong>Reference Link </strong></b></span> <span class="text-black-50">
+                                    <?= $referralLink ?></span> <span> </span>
                             </div>
                         </div>
                         <div class="col-md-5 border-right">

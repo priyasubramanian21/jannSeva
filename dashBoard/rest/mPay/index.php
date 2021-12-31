@@ -22,11 +22,18 @@ $totalPMF = 100;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    if (isset($_POST['pmf'])) {
+    if (isset($_POST['pmf']) || isset($_POST['total']) || isset($_POST['inlineFormInputGroupUsername2'])) {
 
-        $cPmf = $_POST['pmf'];
+        if ($_POST['total'] && !empty($_POST['total']) && $_POST['total'] != 0.00) {
+            $cPmf = $_POST['total'];
+        } elseif ($_POST['inlineFormInputGroupUsername2']) {
+            $cPmf = $_POST['inlineFormInputGroupUsername2'];
+        } else {
+            $cPmf = $_POST['pmf'];
+        }
 
         $userPayedPMF = $user->numberOfPMF($_SESSION["user"]['UserId']);
+
 
         if ($userPayedPMF >= $totalPMF) {
             header('refresh: 5; url=../');
@@ -34,16 +41,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } elseif (($userPayedPMF + $cPmf) >= $totalPMF) {
 
             $ablePMF = $totalPMF - $userPayedPMF;
+            if ($_POST['total']) {
+                $ablePMF = $cPmf / 500;
+            }
 
             pay($api, $ablePMF, $displayCurrency, $keyId);
         } else {
+
             pay($api, $cPmf, $displayCurrency, $keyId);
         }
     } else {
         header('Location: psc');
     }
 }
-
 
 function pay($api, $cPmf, $displayCurrency, $keyId)
 {

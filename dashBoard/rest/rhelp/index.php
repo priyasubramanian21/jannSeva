@@ -15,8 +15,6 @@ include "../inc/header.php";
 $connectID = $_SESSION['user']['UserId'];
 $arrayVal = $user->getPercentageConnect($connectID);
 
-
-
 ?>
 
 
@@ -26,6 +24,42 @@ $arrayVal = $user->getPercentageConnect($connectID);
         <div class="row">
 
             <div class="col-md-12 grid-margin">
+
+                <input id="st1per" value="<?php
+                                            if (isset($arrayVal['level1']['percent'])) {
+                                                echo $arrayVal['level1']['percent'];
+                                            } else {
+                                                echo intval($arrayVal['level1']['percent']);
+                                            }
+                                            ?>" type="hidden" />
+                <input id="st2per" value="<?php if (isset($arrayVal['level2']['percent'])) {
+                                                echo $arrayVal['level2']['percent'];
+                                            } else {
+                                                echo intval($arrayVal['level2']['percent']);
+                                            }
+
+                                            ?>" type="hidden" />
+                <input id="st3per" value="<?php if (isset($arrayVal['level3']['percent'])) {
+                                                echo $arrayVal['level3']['percent'];
+                                            } else {
+                                                echo intval($arrayVal['level3']['percent']);
+                                            }
+
+                                            ?>" type="hidden" />
+                <input id="st4per" value="<?php if (isset($arrayVal['level4']['percent'])) {
+                                                echo $arrayVal['level4']['percent'];
+                                            } else {
+                                                echo intval($arrayVal['level4']['percent']);
+                                            }
+                                            ?>" type="hidden" />
+                <input id="st5per" value="<?php
+                                            if (isset($arrayVal['level5']['percent'])) {
+                                                echo $arrayVal['level5']['percent'];
+                                            } else {
+                                                echo intval($arrayVal['level5']['percent']);
+                                            }
+                                            ?>" type="hidden" />
+
                 <?php if (empty($arrayVal['level1']['st1red'])) { ?>
                     <input id="st1red" value="2.5" type="hidden" />
                 <?php } else { ?>

@@ -32,7 +32,6 @@ $session = new session();
 $session->start();
 $message = null;
 
-
 if (isset($_POST['submit'])) {
 
     if ($post->isTheseParametersAvailable(array('firstName', 'lastName', 'phoneNumber', 'email', 'password', 'cpassword', 'state', 'district', 'connect'))) {
@@ -49,7 +48,6 @@ if (isset($_POST['submit'])) {
         $district = $_POST['district'];
         $connect = $_POST['connect'];
         $res = array();
-
 
         if ($password == $cpassword) {
 
@@ -76,11 +74,11 @@ if (isset($_POST['submit'])) {
     }
 }
 
-if (isset($_GET['id'])) {
-    $uId = $_GET['id'];
+if (isset($_GET['ReferenceID'])) {
+    $uId = $_GET['ReferenceID'];
     $enStatus = 'readonly';
 } else {
-    $uId = 00012;
+    $uId = '';
     $enStatus = '';
 }
 

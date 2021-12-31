@@ -109,25 +109,25 @@
                             <span class="menu-title">PCS</span>
                         </a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
-                            <i class="icon-columns menu-icon"></i>
-                            <span class="menu-title">Help</span>
-                            <i class="menu-arrow"></i>
+                        <a class="nav-link" href="http://localhost/jannSeva/dashBoard/rest/ghelp">
+                            <i class="fas fa-hands-helping"></i> &nbsp;&nbsp;
+                            <span class="menu-title">Give Help</span>
                         </a>
-                        <div class="collapse" id="form-elements">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"><a class="nav-link" href="http://localhost/jannSeva/dashBoard/rest/ghelp">Give Help</a></li>
-                                <li class="nav-item"><a class="nav-link" href="http://localhost/jannSeva/dashBoard/rest/rhelp">Receive Help</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#">Open Help</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#">Transaction History</a></li>
-                            </ul>
-                        </div>
                     </li>
 
                     <li class="nav-item">
+                        <a class="nav-link" href="http://localhost/jannSeva/dashBoard/rest/rhelp">
+                            <i class="far fa-people-carry"></i> &nbsp;&nbsp;
+                            <span class="menu-title">Receive Help</span>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item">
                         <a class="nav-link" href="http://localhost/jannSeva/dashBoard/rest/referees">
-                            <i class="icon-bar-graph menu-icon"></i>
+                            <i class="fas fa-asterisk"></i> &nbsp;&nbsp;
                             <span class="menu-title">My Referees</span>
                         </a>
                     </li>
@@ -139,12 +139,5 @@
                         </a>
                     </li>
 
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="receipt">
-                            <i class="icon-grid-2 menu-icon"></i>
-                            <span class="menu-title">Payment Receipt</span>
-                        </a>
-                    </li>
                 </ul>
             </nav>
