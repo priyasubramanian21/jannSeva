@@ -45,7 +45,7 @@ RewriteRule ^sendNotification dashBoard/rest/User/sendNotification.php [NC,L]
 RewriteRule ^permit dashBoard/rest/notify/permit.php [NC,L]
 
 RewriteRule ^signUp=([0-9a-zA-Z-_+]*) ./dashBoard/rest/signup/index.php?ReferenceID=$1
-RewriteRule ^signUp dashBoard/rest/signup/index.php [NC,L]
+RewriteRule ^signUp dashBoard/rest/signUp/index.php [NC,L]
 
 RewriteRule ^level dashBoard/rest/level/index.php [NC,L]
 
