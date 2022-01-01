@@ -79,6 +79,20 @@ if (isset($_POST['api_url'])) {
 
                                                                 echo $arrayVal['level1']['data'][$x]['user_id'] ?></td>
                                                         <td> ₹ 500 </td>
+                                                        <td> <?php
+
+                                                                $status = $user->getLevelStatus($arrayVal['level1']['data'][$x]['user_id']);
+
+
+                                                                if ($status['status'] == 1) { ?>
+                                                                <label class='badge badge-success'>Completed</label>
+                                                            <?php  } else { ?>
+                                                                <label class='badge badge-warning'>Payment Pending</label>
+
+                                                            <?php   } ?>
+
+
+                                                        </td>
 
                                                         <td> <?php
 
@@ -101,6 +115,20 @@ if (isset($_POST['api_url'])) {
 
                                                                 echo $arrayVal['level2']['data'][$x]['user_id'] ?></td>
                                                         <td> ₹ 500 </td>
+                                                        <td> <?php
+
+                                                                $status = $user->getLevelStatus($arrayVal['level1']['data'][$x]['user_id']);
+
+
+                                                                if ($status['status'] == 1) { ?>
+                                                                <label class='badge badge-success'>Completed</label>
+                                                            <?php  } else { ?>
+                                                                <label class='badge badge-warning'>Payment Pending</label>
+
+                                                            <?php   } ?>
+
+
+                                                        </td>
 
                                                         <td> <?php
 
@@ -123,6 +151,20 @@ if (isset($_POST['api_url'])) {
 
                                                                 echo $arrayVal['level3']['data'][$x]['user_id'] ?></td>
                                                         <td> ₹ 500 </td>
+                                                        <td> <?php
+
+                                                                $status = $user->getLevelStatus($arrayVal['level1']['data'][$x]['user_id']);
+
+
+                                                                if ($status['status'] == 1) { ?>
+                                                                <label class='badge badge-success'>Completed</label>
+                                                            <?php  } else { ?>
+                                                                <label class='badge badge-warning'>Payment Pending</label>
+
+                                                            <?php   } ?>
+
+
+                                                        </td>
 
                                                         <td> <?php
 
@@ -145,6 +187,20 @@ if (isset($_POST['api_url'])) {
 
                                                                 echo $arrayVal['level4']['data'][$x]['user_id'] ?></td>
                                                         <td> ₹ 500 </td>
+                                                        <td> <?php
+
+                                                                $status = $user->getLevelStatus($arrayVal['level1']['data'][$x]['user_id']);
+
+
+                                                                if ($status['status'] == 1) { ?>
+                                                                <label class='badge badge-success'>Completed</label>
+                                                            <?php  } else { ?>
+                                                                <label class='badge badge-warning'>Payment Pending</label>
+
+                                                            <?php   } ?>
+
+
+                                                        </td>
 
                                                         <td> <?php
 
@@ -167,6 +223,20 @@ if (isset($_POST['api_url'])) {
 
                                                                 echo $arrayVal['level5']['data'][$x]['user_id'] ?></td>
                                                         <td> ₹ 800 </td>
+                                                        <td> <?php
+
+                                                                $status = $user->getLevelStatus($arrayVal['level1']['data'][$x]['user_id']);
+
+
+                                                                if ($status['status'] == 1) { ?>
+                                                                <label class='badge badge-success'>Completed</label>
+                                                            <?php  } else { ?>
+                                                                <label class='badge badge-warning'>Payment Pending</label>
+
+                                                            <?php   } ?>
+
+
+                                                        </td>
 
                                                         <td> <?php
 

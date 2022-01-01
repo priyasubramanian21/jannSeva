@@ -537,7 +537,7 @@ class UserServiceImpl
                 // elseif ($getData[$x]['user_id'] == 1006 && $status == 'Pending') {
                 //     $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
                 // }
-                
+
                 $_SESSION['giveHelp'] = $giveHelp;
 
                 $res = "<tr>
@@ -548,11 +548,11 @@ class UserServiceImpl
                         <td>" . $statushtml . " </td>
                         <td>" . $getData[$x]['user_phone'] . " </td>
                         </tr>";
-                if ($checkPSC >= 50000) {
-                    continue;
-                } else {
+                // if ($checkPSC >= 50000) {
+                //     continue;
+                // } else {
                     echo $res;
-                }
+               // }
             }
         }
     }
@@ -578,16 +578,30 @@ class UserServiceImpl
         $num = 0;
         $num = count($data) + 1;
 
-        for ($x = 1; $x <= $num; $x++) {
-            if (isset($data[$x]['user_id'])) {
-                $checkPSC = $Helpher->checkPSC($data[$x]['user_id']);
-                if ($checkPSC >= 50000) {
-                    unset($data[$x]);
-                }
-            }
-        }
+        # Removed check condition  50000
+        // for ($x = 1; $x <= $num; $x++) {
+        //     if (isset($data[$x]['user_id'])) {
+        //         $checkPSC = $Helpher->checkPSC($data[$x]['user_id']);
+        //         if ($checkPSC >= 50000) {
+        //             unset($data[$x]);
+        //         }
+        //     }
+        // }
         return $data;
     }
+    
+    public function getLevelStatus($levelID)
+    {
+        $userID = $_SESSION['user']['UserId'];
+
+        $getLevel = mysqli_query($this->conn, "SELECT  `status` FROM `pay_history` WHERE `receiver_id` = '$userID' AND `sender_id`='$levelID'");
+        if (mysqli_num_rows($getLevel) > 0) {
+            $row = mysqli_fetch_array($getLevel);
+        }
+
+        return $row;
+    }
+
     public function conQuery($connectID)
     {
         $getConnect = mysqli_query($this->conn, "SELECT *  FROM customer Where `user_id` = '$connectID' AND user_status =1");
