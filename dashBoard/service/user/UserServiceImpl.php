@@ -491,12 +491,13 @@ class UserServiceImpl
                 $status = $Helpher->getStatus($getData[$x]['user_id'], $getDataID);
                 #Status 
                 if ($x == 1) {
+                    $giveHelp[$x]['userID'] = $getData[$x]['user_id'];
+                    $giveHelp[$x]['amount'] = $getData[$x]['amount'];
                     $RedirectUrl = $siteUrl . 'User';
 
                     if ($status == 'Pending') {
-
-                        $_SESSION["l_userID"] = $getData[$x]['user_id'];
-                        $_SESSION["l_amount"] = $getData[$x]['amount'];
+                       
+                        $giveHelp[$x]['status'] = 'open';
 
                         $statushtml = " <a href=" . $RedirectUrl . "><label class='badge badge-info' >Open  </label></a> ";
 
@@ -507,8 +508,8 @@ class UserServiceImpl
                     #redirect URL
                     $Redirecturl = $siteUrl . 'User';
 
-                    $_SESSION["l_userID"] = $getData[$x]['user_id'];
-                    $_SESSION["l_amount"] = $getData[$x]['amount'];
+                    $giveHelp[$x]['userID'] = $getData[$x]['user_id'];
+                    $giveHelp[$x]['amount'] = $getData[$x]['amount'];
 
                     if ($status == 'Pending') {
                         $statushtml = " <a href=''><label class='badge badge-warning' > Pending </label></a> ";
@@ -519,8 +520,10 @@ class UserServiceImpl
 
                         $resetX = 1 + count($getDataID);
 
-                        if ($x == $resetX && $getDataID[0]['deleted'] == 1)
+                        if ($x == $resetX && $getDataID[0]['deleted'] == 1){
+                            $giveHelp[$x]['status'] = 'open';
                             $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
+                        }
                     }
                 }
 
@@ -534,6 +537,8 @@ class UserServiceImpl
                 // elseif ($getData[$x]['user_id'] == 1006 && $status == 'Pending') {
                 //     $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
                 // }
+                
+                $_SESSION['giveHelp'] = $giveHelp;
 
                 $res = "<tr>
                         <td> </td>

@@ -27,7 +27,7 @@ if (!isset($_SESSION["user"]["UserId"])) {
     unset($_SESSION["user"]);
 }
 
-$referralLink = soPath . "signUp=" . $_SESSION["user"]["UserId"];
+$referralLink = soPath . "signUp?ReferenceID=" . $_SESSION["user"]["UserId"];
 
 include '../inc/header.php';
 

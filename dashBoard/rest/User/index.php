@@ -15,12 +15,15 @@ $message = "";
 $userID = "";
 $Amount = "";
 
-if (isset($_SESSION["l_userID"])) {
-    $userID = $_SESSION["l_userID"];
-}
+if (isset($_SESSION['giveHelp'])) {
+    for ($x = 0; $x <= count($_SESSION['giveHelp']); $x++) {
 
-if (isset($_SESSION["l_amount"])) {
-    $Amount = $_SESSION["l_amount"];
+        if ($_SESSION['giveHelp'][$x]['status'] == 'open') {
+
+            $userID = $_SESSION['giveHelp'][$x]['userID'];
+            $Amount = $_SESSION['giveHelp'][$x]['amount'];
+        }
+    }
 }
 
 include '../inc/header.php';
