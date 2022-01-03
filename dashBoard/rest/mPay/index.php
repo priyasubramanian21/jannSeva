@@ -92,7 +92,7 @@ function pay($api, $cPmf, $displayCurrency, $keyId)
         "amount" => $amount,
         "name" => "B Fit",
         "description" => "JLE MARKETING PRIVATE LIMITED" . $_SESSION['PMF_count'] . " PMF Payment",
-        "image" => "asset/image/logo/jle.svg",
+        "image" => getenv("payImage"),
         "readonly" => [
             "name" => $_SESSION["user"]['FistName'] . $_SESSION["user"]['LastName'],
             "email" => $_SESSION["user"]['EmailId'],
@@ -104,7 +104,7 @@ function pay($api, $cPmf, $displayCurrency, $keyId)
             "contact" => $_SESSION["user"]['UserPhone'],
         ],
         "theme" => [
-            "color" => "#F37254"
+            "color" => getenv("payColor")
         ],
         "send_sms_hash" => true,
         "config" => [

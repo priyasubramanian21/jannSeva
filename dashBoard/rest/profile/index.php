@@ -109,7 +109,7 @@ include '../inc/header.php';
                                 <div class="row mt-3">
                                     <div class="col-md-12"><label class="labels">DOB</label><input name="dob" type="date" class="form-control" placeholder="Date of Birth" value="<?php echo  $data['dob']; ?>"></div>
 
-                                    <div class="col-md-12"><label class="labels">Mobile Number</label><input name="mobile" type="text" class="form-control" placeholder="enter phone number" value="<?php echo  $data['user_phone']; ?>"></div>
+                                    <div class="col-md-12"><label class="labels">Mobile Number</label><input name="mobile" type="text" class="form-control" placeholder="enter phone number" value="<?php echo  $data['user_phone']; ?>" readonly></div>
 
                                     <div class="col-md-12"><label class="labels">Email</label><input name="email" type="text" class="form-control" placeholder="enter Email" value="<?php echo  $data['user_email']; ?>" readonly></div>
 

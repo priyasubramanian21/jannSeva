@@ -2,6 +2,8 @@
 
 namespace Service\user;
 
+error_reporting(0);
+
 use database\connection as conn;
 use Level\Level as level;
 use Helpher\Helpher as Helpher;
@@ -136,6 +138,19 @@ class UserServiceImpl
         }
     }
 
+    public function updatePassword($password, $userID)
+    {
+
+        $passwordI = mysqli_real_escape_string($this->conn, $password);
+
+        $sql = "UPDATE `customer` SET `user_password`='$passwordI' WHERE `user_id`=$userID";
+        if ($this->conn->query($sql) === TRUE) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function updateProfileImage($file, $userID)
     {
         $fileI = mysqli_real_escape_string($this->conn, $file);
@@ -147,6 +162,7 @@ class UserServiceImpl
             return false;
         }
     }
+
 
 
     public function userSignUpSystem($firstName, $lastName, $phoneNumber, $email, $password, $state, $district, $connect, $post, &$res)
@@ -189,12 +205,7 @@ class UserServiceImpl
                             $userData = mysqli_fetch_assoc($userLoginQuery);
                             $_POST['conID'] = $userData['user_id'];
 
-
-                            $to = $_POST['email'];
-                            $name = $_POST['firstName'] ." ". $_POST['lastName'];
-                            $connect = $_POST['conID'];
-
-                            $mailHub = mailRequest($to, $name, $connect);
+                            include "mail.php";
 
                             $user = array(
                                 'FistName' => $userData['user_first_name'],
@@ -280,11 +291,11 @@ class UserServiceImpl
             $rand_color = array_rand($color, 2);
 
             $res = '<div class="col-md-6 mb-4 stretch-card transparent"><div class="' . $color[$rand_color[0]] . '">
-		                <div class="card-body"> 
-			                <p class="mb-4">Invited Member</p>
-			                <p class="fs-30 mb-2"><small><a href="#" style="text-decoration: none;color: #FFF;"> ' . $myConnectionData['user_first_name'] . " " . $myConnectionData['user_last_name'] . '</a></small></p>
-			                <p> ' . $myConnectionData['user_phone'] . ' </p>
-		            </div></div></div>';
+                        <div class="card-body"> 
+                            <p class="mb-4">Invited Member</p>
+                            <p class="fs-30 mb-2"><small><a href="#" style="text-decoration: none;color: #FFF;"> ' . $myConnectionData['user_first_name'] . " " . $myConnectionData['user_last_name'] . '</a></small></p>
+                            <p> ' . $myConnectionData['user_phone'] . ' </p>
+                    </div></div></div>';
         }
         return $res;
     }
@@ -394,17 +405,17 @@ class UserServiceImpl
             }
 
             $res = '<tr>
-	            <td class="py-1"> <img src="' . $profile . '" alt="image" /> </td>
-	            <td> ' . $myConnectionData['user_first_name'] . " " . $myConnectionData['user_last_name'] . ' </td>
-	            <td> ' . $myConnectionData['connect_id'] . ' </td>
-	            <td> ' . $myConnectionData['user_phone'] . ' </td>
-	            <td> ' . $myConnectionData['user_email'] . ' </td>
-	            
-	            <td>
-	             	<div class="progress">
-			            <div class="progress-bar ' . $VC['color'] . '" role="progressbar" style="width: ' . $VC['value'] . '%" aria-valuenow="' . $VC['value'] . '" aria-valuemin="0" aria-valuemax="100"></div>
-		            </div>
-	            </td>
+                <td class="py-1"> <img src="' . $profile . '" alt="image" /> </td>
+                <td> ' . $myConnectionData['user_first_name'] . " " . $myConnectionData['user_last_name'] . ' </td>
+                <td> ' . $myConnectionData['connect_id'] . ' </td>
+                <td> ' . $myConnectionData['user_phone'] . ' </td>
+                <td> ' . $myConnectionData['user_email'] . ' </td>
+                
+                <td>
+                    <div class="progress">
+                        <div class="progress-bar ' . $VC['color'] . '" role="progressbar" style="width: ' . $VC['value'] . '%" aria-valuenow="' . $VC['value'] . '" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </td>
                 </tr>';
 
             echo $res;
@@ -446,12 +457,12 @@ class UserServiceImpl
 
 
             $res = '<tr>
-	            <td>' . $X . '</td>
-	            <td> ' . $myConnectionData['receipt_id'] . ' </td>
-	            <td> ' . $myConnectionData['PMF'] . ' </td>
-	            <td> ' . $myConnectionData['Amount'] . ' </td>
-	            <td> <label class="badge badge-success">' . $myConnectionData['status'] . '</label> </td>
-	            <td> <label class="badge badge-info"><a href="' . getenv("soPath") . $myConnectionData['receipt'] . '" style="color: #fff;text-decoration: none;">Receip</a></label></td>
+                <td>' . $X . '</td>
+                <td> ' . $myConnectionData['receipt_id'] . ' </td>
+                <td> ' . $myConnectionData['PMF'] . ' </td>
+                <td> ' . $myConnectionData['Amount'] . ' </td>
+                <td> <label class="badge badge-success">' . $myConnectionData['status'] . '</label> </td>
+                <td> <label class="badge badge-info"><a href="' . getenv("soPath") . $myConnectionData['receipt'] . '" style="color: #fff;text-decoration: none;">Receip</a></label></td>
                 </tr>';
             $X++;
         }
@@ -470,17 +481,18 @@ class UserServiceImpl
         }
         $Helpher = new Helpher();
         #Connected To
-        $siteUrl = '';
+        $siteUrl = 'http://localhost/jannSeva/';
 
         #GET All Connect below us
         #level 1
         $getData = $this->getAllConnect($MyConn);
 
         $getDataID = $Helpher->checknotify($UserId);
-
         if (!empty($getData)) {
-
             for ($x = 1; $x <= count($getData); $x++) {
+                if (empty($getData[$x])) {
+                    continue;
+                }
                 #set Amount
                 $getData[$x]['amount'] = 500;
                 if (isset($getData[5])) {
@@ -493,23 +505,22 @@ class UserServiceImpl
                 if ($x == 1) {
                     $giveHelp[$x]['userID'] = $getData[$x]['user_id'];
                     $giveHelp[$x]['amount'] = $getData[$x]['amount'];
-                    $RedirectUrl = $siteUrl . 'User';
+
+
+                    $Redirecturl = $siteUrl . 'dashBoard/rest/User?userID=' . $getData[$x]['user_id'] . '&amount=' . $getData[$x]['amount'];
 
                     if ($status == 'Pending') {
-                       
                         $giveHelp[$x]['status'] = 'open';
-
-                        $statushtml = " <a href=" . $RedirectUrl . "><label class='badge badge-info' >Open  </label></a> ";
-
+                        $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
                     } else {
                         $statushtml = $status;
                     }
                 } else {
                     #redirect URL
-                    $Redirecturl = $siteUrl . 'User';
-
                     $giveHelp[$x]['userID'] = $getData[$x]['user_id'];
                     $giveHelp[$x]['amount'] = $getData[$x]['amount'];
+
+                    $Redirecturl = $siteUrl . 'dashBoard/rest/User?userID=' . $getData[$x]['user_id'] . '&amount=' . $getData[$x]['amount'];
 
                     if ($status == 'Pending') {
                         $statushtml = " <a href=''><label class='badge badge-warning' > Pending </label></a> ";
@@ -520,7 +531,7 @@ class UserServiceImpl
 
                         $resetX = 1 + count($getDataID);
 
-                        if ($x == $resetX && $getDataID[0]['deleted'] == 1){
+                        if ($x == $resetX && $getDataID[0]['deleted'] == 1) {
                             $giveHelp[$x]['status'] = 'open';
                             $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
                         }
@@ -530,15 +541,14 @@ class UserServiceImpl
 
                 #check pmf for user 
                 $checkPSC = $Helpher->checkPSC($getData[$x]['user_id']);
+                //print_r($checkPSC);
+                if ($checkPSC == 1) {
 
-                if ($checkPSC >= 3000) {
                     $statushtml = " <a href=''><label class='badge badge-warning' > Pending </label></a> ";
                 }
-                // elseif ($getData[$x]['user_id'] == 1006 && $status == 'Pending') {
-                //     $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
-                // }
 
                 $_SESSION['giveHelp'] = $giveHelp;
+
 
                 $res = "<tr>
                         <td> </td>
@@ -548,11 +558,8 @@ class UserServiceImpl
                         <td>" . $statushtml . " </td>
                         <td>" . $getData[$x]['user_phone'] . " </td>
                         </tr>";
-                // if ($checkPSC >= 50000) {
-                //     continue;
-                // } else {
-                    echo $res;
-               // }
+
+                echo $res;
             }
         }
     }
@@ -573,35 +580,19 @@ class UserServiceImpl
         #ref 5
         $data[5] = $this->conQuery($data[4]['connect']);
 
-        #check pmf for user 
-        $Helpher = new Helpher();
-        $num = 0;
-        $num = count($data) + 1;
+        // #check pmf for user 
+        // $Helpher = new Helpher();
+        // $num = 0;
+        // $num = count($data) + 1;
 
-        # Removed check condition  50000
         // for ($x = 1; $x <= $num; $x++) {
         //     if (isset($data[$x]['user_id'])) {
         //         $checkPSC = $Helpher->checkPSC($data[$x]['user_id']);
-        //         if ($checkPSC >= 50000) {
-        //             unset($data[$x]);
-        //         }
+
         //     }
         // }
         return $data;
     }
-    
-    public function getLevelStatus($levelID)
-    {
-        $userID = $_SESSION['user']['UserId'];
-
-        $getLevel = mysqli_query($this->conn, "SELECT  `status` FROM `pay_history` WHERE `receiver_id` = '$userID' AND `sender_id`='$levelID'");
-        if (mysqli_num_rows($getLevel) > 0) {
-            $row = mysqli_fetch_array($getLevel);
-        }
-
-        return $row;
-    }
-
     public function conQuery($connectID)
     {
         $getConnect = mysqli_query($this->conn, "SELECT *  FROM customer Where `user_id` = '$connectID' AND user_status =1");
@@ -635,6 +626,18 @@ class UserServiceImpl
         $stage['level5'] = $level->level5($stage['level4']);
 
         return $stage;
+    }
+
+    public function getLevelStatus($levelID)
+    {
+        $userID = $_SESSION['user']['UserId'];
+
+        $getLevel = mysqli_query($this->conn, "SELECT  `status` FROM `pay_history` WHERE `receiver_id` = '$userID' AND `sender_id`='$levelID'");
+        if (mysqli_num_rows($getLevel) > 0) {
+            $row = mysqli_fetch_array($getLevel);
+        }
+
+        return $row;
     }
 
     public function numberOfPMF($userId)

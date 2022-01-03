@@ -59,7 +59,7 @@ $data = [
     "amount" => $amount,
     "name" => "B Fit",
     "description" => "JLE MARKETING PRIVATE LIMITED 1st PMF Payment",
-    "image" => "asset/image/logo/jle.svg",
+    "image" => getenv("payImage"),
     "readonly" => [
         "name" => $_SESSION["user"]['FistName'] . $_SESSION["user"]['LastName'],
         "email" => $_SESSION["user"]['EmailId'],
@@ -71,7 +71,7 @@ $data = [
         "contact" => $_SESSION["user"]['UserPhone'],
     ],
     "theme" => [
-        "color" => "#F37254"
+        "color" => getenv("payColor")
     ],
     "send_sms_hash" => true,
     "config" => [

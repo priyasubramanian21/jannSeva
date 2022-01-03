@@ -3,6 +3,7 @@
 namespace Helpher;
 
 use database\connection as conn;
+use Service\user\UserServiceImpl as Service;
 
 
 
@@ -16,6 +17,22 @@ class Helpher
 
         $db = new conn();
         $this->conn = $db->connect();
+    }
+
+    public function clearNotify($userId)
+    {
+
+        $sql = "UPDATE `pay_history` SET `status`= 1,`deleted`=1 WHERE `sender_id`='$userId' AND `receiver_id`='$userId'";
+
+        if ($this->conn->query($sql) === TRUE) {
+
+            $message = "<label class='badge badge-success'>Data Cleared.</label>";
+        } else {
+
+            $message = "<label class='badge badge-danger'>Something went worng</label>";
+        }
+
+        return $message;
     }
 
     public function userProfile($userId, &$res)
@@ -106,9 +123,67 @@ class Helpher
 
     public function myNotification($userID)
     {
+        $generalNotify = $res = array();
+        $getStatus = $this->checkGiveHelpStatus($userID);
+        $count = count($getStatus);
+        $Query = mysqli_query($this->conn, "SELECT * FROM `pay_history` WHERE `receiver_id` = $userID  AND deleted = 0 ORDER BY  notification_id DESC");
+
+        if (mysqli_num_rows($Query) > 0) {
+            while ($row = mysqli_fetch_assoc($Query)) {
+                if ($row['receiver_id'] == $row['sender_id']) {
+                    $generalNotify[] = $row;
+                } else {
+                    $res[] = $row;
+                }
+            }
+        } else {
+            $res = 0;
+        }
+        if (!empty($res))
+            $qCount = count($res);
+        else
+            $qCount = 0;
+
+        $getconnect = $this->getConnect($userID);
+        $Data = array();
+        $service = new Service();
+        $getData = $service->getAllConnect($getconnect);
+        for ($m = 0; $m <= count($getData); $m++) {
+            if (!empty($getData[$m])) {
+                $Data[] = $getData[$m];
+            }
+        }
+        $checkCount = count($Data);
+
+        if ($count >= $checkCount) {
+            $response['receiver'] = $res;
+        } elseif ($count >= 1  &&  $qCount >= 1) {
+            $response['status'] = 'Available';
+            $response['count'] = count($res);
+        } else {
+            $response = 0;
+        }
+        $response['generalNotify'] = $generalNotify;
+        return $response;
+    }
+
+    public function getConnect($UserId)
+    {
+
+        $myConnectionTable = mysqli_query($this->conn, "SELECT connect FROM customer Where `user_id` = '$UserId';");
+        if (mysqli_num_rows($myConnectionTable) > 0) {
+            $myConnectionData = mysqli_fetch_array($myConnectionTable);
+            $MyConn = $myConnectionData['connect'];
+        }
+
+        return $MyConn;
+    }
+
+    public function checkGiveHelpStatus($userID)
+    {
         $res = array();
 
-        $Query = mysqli_query($this->conn, "SELECT * FROM `pay_history` WHERE `receiver_id` = $userID  AND deleted =0 ORDER BY  notification_id DESC");
+        $Query = mysqli_query($this->conn, "SELECT * FROM `pay_history` WHERE `sender_id` = $userID  AND deleted = 1 ORDER BY  notification_id DESC");
 
         if (mysqli_num_rows($Query) > 0) {
             while ($row = mysqli_fetch_assoc($Query)) {
@@ -120,6 +195,7 @@ class Helpher
 
         return $res;
     }
+
     public function setConfirmed($sender_id)
     {
 
@@ -140,22 +216,26 @@ class Helpher
     {
         $total_amount = 0;
         $checkamount = 5000;
+        $total_pmf = 0;
 
-        $Query = mysqli_query($this->conn, "SELECT Amount FROM `payment` WHERE `user_id` = $userID  AND status ='Paid'");
+        $Query = mysqli_query($this->conn, "SELECT Amount , PMF FROM `payment` WHERE `user_id` = $userID  AND status ='Paid'");
         if (mysqli_num_rows($Query) > 0) {
             while ($row = mysqli_fetch_assoc($Query)) {
                 $total_amount += $row['Amount'];
+                $total_pmf += $row['PMF'];
             }
 
-            for ($x = 1; $x <= 10; $x++) {
-                $checkval =  $checkamount * $x;
-                if ($total_amount == $checkval) {
+            $getPmfCount = 1 + ($total_amount / $checkamount);
+            $getInt = (int)$getPmfCount;
 
-                    $status = $this->setNotification($userID, 500, $userID,);
-                }
+            if ($getInt <= $total_pmf) {
+                $res = 0;
+            } else {
+
+                $status = $this->setNotification($userID, 500, $userID);
+                $res = 1;
             }
 
-            $res = $total_amount;
         } else {
             $res = 0;
         }

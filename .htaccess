@@ -5,6 +5,13 @@ SetEnv DBName "jle"
 SetEnv soPath "http://localhost/jannSeva/"
 
 
+SetEnv keyId "rzp_test_z1VlDNunoD01bf"
+SetEnv keySecret "pPrWfMv0zVL2qlyWryC9QITr"
+SetEnv displayCurrency "INR"
+SetEnv payImage "asset/image/logo/jle.svg"
+SetEnv payColor "#F37254"
+
+
 RewriteEngine on
 
 RewriteCond %{REQUEST_FILENAME} !-d
