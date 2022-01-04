@@ -103,11 +103,11 @@ var myChart = new Chart(ctx, {
 	type: "bar",
 	data: {
 		labels: [
-			"1 Stage -" + st1per + "%",
-			"2 Stage -" + st2per + "%",
-			"3 Stage -" + st3per + "%",
-			"4 Stage -" + st4per + "%",
-			"5 Stage -" + st5per + "%",
+			"1 Stage - " + st1per + "%",
+			"2 Stage - " + st2per + "%",
+			"3 Stage - " + st3per + "%",
+			"4 Stage - " + st4per + "%",
+			"5 Stage - " + st5per + "%",
 		],
 
 		datasets: [

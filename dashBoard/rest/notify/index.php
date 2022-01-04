@@ -20,8 +20,6 @@ if (isset($_GET['message'])) {
 
 $siteURL = 'http://localhost/jannSeva/';
 
-
-
 include "../inc/header.php";
 
 ?>
@@ -53,6 +51,7 @@ include "../inc/header.php";
                         <div class="card-body">
                             <h4 class="card-title">Notification</h4>
                             <p class="card-description"> Date : <code><?php echo Date("d F, y") ?></code> </p>
+                            <a href="clear.php" style="float: right;"><label class='badge badge-info'> ClearALL </label></a>
                             <div class="table-responsive">
 
 
@@ -73,35 +72,60 @@ include "../inc/header.php";
 
                                         $data = $Helper->myNotification($_SESSION['user']['UserId']);
 
+
                                         ?>
 
-                                        <?php if ($data == 0) { ?>
+                                        <?php if ($data['receiver'] == 0 && empty($data['status'])) { ?>
 
                                             <tr> <label class='badge badge-danger'> No Record Founds.</label> </tr>
+                                        <?php
 
+                                        } elseif ($data['status'] == 'Available') { ?>
+
+                                            <tr> <label class='badge badge-info'> Please Complete your GiveHelp Payment. You have <?php echo $data['count']; ?> Receiver Waiting!! </label> </tr>
 
                                             <?php
                                         } else {
-                                            for ($x = 0; $x < count($data); $x++) {
+                                            for ($x = 0; $x < count($data['receiver']); $x++) {
                                                 $res = array();
-                                                $Data = $Helper->userProfile($data[$x]['sender_id'], $res);
+                                                $Data = $Helper->userProfile($data['receiver'][$x]['sender_id'], $res);
 
-                                                if ($data[$x]['sender_id'] == $data[$x]['receiver_id']) {
-                                                    $redirectUrl = $siteURL . "dashBoard/rest/pmf/index.php";
-                                                    $status = "Pay Your PSC";
-                                                } else {
-                                                    $redirectUrl = "permit.php?sender_id=" . $data[$x]['sender_id'];
-                                                    $status = "Click confirmed";
-                                                }
+                                                $redirectUrl = "permit.php?sender_id=" . $data['receiver'][$x]['sender_id'];
+                                                $status = "Click confirmed";
+
 
                                             ?>
                                                 <tr>
                                                     <td> </td>
                                                     <td><?= $Data['user']['FistName'] . " " . $Data['user']['LastName'] ?> </td>
-                                                    <td><?= $data[$x]['sender_id'] ?></td>
-                                                    <td><?= $data[$x]['amount'] ?> </td>
+                                                    <td><?= $data['receiver'][$x]['sender_id'] ?></td>
+                                                    <td><?= $data['receiver'][$x]['amount'] ?> </td>
                                                     <td> <a href="<?= $redirectUrl ?>"><label class='badge badge-danger'><?= $status ?> </label></a></td>
                                                     <td><?= $Data['user']['user_phone'] ?> </td>
+                                                </tr>
+
+                                        <?php }
+                                        } ?>
+
+                                        <?php if (!empty($data['generalNotify'])) {
+
+                                            for ($x = 0; $x < count($data['generalNotify']); $x++) {
+                                                $res = array();
+                                                $DataI = $Helper->userProfile($data['generalNotify'][$x]['sender_id'], $res);
+
+                                                $redirectUrl = $siteURL . "dashBoard/rest/pmf/index.php";
+                                                $status = "Pay Your PSC";
+
+                                        ?>
+
+                                                <tr>
+                                                    <td> </td>
+                                                    <td><?= $DataI['user']['FistName'] . " " . $DataI['user']['LastName'] ?> </td>
+                                                    <td><?= $data['generalNotify'][$x]['sender_id'] ?></td>
+                                                    <td><?= $data['generalNotify'][$x]['amount'] ?> </td>
+                                                    <td> <a href="<?= $redirectUrl ?>"><label class='badge badge-danger'><?= $status ?> </label></a>
+                                                    </td>
+                                                    <td><?= $DataI['user']['user_phone'] ?> </td>
                                                 </tr>
 
                                         <?php }

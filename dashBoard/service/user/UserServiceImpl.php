@@ -138,6 +138,19 @@ class UserServiceImpl
         }
     }
 
+    public function updatePassword($password, $userID)
+    {
+
+        $passwordI = mysqli_real_escape_string($this->conn, $password);
+
+        $sql = "UPDATE `customer` SET `user_password`='$passwordI' WHERE `user_id`=$userID";
+        if ($this->conn->query($sql) === TRUE) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function updateProfileImage($file, $userID)
     {
         $fileI = mysqli_real_escape_string($this->conn, $file);
@@ -149,6 +162,7 @@ class UserServiceImpl
             return false;
         }
     }
+
 
 
     public function userSignUpSystem($firstName, $lastName, $phoneNumber, $email, $password, $state, $district, $connect, $post, &$res)
@@ -474,10 +488,11 @@ class UserServiceImpl
         $getData = $this->getAllConnect($MyConn);
 
         $getDataID = $Helpher->checknotify($UserId);
-
         if (!empty($getData)) {
-
             for ($x = 1; $x <= count($getData); $x++) {
+                if (empty($getData[$x])) {
+                    continue;
+                }
                 #set Amount
                 $getData[$x]['amount'] = 500;
                 if (isset($getData[5])) {
@@ -488,15 +503,23 @@ class UserServiceImpl
                 $status = $Helpher->getStatus($getData[$x]['user_id'], $getDataID);
                 #Status 
                 if ($x == 1) {
+                    $giveHelp[$x]['userID'] = $getData[$x]['user_id'];
+                    $giveHelp[$x]['amount'] = $getData[$x]['amount'];
+
+
                     $Redirecturl = $siteUrl . 'dashBoard/rest/User?userID=' . $getData[$x]['user_id'] . '&amount=' . $getData[$x]['amount'];
 
                     if ($status == 'Pending') {
+                        $giveHelp[$x]['status'] = 'open';
                         $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
                     } else {
                         $statushtml = $status;
                     }
                 } else {
                     #redirect URL
+                    $giveHelp[$x]['userID'] = $getData[$x]['user_id'];
+                    $giveHelp[$x]['amount'] = $getData[$x]['amount'];
+
                     $Redirecturl = $siteUrl . 'dashBoard/rest/User?userID=' . $getData[$x]['user_id'] . '&amount=' . $getData[$x]['amount'];
 
                     if ($status == 'Pending') {
@@ -508,21 +531,24 @@ class UserServiceImpl
 
                         $resetX = 1 + count($getDataID);
 
-                        if ($x == $resetX && $getDataID[0]['deleted'] == 1)
+                        if ($x == $resetX && $getDataID[0]['deleted'] == 1) {
+                            $giveHelp[$x]['status'] = 'open';
                             $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
+                        }
                     }
                 }
 
 
                 #check pmf for user 
                 $checkPSC = $Helpher->checkPSC($getData[$x]['user_id']);
+                //print_r($checkPSC);
+                if ($checkPSC == 1) {
 
-                if ($checkPSC >= 3000) {
                     $statushtml = " <a href=''><label class='badge badge-warning' > Pending </label></a> ";
                 }
-                // elseif ($getData[$x]['user_id'] == 1006 && $status == 'Pending') {
-                //     $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
-                // }
+
+                $_SESSION['giveHelp'] = $giveHelp;
+
 
                 $res = "<tr>
                         <td> </td>
@@ -532,11 +558,8 @@ class UserServiceImpl
                         <td>" . $statushtml . " </td>
                         <td>" . $getData[$x]['user_phone'] . " </td>
                         </tr>";
-                if ($checkPSC >= 50000) {
-                    continue;
-                } else {
-                    echo $res;
-                }
+
+                echo $res;
             }
         }
     }
@@ -557,19 +580,17 @@ class UserServiceImpl
         #ref 5
         $data[5] = $this->conQuery($data[4]['connect']);
 
-        #check pmf for user 
-        $Helpher = new Helpher();
-        $num = 0;
-        $num = count($data) + 1;
+        // #check pmf for user 
+        // $Helpher = new Helpher();
+        // $num = 0;
+        // $num = count($data) + 1;
 
-        for ($x = 1; $x <= $num; $x++) {
-            if (isset($data[$x]['user_id'])) {
-                $checkPSC = $Helpher->checkPSC($data[$x]['user_id']);
-                if ($checkPSC >= 50000) {
-                    unset($data[$x]);
-                }
-            }
-        }
+        // for ($x = 1; $x <= $num; $x++) {
+        //     if (isset($data[$x]['user_id'])) {
+        //         $checkPSC = $Helpher->checkPSC($data[$x]['user_id']);
+
+        //     }
+        // }
         return $data;
     }
     public function conQuery($connectID)
@@ -605,6 +626,18 @@ class UserServiceImpl
         $stage['level5'] = $level->level5($stage['level4']);
 
         return $stage;
+    }
+
+    public function getLevelStatus($levelID)
+    {
+        $userID = $_SESSION['user']['UserId'];
+
+        $getLevel = mysqli_query($this->conn, "SELECT  `status` FROM `pay_history` WHERE `receiver_id` = '$userID' AND `sender_id`='$levelID'");
+        if (mysqli_num_rows($getLevel) > 0) {
+            $row = mysqli_fetch_array($getLevel);
+        }
+
+        return $row;
     }
 
     public function numberOfPMF($userId)

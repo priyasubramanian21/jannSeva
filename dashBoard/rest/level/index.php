@@ -18,6 +18,7 @@ if (isset($_SESSION['user']['UserId'])) {
 }
 
 
+
 ?>
 <style>
     body {
@@ -52,6 +53,7 @@ if (isset($_SESSION['user']['UserId'])) {
                                             <th> Name </th>
                                             <th> User Id </th>
                                             <th> Amount </th>
+                                            <th> Status </th>
                                             <th> Phone Number </th>
                                         </tr>
                                     </thead>
@@ -73,6 +75,21 @@ if (isset($_SESSION['user']['UserId'])) {
 
                                                                 echo $arrayVal['level1']['data'][$x]['user_id'] ?></td>
                                                         <td> ₹ 500 </td>
+                                                        <td> <?php
+
+                                                                $status = $user->getLevelStatus($arrayVal['level1']['data'][$x]['user_id']);
+
+
+                                                                if ($status['status'] == 1) { ?>
+                                                                <label class='badge badge-success'>Completed</label>
+                                                            <?php  } else { ?>
+                                                                <label class='badge badge-warning'>Payment Pending</label>
+
+                                                            <?php   } ?>
+
+
+                                                        </td>
+
 
                                                         <td> <?php
 
@@ -95,6 +112,20 @@ if (isset($_SESSION['user']['UserId'])) {
 
                                                                 echo $arrayVal['level2']['data'][$x]['user_id'] ?></td>
                                                         <td> ₹ 500 </td>
+                                                        <td> <?php
+
+                                                                $status = $user->getLevelStatus($arrayVal['level2']['data'][$x]['user_id']);
+
+
+                                                                if ($status['status'] == 1) { ?>
+                                                                <label class='badge badge-success'>Completed</label>
+                                                            <?php  } else { ?>
+                                                                <label class='badge badge-warning'>Payment Pending</label>
+
+                                                            <?php   } ?>
+
+
+                                                        </td>
 
                                                         <td> <?php
 
@@ -117,6 +148,20 @@ if (isset($_SESSION['user']['UserId'])) {
 
                                                                 echo $arrayVal['level3']['data'][$x]['user_id'] ?></td>
                                                         <td> ₹ 500 </td>
+                                                        <td> <?php
+
+                                                                $status = $user->getLevelStatus($arrayVal['level3']['data'][$x]['user_id']);
+
+
+                                                                if ($status['status'] == 1) { ?>
+                                                                <label class='badge badge-success'>Completed</label>
+                                                            <?php  } else { ?>
+                                                                <label class='badge badge-warning'>Payment Pending</label>
+
+                                                            <?php   } ?>
+
+
+                                                        </td>
 
                                                         <td> <?php
 
@@ -139,6 +184,20 @@ if (isset($_SESSION['user']['UserId'])) {
 
                                                                 echo $arrayVal['level4']['data'][$x]['user_id'] ?></td>
                                                         <td> ₹ 500 </td>
+                                                        <td> <?php
+
+                                                                $status = $user->getLevelStatus($arrayVal['level4']['data'][$x]['user_id']);
+
+
+                                                                if ($status['status'] == 1) { ?>
+                                                                <label class='badge badge-success'>Completed</label>
+                                                            <?php  } else { ?>
+                                                                <label class='badge badge-warning'>Payment Pending</label>
+
+                                                            <?php   } ?>
+
+
+                                                        </td>
 
                                                         <td> <?php
 
@@ -161,6 +220,20 @@ if (isset($_SESSION['user']['UserId'])) {
 
                                                                 echo $arrayVal['level5']['data'][$x]['user_id'] ?></td>
                                                         <td> ₹ 800 </td>
+                                                        <td> <?php
+
+                                                                $status = $user->getLevelStatus($arrayVal['level5']['data'][$x]['user_id']);
+
+
+                                                                if ($status['status'] == 1) { ?>
+                                                                <label class='badge badge-success'>Completed</label>
+                                                            <?php  } else { ?>
+                                                                <label class='badge badge-warning'>Payment Pending</label>
+
+                                                            <?php   } ?>
+
+
+                                                        </td>
 
                                                         <td> <?php
 
