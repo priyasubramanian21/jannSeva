@@ -90,8 +90,9 @@ include "../inc/header.php";
                                             for ($x = 0; $x < count($data['receiver']); $x++) {
                                                 $res = array();
                                                 $Data = $Helper->userProfile($data['receiver'][$x]['sender_id'], $res);
-
-                                                $redirectUrl = "permit.php?sender_id=" . $data['receiver'][$x]['sender_id'];
+                                                $redirectUrl = "permit";
+                                                $_SESSION["permit_id"] = $data['receiver'][$x]['sender_id'];
+                                               
                                                 $status = "Click confirmed";
 
 
@@ -114,7 +115,7 @@ include "../inc/header.php";
                                                 $res = array();
                                                 $DataI = $Helper->userProfile($data['generalNotify'][$x]['sender_id'], $res);
 
-                                                $redirectUrl = $siteURL . "dashBoard/rest/pmf/index.php";
+                                                $redirectUrl = "psc";
                                                 $status = "Pay Your PSC";
 
                                         ?>

@@ -71,8 +71,8 @@ class UserServiceImpl
     }
 
     public function userLoginSystem($userName, $password, $post, array &$res)
-    {
-
+    {  
+     
         $res = array();
 
         $userIdI = mysqli_real_escape_string($this->conn, $userName);
@@ -188,7 +188,7 @@ class UserServiceImpl
 
             if (mysqli_num_rows($userMail) < 1) {
 
-                if (mysqli_num_rows($userPhone) < 5) {
+                if (mysqli_num_rows($userPhone) < 10) {
 
 
                     $sql = " INSERT INTO customer(user_first_name,user_last_name,user_email,user_phone,state, district, user_password, connect) VALUES ('$firstNameI','$lastName', '$emailI', '$phoneNumberI', '$stateI', '$districtI', '$passwordI', '$connectI')";
@@ -242,10 +242,10 @@ class UserServiceImpl
                 }
             } else {
 
-                $res['signup'] = false;
+                  $res['signup'] = false;
 
-                $res["message"] = '<span style="color: brown;font-size: smaller;font-style: normal;">Your Mail Id limit has exceeded</span>';
-            }
+                  $res["message"] = '<span style="color: brown;font-size: smaller;font-style: normal;">Your Mail Id limit has exceeded</span>';
+              }
         } else {
             $res['signup'] = false;
 
@@ -472,7 +472,8 @@ class UserServiceImpl
 
 
     public function myHelp($UserId)
-    {
+    {  
+    
 
         $myConnectionTable = mysqli_query($this->conn, "SELECT connect FROM customer Where `user_id` = '$UserId';");
         if (mysqli_num_rows($myConnectionTable) > 0) {
@@ -481,7 +482,7 @@ class UserServiceImpl
         }
         $Helpher = new Helpher();
         #Connected To
-        $siteUrl = 'http://localhost/jannSeva/';
+        $siteUrl = '';
 
         #GET All Connect below us
         #level 1
@@ -501,17 +502,18 @@ class UserServiceImpl
 
 
                 $status = $Helpher->getStatus($getData[$x]['user_id'], $getDataID);
+           
                 #Status 
-                if ($x == 1) {
+                if ($x == 1) {  
                     $giveHelp[$x]['userID'] = $getData[$x]['user_id'];
                     $giveHelp[$x]['amount'] = $getData[$x]['amount'];
 
 
-                    $Redirecturl = $siteUrl . 'dashBoard/rest/User?userID=' . $getData[$x]['user_id'] . '&amount=' . $getData[$x]['amount'];
+                     $RedirectUrl = $siteUrl . 'User';
 
                     if ($status == 'Pending') {
                         $giveHelp[$x]['status'] = 'open';
-                        $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
+                        $statushtml = " <a href=" . $RedirectUrl . "><label class='badge badge-info' >Open  </label></a> ";
                     } else {
                         $statushtml = $status;
                     }
@@ -520,7 +522,7 @@ class UserServiceImpl
                     $giveHelp[$x]['userID'] = $getData[$x]['user_id'];
                     $giveHelp[$x]['amount'] = $getData[$x]['amount'];
 
-                    $Redirecturl = $siteUrl . 'dashBoard/rest/User?userID=' . $getData[$x]['user_id'] . '&amount=' . $getData[$x]['amount'];
+                   $RedirectUrl = $siteUrl . 'User';
 
                     if ($status == 'Pending') {
                         $statushtml = " <a href=''><label class='badge badge-warning' > Pending </label></a> ";
@@ -533,15 +535,16 @@ class UserServiceImpl
 
                         if ($x == $resetX && $getDataID[0]['deleted'] == 1) {
                             $giveHelp[$x]['status'] = 'open';
-                            $statushtml = " <a href=" . $Redirecturl . "><label class='badge badge-info' >Open  </label></a> ";
+                            $statushtml = " <a href=" . $RedirectUrl . "><label class='badge badge-info' >Open  </label></a> ";
                         }
                     }
                 }
 
 
                 #check pmf for user 
+                if($getData[$x]['user_id'] != 1001 )
                 $checkPSC = $Helpher->checkPSC($getData[$x]['user_id']);
-                //print_r($checkPSC);
+               
                 if ($checkPSC == 1) {
 
                     $statushtml = " <a href=''><label class='badge badge-warning' > Pending </label></a> ";

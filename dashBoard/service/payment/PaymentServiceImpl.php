@@ -31,14 +31,24 @@ class PaymentServiceImpl
         $order_id = $attributes["razorpay_order_id"];
         $payment_id = $attributes["razorpay_payment_id"];
 
-        $signature = $attributes["razorpay_signature"];
-        $Amount = $attributes['amount'];
+        $signature = $attributes["razorpay_signature"];      
+        
+       
+       if($_SESSION['PMF_amount'] && $_SESSION['PMF_count']){
+       
+             $Amount = $_SESSION['PMF_amount'];
+             $PMF = $_SESSION['PMF_count'];
+             
+       }else{ 
+       
+           $Amount = $attributes['amount'];
+       }        
 
 
-        $sql = "INSERT INTO payment(`id`, `user_id`, `Amount`, PMF, `order_id`, `payment_id`, `signature`, `receipt_id`, `receipt`, `status`) VALUES ( NULL, '$userId','$Amount','$PMF','$order_id','$payment_id','$signature', '$rep_id', '$pdfStore','Paid')";
+        $sql = "INSERT INTO payment(`id`, `user_id`, `Amount`, PMF, `order_id`, `payment_id`, `signature`, `receipt_id`, `receipt`, `status`) VALUES ( NULL, '$userId','$Amount','$PMF','$order_id','$payment_id','$signature', '$rep_id', '$pdfStore','Paid')";        
 
         if ($this->conn->query($sql) === TRUE) {
-
+ 
 
             $updateUserStatus = "UPDATE `customer` SET `user_status` = '1' WHERE `user_id` = $userId;";
 
