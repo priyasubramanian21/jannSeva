@@ -1,3 +1,4 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <?php
 
 include '../../core/support/session.php';
@@ -8,14 +9,24 @@ include '../../service/user/UserServiceImpl.php';
 use core\support\session as session;
 use core\support\postChecker as post;
 use service\user\UserServiceImpl as user;
+use Helpher\Helpher as Helpher;
 
-
+$Helpher = new Helpher();
 $post = new post();
 $user = new user();
 $session = new session();
 
+
 $session->start();
 $message = null;
+
+$getVal = $Helpher->checkGiveHelpStatus($_SESSION['user']['UserId']);
+
+if (isset($getVal) && $getVal !=0) {
+    $giveHelpStatus = 1;
+} else {
+    $giveHelpStatus = 0;
+}
 
 if (isset($_POST['submit'])) {
 
@@ -55,7 +66,7 @@ include '../inc/header.php';
 
             <div class="container rounded bg-white mt-5 mb-5">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-5 border-right">
                         <div class="p-3 py-5">
                             <form class="pt-3" method="post" id="restSystem" action="#">
 
@@ -69,13 +80,46 @@ include '../inc/header.php';
                                 <div class="form-group">
                                     <input type="password" name="cpassword" required minlength="6" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
                                 </div>
-                                <div class="mt-3">
+                                <div class="mt-3" style="width: fit-content;">
                                     <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" name="submit">Update Password</button>
                                 </div>
                                 <!-- </form> -->
 
                             </form>
 
+                        </div>
+
+                    </div>
+
+                      <div class="col-md-5" <?php if ($giveHelpStatus == 1) { ?> style="display: none;" <?php } ?>>
+
+
+                        <div class=" p-3 py-5">
+                            
+                            <div class="d-flex justify-content-between align-items-center experience"><span>Change Connect</span></div></BR>
+
+
+                            <div class="form-group">
+                                <input type="text" name="connect" required class="form-control form-control-lg" id="connect" placeholder="Refernce ID">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="hidden" name="user" id='user' class="form-control form-control-lg" value="<?php echo $_SESSION['user']['UserId']; ?>">
+
+                                <input type="text" name="name" id='name' class="form-control form-control-lg" placeholder="Connect Name">
+                            </div>
+
+                            <div class="mt-3" style="display: true; width: fit-content;">
+                                <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="button" id="getConnect">Verify</button>
+                            </div>
+
+
+
+
+                            <div class="mt-3" style="width: fit-content;">
+                                <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="button" id="getConform" >Conform</button>
+
+                            </div>
                         </div>
 
                     </div>
@@ -89,5 +133,7 @@ include '../inc/header.php';
 
 
 </div>
+<script src="connectjs"></script>
+
 
 <?php include "../inc/footer.php"; ?>

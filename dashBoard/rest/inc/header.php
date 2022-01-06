@@ -54,8 +54,7 @@
                             </a>
                             <a class="dropdown-item" href="password">
                                 <i class="fa fa-window-restore text-primary" aria-hidden="true"></i>
-
-                                Reset Password
+                               Account
                             </a>
                             <a class="dropdown-item" href="logout">
                                 <i class="ti-power-off text-primary"></i>
