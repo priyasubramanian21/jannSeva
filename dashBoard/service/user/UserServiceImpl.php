@@ -692,15 +692,15 @@ class UserServiceImpl
                         '<span style="color: brown;font-size: smaller;font-style: normal;">Please Check Your Mail For OTP</span>';
                 } else {
                     $res['success'] = 0;
-                    $res = '<span style="color: brown;font-size: smaller;font-style: normal;">Something went wrong , Please check again Later</span>';
+                    $res['message'] = '<span style="color: brown;font-size: smaller;font-style: normal;">Something went wrong , Please check again Later</span>';
                 }
             } else {
                 $res['success'] = 0;
-                $res = '<span style="color: brown;font-size: smaller;font-style: normal;">Something went wrong , Please check again Later</span>';
+                $res['message'] = '<span style="color: brown;font-size: smaller;font-style: normal;">Something went wrong , Please check again Later</span>';
             }
         } else {
             $res['success'] = 0;
-            $res = '<span style="color: brown;font-size: smaller;font-style: normal;">Please enter Valid EmailID</span>';
+            $res['message'] = '<span style="color: brown;font-size: smaller;font-style: normal;">Please enter Valid EmailID</span>';
         }
 
         return $res;
