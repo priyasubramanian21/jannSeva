@@ -19,6 +19,7 @@
                         var json = $.parseJSON(content);
 
                         var name = json.user_first_name + ' ' + json.user_last_name;
+                        $('#connect').attr('readonly', true);
                         $('#name').val(name);
                         $("#getConnect").css("display", "none");
                         $("#name").show();

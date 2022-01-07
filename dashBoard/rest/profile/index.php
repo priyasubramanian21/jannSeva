@@ -86,7 +86,7 @@ include '../inc/header.php';
                                     </div><br>
                                 </form>
                                 <span class="font-weight-bold"> <?= $name ?> </span>
-                                <span class="text-black-50"><b>Male</b></span> <span class="text-black-50">
+                                <span class="text-black-50">
                                     <?= $email ?></span> <span> </span>
 
                                 <span class="font-weight-bold" style="padding-top: 25%;"><b><strong>Reference Link </strong></b></span> <span class="text-black-50">

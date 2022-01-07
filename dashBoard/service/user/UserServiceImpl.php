@@ -663,4 +663,63 @@ class UserServiceImpl
 
         return $res;
     }
+
+    public function checkEmail($email)
+    {
+        $res = array();
+        $getUser = mysqli_query($this->conn, "SELECT * FROM `customer` WHERE user_email = '$email' AND user_status = 1");
+
+
+        if (mysqli_num_rows($getUser) > 0) {
+            $user = mysqli_fetch_array($getUser);
+
+            // generate OTP
+            $otp = rand(100000, 999999);
+            // Send OTP
+            $mail_status = sendOTP($email, $otp);
+
+            if ($mail_status == 1) {
+
+                $result = mysqli_query($this->conn, "INSERT INTO otp_expiry(otp,is_expired,create_at) VALUES ('" . $otp . "', 0, '" . date("Y-m-d H:i:s") . "')");
+                $current_id = mysqli_insert_id($this->conn);
+                if (!empty($current_id)) {
+                    $res['success'] = 1;
+                    $res['otp_id'] = $current_id;
+                    $_SESSION['userID'] = $user['user_id'];
+
+
+                    $res['message'] =
+                        '<span style="color: brown;font-size: smaller;font-style: normal;">Please Check Your Mail For OTP</span>';
+                } else {
+                    $res['success'] = 0;
+                    $res = '<span style="color: brown;font-size: smaller;font-style: normal;">Something went wrong , Please check again Later</span>';
+                }
+            } else {
+                $res['success'] = 0;
+                $res = '<span style="color: brown;font-size: smaller;font-style: normal;">Something went wrong , Please check again Later</span>';
+            }
+        } else {
+            $res['success'] = 0;
+            $res = '<span style="color: brown;font-size: smaller;font-style: normal;">Please enter Valid EmailID</span>';
+        }
+
+        return $res;
+    }
+
+    public function otpVerification($otp)
+    {
+        $res = array();
+        $result = mysqli_query($this->conn, "SELECT * FROM otp_expiry WHERE otp='" . $otp . "' AND is_expired!=1 AND NOW() <= DATE_ADD(create_at, INTERVAL 24 HOUR)");
+        $count  = mysqli_num_rows($result);
+        if (!empty($count)) {
+            $result = mysqli_query($this->conn, "UPDATE otp_expiry SET is_expired = 1 WHERE otp = '" . $otp . "'");
+            $res['success'] = 2;
+        } else {
+            $res['$success'] = 1;
+            $res['message'] =
+                '<span style="color: brown;font-size: smaller;font-style: normal;">Invalid OTP!</span>';
+        }
+
+        return $res;
+    }
 }
