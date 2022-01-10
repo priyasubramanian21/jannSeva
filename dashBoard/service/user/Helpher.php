@@ -84,7 +84,7 @@ class Helpher
 
         $res = array();
 
-        $Query = mysqli_query($this->conn, "SELECT * FROM `pay_history` WHERE `sender_id` = $userID ORDER BY  notification_id DESC");
+        $Query = mysqli_query($this->conn, "SELECT * FROM `pay_history` WHERE `sender_id` = $userID AND `receiver_id` != $userID ORDER BY  notification_id DESC");
 
         if (mysqli_num_rows($Query) > 0) {
             while ($row = mysqli_fetch_assoc($Query)) {
@@ -186,7 +186,7 @@ class Helpher
     {
         $res = array();
 
-        $Query = mysqli_query($this->conn, "SELECT * FROM `pay_history` WHERE `sender_id` = $userID  AND deleted = 1 ORDER BY  notification_id DESC");
+        $Query = mysqli_query($this->conn, "SELECT * FROM `pay_history` WHERE `sender_id` = $userID AND `receiver_id` != $userID AND deleted = 1 ORDER BY  notification_id DESC");
 
         if (mysqli_num_rows($Query) > 0) {
             while ($row = mysqli_fetch_assoc($Query)) {

@@ -326,7 +326,7 @@ class UserServiceImpl
     public function totalGiveHelp($userID)
     {
 
-        $totalPayedPMFAmount = mysqli_query($this->conn, "SELECT SUM(amount) AS totalAmount  FROM `pay_history` WHERE `sender_id` = '$userID' AND status = 1");
+        $totalPayedPMFAmount = mysqli_query($this->conn, "SELECT SUM(amount) AS totalAmount  FROM `pay_history` WHERE `sender_id` = '$userID' AND `receiver_id` != '$userID' AND status = 1");
 
         $totalPayedPMF = 0;
 
@@ -347,7 +347,7 @@ class UserServiceImpl
     public function totalReceivedHelp($userID)
     {
 
-        $totalPayedPMFAmount = mysqli_query($this->conn, "SELECT SUM(amount) AS totalAmount  FROM `pay_history` WHERE `receiver_id` = '$userID' AND status = 1");
+        $totalPayedPMFAmount = mysqli_query($this->conn, "SELECT SUM(amount) AS totalAmount  FROM `pay_history` WHERE `receiver_id` = '$userID' AND `sender_id` !='$userID' AND status = 1");
 
         $totalPayedPMF = 0;
 
@@ -663,12 +663,11 @@ class UserServiceImpl
 
         return $res;
     }
-
     public function checkEmail($email)
     {
         $res = array();
         $getUser = mysqli_query($this->conn, "SELECT * FROM `customer` WHERE user_email = '$email' AND user_status = 1");
-
+        
 
         if (mysqli_num_rows($getUser) > 0) {
             $user = mysqli_fetch_array($getUser);
