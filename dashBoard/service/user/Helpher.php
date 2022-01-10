@@ -217,8 +217,14 @@ class Helpher
 
     public function checkPSC($userID)
     {
+        $payq = mysqli_query($this->conn, "SELECT  `amount`  FROM `pay_history` WHERE `receiver_id` = $userID AND `sender_id` != $userID AND `status`= 1");
+
+        while ($prow = mysqli_fetch_assoc($payq)) {
+            $checkamount += $prow['amount'];
+        }
+
         $total_amount = 0;
-        $checkamount = 5000;
+        // $checkamount = 5000;
         $total_pmf = 0;
 
         $Query = mysqli_query($this->conn, "SELECT Amount , PMF FROM `payment` WHERE `user_id` = $userID  AND status ='Paid'");
@@ -228,17 +234,35 @@ class Helpher
                 $total_pmf += $row['PMF'];
             }
 
-            $getPmfCount = 1 + ($total_amount / $checkamount);
-            $getInt = (int)$getPmfCount;
+            $getPmfCount = $checkamount / $total_amount;
 
-            if ($getInt <= $total_pmf) {
-                $res = 0;
-            } else {
-
+            // $getInt = (int)$getPmfCount;
+            if ($getPmfCount >= 10) {
                 $status = $this->setNotification($userID, 500, $userID);
                 $res = 1;
+            } else {
+                $res = 0;
             }
+        } else {
+            $res = 0;
+        }
 
+        return $res;
+    }
+
+
+    public function checkInitialPSC($userID)
+    {
+        $Query = mysqli_query($this->conn, "SELECT * FROM `payment` WHERE `user_id` = $userID  AND status ='Paid'");
+
+        if (mysqli_num_rows($Query) > 0) {
+            $getstatus =  $this->checkPSC($userID);
+
+            if ($getstatus == 1) {
+                $res = 0;
+            } else {
+                $res = 1;
+            }
         } else {
             $res = 0;
         }

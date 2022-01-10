@@ -55,7 +55,7 @@ include "../inc/header.php";
                             <h4 class="card-title">Notification</h4>
                             <p class="card-description"> Date : <code><?php echo Date("d F, y") ?></code> </p>
                             <div class="table-responsive">
-
+                              <a href="clearAll" style="float: right;"><label class='badge badge-info'> ClearALL </label></a>
 
                                 <table class="table table-bordered">
                                     <thead>
