@@ -6,7 +6,6 @@ use database\connection as conn;
 use Service\user\UserServiceImpl as Service;
 
 
-
 class Helpher
 {
 
@@ -79,6 +78,7 @@ class Helpher
 
         return $status;
     }
+
     public function checknotify($userID)
     {
 
@@ -95,9 +95,10 @@ class Helpher
         }
         return $res;
     }
+
     public function getStatus($ID, $data)
     {
-        $status  = '';
+        $status = '';
         if ($data) {
             for ($x = 0; $x < count($data); $x++) {
 
@@ -109,7 +110,7 @@ class Helpher
                     } else {
                         $status = "<label class='badge badge-dark'>Waiting for conformation</label>";
                     }
-                    return  $status;
+                    return $status;
                 } else {
                     $status = 'Pending';
                 }
@@ -124,12 +125,12 @@ class Helpher
     public function myNotification($userID)
     {
         $generalNotify = $res = array();
-        $getStatus = $this->checkGiveHelpStatus($userID); 
-        if(!empty($getStatus))      
-        $count = count($getStatus);
+        $getStatus = $this->checkGiveHelpStatus($userID);
+        if (!empty($getStatus))
+            $count = count($getStatus);
         else
-        $count = 0;
-        
+            $count = 0;
+
         $Query = mysqli_query($this->conn, "SELECT * FROM `pay_history` WHERE `receiver_id` = $userID  AND deleted = 0 ORDER BY  notification_id DESC");
 
         if (mysqli_num_rows($Query) > 0) {
@@ -160,7 +161,7 @@ class Helpher
         $checkCount = count($Data);
         if ($count >= $checkCount) {
             $response['receiver'] = $res;
-        } elseif ($count >= 1  &&  $qCount >= 1 || $count == 0 && $qCount >= 1) {
+        } elseif ($count >= 1 && $qCount >= 1 || $count == 0 && $qCount >= 1) {
             $response['status'] = 'Available';
             $response['count'] = count($res);
         } else {
@@ -256,7 +257,7 @@ class Helpher
         $Query = mysqli_query($this->conn, "SELECT * FROM `payment` WHERE `user_id` = $userID  AND status ='Paid'");
 
         if (mysqli_num_rows($Query) > 0) {
-            $getstatus =  $this->checkPSC($userID);
+            $getstatus = $this->checkPSC($userID);
 
             if ($getstatus == 1) {
                 $res = 0;

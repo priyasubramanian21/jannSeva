@@ -69,6 +69,18 @@
 
 .graph_container{
     display:block;
-    width:600px;
+    /*width:600px;*/
     margin: 100px auto;
   }
+
+@media (max-width: 991px) {
+    .graph_container {
+    "padding": "5px";
+    "overflow": "scroll";
+    "margin": "4px, 4px";
+    "width": "100%";
+    "overflow-x": "auto";
+    "overflow-y": "hidden";
+    "white-space": "nowrap";
+    }
+}

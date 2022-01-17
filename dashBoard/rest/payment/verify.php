@@ -74,15 +74,15 @@ if ($success === true) {
     $pdfStore = $rootFolder . $pdf_upload_dir;
 
     $status = file_put_contents($pdfStore, $pdf);
+    
+   
 
     if ($status) {
-
 
         if (isset($_SESSION["user"])) {
 
             $userId = $_SESSION["user"]['UserId'];
             $rep_id = $_SESSION["Pay1-re"];
-
 
             return $payment->paymentRegister($userId, $attributes, $rep_id, $pdf_upload_dir, 1);
         } else {

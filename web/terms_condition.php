@@ -1,81 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title> B Fit</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="asset/vendors/bootstrap.css/bootstrap.min.css">
-    <link rel="shortcut icon" href="asset/image/logo/jle.png"/>
-
-    <script src="asset/vendors/js/jquery.min.js"></script>
-    <script src="asset/vendors/js/bootstrap.min.js"></script>
-
-
-    <link rel="stylesheet" href="asset/css/style.home.css">
-
-    <!-- Font Awesome -->
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css">
-    </link>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <!-- ANIMATION -->
-
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-
-    <!-- Google Font -->
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&display=swap" rel="stylesheet">
-
-
-</head>
-
-
-<body>
-
-
-
-    <header>
-
-        <div class="container text-center">
-            <a  href="index.html">
-                <img src="asset/image/logo/jle.png" class="img-fluid d-none d-md-inline" width="150px" height="150px">
-            </a>
-
-        </div>
-
-
-    </header>
-
-    <nav class="navbar navbar-expand-md">
-
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"><i class="fa fa-bars fa-1x"></i></span>
-      </button>
-    <img src="asset/image/logo/jle.png" class="img-fluid d-block d-md-none" width="200px" height="200px">
-
-
-        <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul  class="navbar-nav">
-
-
-            <li class="nav-item"> <a class="nav-link " href="index">HOME  </a></li>
-            <li class="nav-item"> <a class="nav-link" href="about">ABOUT US </a></li>
-            <li class="nav-item"> <a class="nav-link" href="service">SERVICES  </a></li>
-            <li class="nav-item"> <a class="nav-link" href="faq">FAQ </a></li>
-            <li class="nav-item"> <a class="nav-link" href="contact">CONTACT US </a></li>
-            <li class="nav-item"> <a class="nav-link" href="login">LOGIN </a></li>
-            <li class="nav-item"> <a class="nav-link" href="signUp">SIGN UP</a></li>
-
-          </ul>
-        </div>
-    </nav>
-
-
+<?php include "inc/header.php" ?>
 
     <section>
 
@@ -116,22 +39,10 @@
     <p>	I personally agree and accept that company has the full right to make changes/amendments/addition in laws and guidelines of the governance of the company to make suitable changes to enhance the financial welfare of its members or any other activities related to bfitjle.com Platform plans. 
         I affirm that I will not act by word or deed against the aforesaid matters and will not drag the company into legal suits in this regard.</p>
  
+        
 
         </div>
 
     </section>
 
-    
-    <footer class="text-center p-3">
-
-        <p class="p-0 m-0"> Copyright 2021 @ B Fit | <a href="terms"> Terms & Condition </a> </p>
-
-    </footer>
-
-
-
-</body>
-
-
-
-</html>
+    <?php include "inc/footer.php" ?>

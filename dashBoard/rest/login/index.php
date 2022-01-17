@@ -96,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="text-center mt-4 font-weight-light">
                                     Don't have an account? <a href="signUp" class="text-primary">Create</a>
                                 </div>
-                                 <div class="text-left mt-4 font-weight-light">
+                                <div class="text-left mt-4 font-weight-light">
                                     <a href="forgot" class="text-primary">Forgot Password</a>
                                 </div>
                             </form>

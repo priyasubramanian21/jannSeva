@@ -38,9 +38,9 @@ include "../inc/header.php";
 
                 <div class="row">
                     <div class="col-md-6 grid-margin stretch-card">
-                        <div class="card tale-bg">
+                        <div class="card " style="padding: 10px;box-shadow: 1px 0px 10px 0px;">
                             <div class="card-people mt-auto">
-                                <img src="asset/image/logo/jle.png" alt="people">
+                                <img src="asset/image/banner/family.png" alt="people">
 
                                 <div class="card-body">
                                     <p class="fs-30 mb-2">

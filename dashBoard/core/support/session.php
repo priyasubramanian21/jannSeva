@@ -64,9 +64,7 @@ class session
         unset($_SESSION["login"]);
         unset($_SESSION["signup"]);
         unset($_SESSION["user"]);
-
-        session_destroy();
-        
-        header("location:" . $Path);
+        session_destroy();       
+	header("location:" . $Path);
     }
 }

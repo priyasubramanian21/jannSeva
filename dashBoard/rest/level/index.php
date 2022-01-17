@@ -47,205 +47,182 @@ if (isset($_POST['api_url'])) {
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Level</h4>
-                            <p class="card-description"> Date : <code><?php echo Date("d F, y") ?></code> </p>
+                            <p class="card-description"> Date : <code><?php echo Date("d F, y") ?></code></p>
                             <div class="table-responsive">
 
 
                                 <table class="table table-bordered">
                                     <thead>
-                                        <tr>
-                                            <th> # </th>
-                                            <th> Name </th>
-                                            <th> User Id </th>
-                                            <th> Amount </th>
-                                            <th> Phone Number </th>
-                                        </tr>
+                                    <tr>
+                                        <th> #</th>
+                                        <th> Name</th>
+                                        <th> User Id</th>
+                                        <th> Amount</th>
+
+                                        <th> Status</th>
+                                        <th> Phone Number</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
 
-                                        <?php if ($iLevel == 1) {
+                                    <?php if ($iLevel == 1) {
                                         ?>
 
-                                            <?php
+                                        <?php
 
-                                            if (isset($arrayVal['level1']['data'])) {
-                                                for ($x = 0; $x < count($arrayVal['level1']['data']); $x++) {  ?>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td> <?php
+                                        if (isset($arrayVal['level1']['data'])) {
+                                            for ($x = 0; $x < count($arrayVal['level1']['data']); $x++) { ?>
+                                                <tr>
+                                                    <td></td>
+                                                    <td> <?php
 
-                                                                echo $arrayVal['level1']['data'][$x]['user_first_name'] . " " . $arrayVal['level1']['data'][$x]['user_last_name'] ?> </td>
-                                                        <td> <?php
+                                                        echo $arrayVal['level1']['data'][$x]['user_first_name'] . " " . $arrayVal['level1']['data'][$x]['user_last_name'] ?> </td>
+                                                    <td> <?php
 
-                                                                echo $arrayVal['level1']['data'][$x]['user_id'] ?></td>
-                                                        <td> ₹ 500 </td>
-                                                        <td> <?php
+                                                        echo $arrayVal['level1']['data'][$x]['user_id'] ?></td>
+                                                    <td> ₹ 500</td>
+                                                    <td>
+                                                        <?php $status = $user->getLevelStatus($arrayVal['level1']['data'][$x]['user_id']);
 
-                                                                $status = $user->getLevelStatus($arrayVal['level1']['data'][$x]['user_id']);
+                                                        if ($status['status'] == 1) { ?>
+                                                            <label class='badge badge-success'> Completed</label>
+                                                        <?php } else { ?>
+                                                            <label class='badge badge-warning'> Payment Pending </label>
+                                                        <?php } ?>
 
+                                                    </td>
 
-                                                                if ($status['status'] == 1) { ?>
-                                                                <label class='badge badge-success'>Completed</label>
-                                                            <?php  } else { ?>
-                                                                <label class='badge badge-warning'>Payment Pending</label>
+                                                    <td> <?php
 
-                                                            <?php   } ?>
+                                                        echo $arrayVal['level1']['data'][$x]['user_phone'] ?></td>
+                                                </tr>
 
+                                            <?php }
+                                        } ?>
+                                    <?php } elseif ($iLevel == 2) { ?>
 
-                                                        </td>
+                                        <?php
+                                        if (isset($arrayVal['level2']['data'])) {
+                                            for ($x = 0; $x < count($arrayVal['level2']['data']); $x++) { ?>
+                                                <tr>
+                                                    <td></td>
+                                                    <td> <?php
 
-                                                        <td> <?php
+                                                        echo $arrayVal['level2']['data'][$x]['user_first_name'] . " " . $arrayVal['level2']['data'][$x]['user_last_name'] ?> </td>
+                                                    <td> <?php
 
-                                                                echo $arrayVal['level1']['data'][$x]['user_phone'] ?></td>
-                                                    </tr>
+                                                        echo $arrayVal['level2']['data'][$x]['user_id'] ?></td>
+                                                    <td> ₹ 500</td>
+                                                    <td>
+                                                        <?php $status = $user->getLevelStatus($arrayVal['level2']['data'][$x]['user_id']);
+                                                        if ($status['status'] == 1) { ?>
+                                                            <label class='badge badge-success'> Completed </label>
+                                                        <?php } else { ?>
+                                                            <label class='badge badge-warning'> Payment Pending </label>
+                                                        <?php } ?>
+                                                    </td>
 
-                                            <?php  }
-                                            } ?>
-                                        <?php } elseif ($iLevel == 2) { ?>
+                                                    <td> <?php
 
-                                            <?php
-                                            if (isset($arrayVal['level2']['data'])) {
-                                                for ($x = 0; $x < count($arrayVal['level2']['data']); $x++) {  ?>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td> <?php
+                                                        echo $arrayVal['level2']['data'][$x]['user_phone'] ?></td>
+                                                </tr>
 
-                                                                echo $arrayVal['level2']['data'][$x]['user_first_name'] . " " . $arrayVal['level2']['data'][$x]['user_last_name'] ?> </td>
-                                                        <td> <?php
+                                            <?php }
+                                        } ?>
+                                    <?php } elseif ($iLevel == 3) { ?>
 
-                                                                echo $arrayVal['level2']['data'][$x]['user_id'] ?></td>
-                                                        <td> ₹ 500 </td>
-                                                        <td> <?php
+                                        <?php
+                                        if (isset($arrayVal['level3']['data'])) {
+                                            for ($x = 0; $x < count($arrayVal['level3']['data']); $x++) { ?>
+                                                <tr>
+                                                    <td></td>
+                                                    <td> <?php
 
-                                                                $status = $user->getLevelStatus($arrayVal['level1']['data'][$x]['user_id']);
+                                                        echo $arrayVal['level3']['data'][$x]['user_first_name'] . " " . $arrayVal['level3']['data'][$x]['user_last_name'] ?> </td>
+                                                    <td> <?php
 
+                                                        echo $arrayVal['level3']['data'][$x]['user_id'] ?></td>
+                                                    <td> ₹ 500</td>
 
-                                                                if ($status['status'] == 1) { ?>
-                                                                <label class='badge badge-success'>Completed</label>
-                                                            <?php  } else { ?>
-                                                                <label class='badge badge-warning'>Payment Pending</label>
-
-                                                            <?php   } ?>
-
-
-                                                        </td>
-
-                                                        <td> <?php
-
-                                                                echo $arrayVal['level2']['data'][$x]['user_phone'] ?></td>
-                                                    </tr>
-
-                                            <?php  }
-                                            } ?>
-                                        <?php } elseif ($iLevel == 3) { ?>
-
-                                            <?php
-                                            if (isset($arrayVal['level3']['data'])) {
-                                                for ($x = 0; $x < count($arrayVal['level3']['data']); $x++) {  ?>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td> <?php
-
-                                                                echo $arrayVal['level3']['data'][$x]['user_first_name'] . " " . $arrayVal['level3']['data'][$x]['user_last_name'] ?> </td>
-                                                        <td> <?php
-
-                                                                echo $arrayVal['level3']['data'][$x]['user_id'] ?></td>
-                                                        <td> ₹ 500 </td>
-                                                        <td> <?php
-
-                                                                $status = $user->getLevelStatus($arrayVal['level1']['data'][$x]['user_id']);
+                                                    <td>
+                                                        <?php $status = $user->getLevelStatus($arrayVal['level3']['data'][$x]['user_id']);
 
 
-                                                                if ($status['status'] == 1) { ?>
-                                                                <label class='badge badge-success'>Completed</label>
-                                                            <?php  } else { ?>
-                                                                <label class='badge badge-warning'>Payment Pending</label>
+                                                        if ($status['status'] == 1) { ?>
+                                                            <label class='badge badge-success'> Completed </label>
+                                                        <?php } else { ?>
+                                                            <label class='badge badge-warning'> Payment Pending </label>
+                                                        <?php } ?>
 
-                                                            <?php   } ?>
+                                                    </td>
 
+                                                    <td> <?php
 
-                                                        </td>
+                                                        echo $arrayVal['level3']['data'][$x]['user_phone'] ?></td>
+                                                </tr>
 
-                                                        <td> <?php
+                                            <?php }
+                                        } ?>
+                                    <?php } elseif ($iLevel == 4) { ?>
 
-                                                                echo $arrayVal['level3']['data'][$x]['user_phone'] ?></td>
-                                                    </tr>
+                                        <?php
+                                        if (isset($arrayVal['level4']['data'])) {
+                                            for ($x = 0; $x < count($arrayVal['level4']['data']); $x++) { ?>
+                                                <tr>
+                                                    <td></td>
+                                                    <td> <?php
 
-                                            <?php  }
-                                            } ?>
-                                        <?php } elseif ($iLevel == 4) { ?>
+                                                        echo $arrayVal['level4']['data'][$x]['user_first_name'] . " " . $arrayVal['level4']['data'][$x]['user_last_name'] ?> </td>
+                                                    <td> <?php
 
-                                            <?php
-                                            if (isset($arrayVal['level4']['data'])) {
-                                                for ($x = 0; $x < count($arrayVal['level4']['data']); $x++) {  ?>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td> <?php
+                                                        echo $arrayVal['level4']['data'][$x]['user_id'] ?></td>
+                                                    <td> ₹ 500</td>
+                                                    <td>
+                                                        <?php $status = $user->getLevelStatus($arrayVal['level4']['data'][$x]['user_id']);
+                                                        if ($status['status'] == 1) { ?>
+                                                            <label class='badge badge-success'> Completed </label>
+                                                        <?php } else { ?>
+                                                            <label class='badge badge-warning'> Payment Pending </label>
+                                                        <?php } ?>
+                                                    </td>
+                                                    <td> <?php
 
-                                                                echo $arrayVal['level4']['data'][$x]['user_first_name'] . " " . $arrayVal['level4']['data'][$x]['user_last_name'] ?> </td>
-                                                        <td> <?php
+                                                        echo $arrayVal['level4']['data'][$x]['user_phone'] ?></td>
+                                                </tr>
 
-                                                                echo $arrayVal['level4']['data'][$x]['user_id'] ?></td>
-                                                        <td> ₹ 500 </td>
-                                                        <td> <?php
+                                            <?php }
+                                        } ?>
+                                    <?php } elseif ($iLevel == 5) { ?>
 
-                                                                $status = $user->getLevelStatus($arrayVal['level1']['data'][$x]['user_id']);
+                                        <?php
+                                        if (isset($arrayVal['level5']['data'])) {
+                                            for ($x = 0; $x < count($arrayVal['level5']['data']); $x++) { ?>
+                                                <tr>
+                                                    <td></td>
+                                                    <td> <?php
 
+                                                        echo $arrayVal['level5']['data'][$x]['user_first_name'] . " " . $arrayVal['level5']['data'][$x]['user_last_name'] ?> </td>
+                                                    <td> <?php
 
-                                                                if ($status['status'] == 1) { ?>
-                                                                <label class='badge badge-success'>Completed</label>
-                                                            <?php  } else { ?>
-                                                                <label class='badge badge-warning'>Payment Pending</label>
+                                                        echo $arrayVal['level5']['data'][$x]['user_id'] ?></td>
+                                                    <td> ₹ 500</td>
+                                                    <td>
+                                                        <?php $status = $user->getLevelStatus($arrayVal['level5']['data'][$x]['user_id']);
+                                                        if ($status['status'] == 1) { ?>
+                                                            <label class='badge badge-success'> Completed </label>
+                                                        <?php } else { ?>
+                                                            <label class='badge badge-warning'> Payment Pending </label>
+                                                        <?php } ?>
 
-                                                            <?php   } ?>
+                                                    </td>
+                                                    <td> <?php
 
+                                                        echo $arrayVal['level5']['data'][$x]['user_phone'] ?></td>
+                                                </tr>
 
-                                                        </td>
-
-                                                        <td> <?php
-
-                                                                echo $arrayVal['level4']['data'][$x]['user_phone'] ?></td>
-                                                    </tr>
-
-                                            <?php  }
-                                            } ?>
-                                        <?php } elseif ($iLevel == 5) { ?>
-
-                                            <?php
-                                            if (isset($arrayVal['level5']['data'])) {
-                                                for ($x = 0; $x < count($arrayVal['level5']['data']); $x++) {  ?>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td> <?php
-
-                                                                echo $arrayVal['level5']['data'][$x]['user_first_name'] . " " . $arrayVal['level5']['data'][$x]['user_last_name'] ?> </td>
-                                                        <td> <?php
-
-                                                                echo $arrayVal['level5']['data'][$x]['user_id'] ?></td>
-                                                        <td> ₹ 800 </td>
-                                                        <td> <?php
-
-                                                                $status = $user->getLevelStatus($arrayVal['level1']['data'][$x]['user_id']);
-
-
-                                                                if ($status['status'] == 1) { ?>
-                                                                <label class='badge badge-success'>Completed</label>
-                                                            <?php  } else { ?>
-                                                                <label class='badge badge-warning'>Payment Pending</label>
-
-                                                            <?php   } ?>
-
-
-                                                        </td>
-
-                                                        <td> <?php
-
-                                                                echo $arrayVal['level5']['data'][$x]['user_phone'] ?></td>
-                                                    </tr>
-
-                                            <?php  }
-                                            } ?>
-                                        <?php } ?>
+                                            <?php }
+                                        } ?>
+                                    <?php } ?>
                                     </tbody>
                                 </table>
 
@@ -261,9 +238,6 @@ if (isset($_POST['api_url'])) {
     </div>
 
 </div>
-
-
-
 
 
 <?php include "../inc/footer.php"; ?>

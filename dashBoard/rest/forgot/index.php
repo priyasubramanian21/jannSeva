@@ -108,8 +108,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 ?>
                                     <h4>Enter OTP</h4>
 
-                                    <p style="color:#31ab00;">Check your email for the OTP</p>
-
                                     <div class="form-group">
                                         <input type="text" name="otp" class="form-control form-control-lg" id="otp" placeholder="One Time Password" required>
 

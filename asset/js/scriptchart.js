@@ -49,17 +49,6 @@ var barOptions_stacked = {
 			ctx.font = "9px Open Sans";
 			ctx.fillStyle = "#fff";
 
-			// Chart.helpers.each(this.data.datasets.forEach(function (dataset, i) {
-			//     var meta = chartInstance.controller.getDatasetMeta(i);
-			//     Chart.helpers.each(meta.data.forEach(function (bar, index) {
-			//         data = dataset.data[index];
-			//         // if(i==0){
-			//         //     ctx.fillText(data, 50, bar._model.y+4);
-			//         // } else {
-			//         //     ctx.fillText(data, bar._model.x-25, bar._model.y+4);
-			//         // }
-			//     }),this)
-			// }),this);
 		},
 	},
 	pointLabelFontFamily: "Quadon Extra Bold",
@@ -103,33 +92,33 @@ var myChart = new Chart(ctx, {
 	type: "bar",
 	data: {
 		labels: [
-			"1 Stage -" + st1per + "%",
-			"2 Stage -" + st2per + "%",
-			"3 Stage -" + st3per + "%",
-			"4 Stage -" + st4per + "%",
-			"5 Stage -" + st5per + "%",
+			"1 Stage",
+			"2 Stage",
+			"3 Stage",
+			"4 Stage",
+			"5 Stage",
 		],
 
 		datasets: [
 			{
 				data: [st1red, st2red, st3red, st4red, st5red],
-				backgroundColor: "#FF0000",
+				backgroundColor: "#ffa5a9",
 
 				// hoverBackgroundColor: "rgba(50,90,100,1)"
 			},
 			{
 				data: [st1orange, st2orange, st3orange, st4orange, st5orange],
-				backgroundColor: "#FFA500",
+				backgroundColor: "#e6c669",
 				// hoverBackgroundColor: "rgba(140,85,100,1)"
 			},
 			{
 				data: [st1yellow, st2yellow, st3yellow, st4yellow, st5yellow],
-				backgroundColor: "#FFFF00",
+				backgroundColor: "#69b2ca",
 				// hoverBackgroundColor: "rgba(140,85,100,1)"
 			},
 			{
 				data: [st1green, st2green, st3green, st4green, st5green],
-				backgroundColor: "#008000",
+				backgroundColor: "#64b061",
 				// hoverBackgroundColor: "rgba(46,185,235,1)"
 			},
 			{
@@ -161,10 +150,6 @@ $("#Chart1").click(function (evt) {
 	form.submit();
 
 
-	/*window.location.replace(
-		"level=" +
-			strArray[0]
-	);*/
 });
 
 
@@ -181,24 +166,6 @@ $("#Chart1").click(function (evt) {
 		redirectTop: false
 	};
 
-	/**
-	 * jQuery Redirect
-	 * @param {string} url - Url of the redirection
-	 * @param {Object} values - (optional) An object with the data to send. If not present will look for values as QueryString in the target url.
-	 * @param {string} method - (optional) The HTTP verb can be GET or POST (defaults to POST)
-	 * @param {string} target - (optional) The target of the form. "_blank" will open the url in a new window.
-	 * @param {boolean} traditional - (optional) This provides the same function as jquery's ajax function. The brackets are omitted on the field name if its an array.  This allows arrays to work with MVC.net among others.
-	 * @param {boolean} redirectTop - (optional) If its called from a iframe, force to navigate the top window.
-	 *//**
-	 * jQuery Redirect
-	 * @param {string} opts - Options object
-	 * @param {string} opts.url - Url of the redirection
-	 * @param {Object} opts.values - (optional) An object with the data to send. If not present will look for values as QueryString in the target url.
-	 * @param {string} opts.method - (optional) The HTTP verb can be GET or POST (defaults to POST)
-	 * @param {string} opts.target - (optional) The target of the form. "_blank" will open the url in a new window.
-	 * @param {boolean} opts.traditional - (optional) This provides the same function as jquery's ajax function. The brackets are omitted on the field name if its an array.  This allows arrays to work with MVC.net among others.
-	 * @param {boolean} opts.redirectTop - (optional) If its called from a iframe, force to navigate the top window.
-	 */
 	$.redirect = function (url, values, method, target, traditional, redirectTop) {
 		var opts = url;
 		if (typeof url !== "object") {
@@ -249,12 +216,6 @@ $("#Chart1").click(function (evt) {
 		return { form: form, submit: function () { submit.call(form[0]); } };
 	}
 
-	//Utility Functions
-	/**
-	 * Url and QueryString Parser.
-	 * @param {string} url - a Url to parse.
-	 * @returns {object} an object with the parsed url with the following structure {url: URL, params:{ KEY: VALUE }}
-	 */
 	$.parseUrl = function (url) {
 
 		if (url.indexOf('?') === -1) {

@@ -374,7 +374,7 @@ class UserServiceImpl
     public function myConnection($userId)
     {
 
-        $myConnectionTable = mysqli_query($this->conn, "SELECT user_first_name, user_last_name, profile_img, user_id as connect_id , user_phone, user_email FROM customer Where `connect` = '$userId' ORDER BY user_id  ASC LIMIT 4;");
+        $myConnectionTable = mysqli_query($this->conn, "SELECT user_first_name, user_last_name, profile_img, user_id as connect_id , user_phone, user_email FROM customer Where `connect` = '$userId' ORDER BY user_id  ASC;");
 
         if (mysqli_num_rows($myConnectionTable) > 0) {
 
@@ -496,9 +496,9 @@ class UserServiceImpl
                 }
                 #set Amount
                 $getData[$x]['amount'] = 500;
-                if (isset($getData[5])) {
+               /* if (isset($getData[5])) {
                     $getData[5]['amount'] = 800;
-                }
+                }*/
 
 
                 $status = $Helpher->getStatus($getData[$x]['user_id'], $getDataID);
@@ -547,14 +547,14 @@ class UserServiceImpl
                
                 if ($checkPSC == 1) {
 
-                    $statushtml = " <a href=''><label class='badge badge-warning' > Pending </label></a> ";
+                    $statushtml = " <a href=''><label class='badge badge-warning' > PSC - Pending </label></a> ";
                 }
 
                 $_SESSION['giveHelp'] = $giveHelp;
 
 
                 $res = "<tr>
-                        <td> </td>
+                        <td></td>
                         <td>" . $getData[$x]['user_first_name'] . " " . $getData[$x]['user_last_name'] . " </td>
                         <td>" . $getData[$x]['user_id'] . "</td>
                         <td> " . $getData[$x]['amount'] . " </td>
@@ -582,6 +582,9 @@ class UserServiceImpl
         $data[4] = $this->conQuery($data[3]['connect']);
         #ref 5
         $data[5] = $this->conQuery($data[4]['connect']);
+
+        $data[6] = $this->conQuery($data[5]['connect']);
+
 
         // #check pmf for user 
         // $Helpher = new Helpher();

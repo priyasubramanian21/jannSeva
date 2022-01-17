@@ -8,7 +8,6 @@ $session = new session();
 
 
 $session->start();
-session_destroy();
 $session->notSet('login');
 
 

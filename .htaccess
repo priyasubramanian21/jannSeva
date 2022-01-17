@@ -1,14 +1,14 @@
-SetEnv DBServer "localhost"
-SetEnv DBUser "root"
-SetEnv DBPassword ""
+SetEnv DBServer "ls-db458348550df5222fd3b743c6e715dc5409ff72.cwtt2q9ycsj4.ap-south-1.rds.amazonaws.com"
+SetEnv DBUser "dbmasteruser"
+SetEnv DBPassword "FuMZA5qPb5+!mE!y>6HZ6O;:26gYQ+Ar"
 SetEnv DBName "jle"
+#SetEnv soPath "https://www.bfitjle.com/"
 SetEnv soPath "http://localhost/jannSeva/"
-
 
 SetEnv keyId "rzp_test_z1VlDNunoD01bf"
 SetEnv keySecret "pPrWfMv0zVL2qlyWryC9QITr"
 SetEnv displayCurrency "INR"
-SetEnv payImage "asset/image/logo/jle.svg"
+SetEnv payImage "asset/image/logo/jle.png"
 SetEnv payColor "#F37254"
 
 
@@ -20,14 +20,17 @@ RewriteRule ^(.*)$ $1.php
 
 
 
-RewriteRule ^$ web/index.html [NC,L]
-RewriteRule ^index web/index.html [NC,L]
-RewriteRule ^about web/about.html [NC,L]
-RewriteRule ^service web/service.html [NC,L]
-RewriteRule ^faq web/faq.html [NC,L]
-RewriteRule ^contact web/contact.html [NC,L]
-RewriteRule ^terms web/terms_condition.html [NC,L]
+RewriteRule ^$ web/index.php [NC,L]
+RewriteRule ^index web/index.php [NC,L]
+RewriteRule ^about web/about.php [NC,L]
+RewriteRule ^service web/service.php [NC,L]
+RewriteRule ^faq web/faq.php [NC,L]
+RewriteRule ^contact web/contact.php [NC,L]
+RewriteRule ^terms web/terms_condition.php [NC,L]
+RewriteRule ^privacy web/privacy_policy.php [NC,L]
+RewriteRule ^refund web/refund.php [NC,L]
 
+#refund
 
 RewriteRule ^login dashBoard/rest/login/index.php [NC,L]
 RewriteRule ^home dashBoard/rest/home/index.php [NC,L]
