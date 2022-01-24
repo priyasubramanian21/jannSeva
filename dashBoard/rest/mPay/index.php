@@ -22,34 +22,38 @@ $totalPMF = 100;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    if (isset($_POST['pmf'])) {
+    if (isset($_POST['pmf']) || isset($_POST['total']) || isset($_POST['inlineFormInputGroupUsername2'])) {
 
-        $cPmf = $_POST['pmf'];
+        if ($_POST['total'] && !empty($_POST['total']) && $_POST['total'] != 0.00) {
+            $cPmf = $_POST['total'];
+        } elseif ($_POST['inlineFormInputGroupUsername2']) {
+            $cPmf = $_POST['inlineFormInputGroupUsername2'];
+        } else {
+            $cPmf = $_POST['pmf'];
+        }
 
         $userPayedPMF = $user->numberOfPMF($_SESSION["user"]['UserId']);
+
 
         if ($userPayedPMF >= $totalPMF) {
             header('refresh: 5; url=../');
             echo '<br><pre> Hi ' . $_SESSION["user"]['FistName'] . " " . $_SESSION["user"]['LastName'] . '<br> User Maximum PMF Payed now you cannot able to pay. Please contact admin <br> Redirecting in <span id="countdown">10</span>.';
+        } elseif (($userPayedPMF + $cPmf) >= $totalPMF) {
 
-        } elseif (($userPayedPMF+$cPmf) >= $totalPMF) {
-
-            $ablePMF =$totalPMF - $userPayedPMF;
+            $ablePMF = $totalPMF - $userPayedPMF;
+            if ($_POST['total']) {
+                $ablePMF = $cPmf / 500;
+            }
 
             pay($api, $ablePMF, $displayCurrency, $keyId);
+        } else {
 
-        }
-        else
-        {
             pay($api, $cPmf, $displayCurrency, $keyId);
         }
-
     } else {
         header('Location: psc');
     }
-
 }
-
 
 function pay($api, $cPmf, $displayCurrency, $keyId)
 {
@@ -86,9 +90,9 @@ function pay($api, $cPmf, $displayCurrency, $keyId)
     $data = [
         "key" => $keyId,
         "amount" => $amount,
-        "name" => "JannSeva",
-        "description" => "JannSeva ".$_SESSION['PMF_count']." PMF Payment",
-        "image" => "asset/image/logo/jle.svg",
+        "name" => "B Fit",
+        "description" => "JLE MARKETING PRIVATE LIMITED" . $_SESSION['PMF_count'] . " PMF Payment",
+        "image" => getenv("payImage"),
         "readonly" => [
             "name" => $_SESSION["user"]['FistName'] . $_SESSION["user"]['LastName'],
             "email" => $_SESSION["user"]['EmailId'],
@@ -100,7 +104,7 @@ function pay($api, $cPmf, $displayCurrency, $keyId)
             "contact" => $_SESSION["user"]['UserPhone'],
         ],
         "theme" => [
-            "color" => "#F37254"
+            "color" => getenv("payColor")
         ],
         "send_sms_hash" => true,
         "config" => [
@@ -124,12 +128,11 @@ function pay($api, $cPmf, $displayCurrency, $keyId)
 ?>
 
 <script type="text/javascript">
-
-    (function () {
+    (function() {
         var timeLeft = 10,
             cinterval;
 
-        var timeDec = function () {
+        var timeDec = function() {
             timeLeft--;
             document.getElementById('countdown').innerHTML = timeLeft;
             if (timeLeft === 0) {
@@ -139,6 +142,4 @@ function pay($api, $cPmf, $displayCurrency, $keyId)
 
         cinterval = setInterval(timeDec, 1000);
     })();
-
-
 </script>

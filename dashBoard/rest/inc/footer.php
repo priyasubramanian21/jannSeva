@@ -1,4 +1,3 @@
-
 </div>
 
 </div>
@@ -18,12 +17,10 @@
 
 <script src="asset/js/dashboard.js"></script>
 
- <script src="asset/js/script.js"></script>
+<script src="asset/js/script.js"></script>
 
 
 
 </body>
 
 </html>
-
-

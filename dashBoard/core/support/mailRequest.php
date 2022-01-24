@@ -4,33 +4,33 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-mailRequest("Rejinshalb@gmail.com", "123");
 
-function mailRequest($mailId, $userId){
+function mailRequest($to, $name, $userId){
 
     $mail = new PHPMailer(true);
 
     try {
-        $mail->SMTPDebug = 2;
         $mail->isSMTP();
-        $mail->Host = 'mail.tech.angyal.in';
+        $mail->SMTPDebug = false;
+        $mail->Host = 'smtp.mail.us-east-1.awsapps.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'hub@tech.angyal.in';
-        $mail->Password = 'Apple@123';
-        $mail->SMTPSecure = "tls";
-        $mail->Port = 587;
+        $mail->Username = 'noreply@bfitjle.com';
+        $mail->Password = 'jann#2022';
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = 465;
 
-        $mail->setFrom('hub@tech.angyal.in', 'Mail Hub');
-        $mail->addAddress($mailId);
+        $mail->setFrom('noreply@bfitjle.com', 'B Fit Service');
+        $mail->addAddress($to, $name);
+        $mail->addReplyTo('Helpdesk@bfitjle.com', 'B Fit HelpDesk');
 
         $mail->isHTML(true);
         $mail->Subject = 'Welcome to our community.';
-        $mail->Body = mailBo($userId);
+        $mail->Body = mailBody($userId);
         $mail->AltBody = 'User Id '.$userId;
         $mail->send();
-        echo "Mail has been sent successfully!";
+        return true;
     } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        return false;
     }
 
 

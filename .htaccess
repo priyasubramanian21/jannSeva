@@ -1,0 +1,78 @@
+SetEnv DBServer "localhost"
+SetEnv DBUser "root"
+SetEnv DBPassword "priya"
+SetEnv DBName "jle"
+SetEnv soPath "http://localhost/jans/"
+ErrorDocument 404 http://localhost/jans/404
+ErrorDocument 500 http://localhost/jans/500
+
+
+SetEnv keyId "rzp_live_mrug8nKv3ebSrl"
+SetEnv keySecret "AZBBgBagyLWyJzuvnyJn8IZN"
+SetEnv displayCurrency "INR"
+SetEnv payImage "asset/image/logo/jle.png"
+SetEnv payColor "#F37254"
+
+
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php
+
+
+RewriteRule ^$ web/index.php [NC,L]
+RewriteRule ^index web/index.php [NC,L]
+RewriteRule ^about web/about.php [NC,L]
+RewriteRule ^service web/service.php [NC,L]
+RewriteRule ^faq web/faq.php [NC,L]
+RewriteRule ^contact web/contact.php [NC,L]
+RewriteRule ^terms web/terms_condition.php [NC,L]
+RewriteRule ^privacy web/privacy_policy.php [NC,L]
+RewriteRule ^refund web/refund.php [NC,L]
+RewriteRule ^partners web/partners.php [NC,L]
+#refund
+
+RewriteRule ^404 error/404.php [NC,L]
+RewriteRule ^500 error/500.php [NC,L]
+
+
+RewriteRule ^login dashBoard/rest/login/index.php [NC,L]
+RewriteRule ^home dashBoard/rest/home/index.php [NC,L]
+RewriteRule ^payment dashBoard/rest/payment/index.php [NC,L]
+RewriteRule ^verify dashBoard/rest/payment/verify.php [NC,L]
+RewriteRule ^logout dashBoard/rest/logout/index.php [NC,L]
+RewriteRule ^profile dashBoard/rest/profile/index.php [NC,L]
+RewriteRule ^myConnects dashBoard/rest/referees/index.php [NC,L]
+RewriteRule ^receipt dashBoard/rest/receipt/index.php [NC,L]
+RewriteRule ^GiveHelp dashBoard/rest/ghelp/index.php [NC,L]
+RewriteRule ^psc dashBoard/rest/pmf/index.php [NC,L]
+RewriteRule ^Pay dashBoard/rest/mPay/index.php [NC,L]
+RewriteRule ^rhelp dashBoard/rest/rhelp/index.php [NC,L]
+RewriteRule ^level dashBoard/rest/level/index.php [NC,L]
+RewriteRule ^notification dashBoard/rest/notify/index.php [NC,L]
+RewriteRule ^pagination dashBoard/rest/pmf/pagination.js [NC,L]
+RewriteRule ^update dashBoard/rest/profile/update.php [NC,L]
+RewriteRule ^upload dashBoard/rest/profile/upload.php [NC,L]
+RewriteRule ^User dashBoard/rest/User/index.php [NC,L]
+RewriteRule ^sendNotification dashBoard/rest/User/sendNotification.php [NC,L]
+RewriteRule ^permit dashBoard/rest/notify/permit.php [NC,L]
+RewriteRule ^password dashBoard/rest/password/index.php [NC,L]
+
+RewriteRule ^merchants dashBoard/rest/merchants/index.php [NC,L]
+
+RewriteRule ^connectjs dashBoard/rest/password/connect.js [NC,L]
+RewriteRule ^connect dashBoard/rest/password/update.php [NC,L]
+RewriteRule ^forgot dashBoard/rest/forgot/index.php [NC,L]
+RewriteRule ^clearAll dashBoard/rest/notify/clear.php [NC,L]
+
+RewriteRule ^updateMerchants dashBoard/rest/merchants/update.php [NC,L]
+RewriteRule ^privilegeCard dashBoard/rest/card/index.php [NC,L]
+
+
+RewriteRule ^signUp=([0-9a-zA-Z-_+]*) ./dashBoard/rest/signup/index.php?ReferenceID=$1
+RewriteRule ^signUp dashBoard/rest/signUp/index.php [NC,L]
+
+RewriteRule ^level dashBoard/rest/level/index.php [NC,L]
+
+#about

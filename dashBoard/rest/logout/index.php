@@ -12,5 +12,3 @@ $session->notSet('login');
 
 
 $session->sessionOut('login');
-
-?>

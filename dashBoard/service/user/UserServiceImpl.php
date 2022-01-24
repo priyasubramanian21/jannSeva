@@ -1,13 +1,18 @@
 <?php
 
-
 namespace Service\user;
 
+error_reporting(0);
+
 use database\connection as conn;
+use Level\Level as level;
+use Helpher\Helpher as Helpher;
 
 include 'UserService.php';
-include "../../core/config/dataBase/connection.php";
 
+include "../../core/config/dataBase/connection.php";
+include "Level.php";
+include "Helpher.php";
 
 class UserServiceImpl
 {
@@ -16,13 +21,12 @@ class UserServiceImpl
 
     public function __construct()
     {
-
         $db = new conn();
         $this->conn = $db->connect();
-
     }
 
-    public function userMainProfile($userId, &$res){
+    public function userMainProfile($userId, &$res)
+    {
 
         $res = array();
 
@@ -41,19 +45,34 @@ class UserServiceImpl
 
             $res["profile"] = true;
             $res["user"] = $user;
-        }
-        else
-        {
+        } else {
             $res["profile"] = false;
             //header("location: login");
         }
 
         return $res;
+    }
 
+    public function getProfileData($userId)
+    {
+
+        $res = array();
+
+        $profileQuery = mysqli_query($this->conn, "SELECT * FROM `customer` WHERE `user_id` = $userId;");
+
+        if (mysqli_num_rows($profileQuery) > 0) {
+
+            $res = mysqli_fetch_assoc($profileQuery);
+        } else {
+            $res = false;
+        }
+
+        return $res;
     }
 
     public function userLoginSystem($userName, $password, $post, array &$res)
     {
+
         $res = array();
 
         $userIdI = mysqli_real_escape_string($this->conn, $userName);
@@ -61,6 +80,7 @@ class UserServiceImpl
         $postI = mysqli_real_escape_string($this->conn, $post);
 
         $userLoginQuery = mysqli_query($this->conn, "SELECT user_first_name, user_id, user_last_name, user_email, user_role, user_status, user_phone  FROM `customer` WHERE `user_id` = '$userIdI' AND `user_password` = '$passwordI'");
+
 
         if (mysqli_num_rows($userLoginQuery) > 0) {
 
@@ -82,7 +102,6 @@ class UserServiceImpl
                 $res["pay"] = true;
                 $res["message"] = '<span style="color: brown;font-size: smaller;font-style: normal;">PSC Pending</span>';
                 $res["user"] = $user;
-
             } else {
 
                 $res["pay"] = false;
@@ -90,7 +109,6 @@ class UserServiceImpl
                 $res["message"] = '<span style="color: #49a578;font-size: smaller;font-style: normal;">Login Done</span>';
                 $res["user"] = $user;
             }
-
         } else {
             $res["pay"] = false;
             $res['login'] = false;
@@ -98,8 +116,53 @@ class UserServiceImpl
         }
 
         return $res;
-
     }
+
+    public function updateProfile($dob, $mobile, $state, $district, $uid, $contact_info, $file, $userID)
+    {
+
+        $dobI = mysqli_real_escape_string($this->conn, $dob);
+        $mobileI = mysqli_real_escape_string($this->conn, $mobile);
+
+        $stateI = mysqli_real_escape_string($this->conn, $state);
+        $districtI = mysqli_real_escape_string($this->conn, $district);
+        $uidI = mysqli_real_escape_string($this->conn, $uid);
+        $contact_infoI = mysqli_real_escape_string($this->conn, $contact_info);
+        //`profile_img`=[value-2],
+
+        $sql = "UPDATE `customer` SET `user_phone`='$mobileI',`state`='$stateI',`district`='$districtI',`dob`='$dobI',`contact_info`='$contact_infoI',`uid`='$uidI' WHERE `user_id`=$userID";
+        if ($this->conn->query($sql) === TRUE) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function updatePassword($password, $userID)
+    {
+
+        $passwordI = mysqli_real_escape_string($this->conn, $password);
+
+        $sql = "UPDATE `customer` SET `user_password`='$passwordI' WHERE `user_id`=$userID";
+        if ($this->conn->query($sql) === TRUE) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function updateProfileImage($file, $userID)
+    {
+        $fileI = mysqli_real_escape_string($this->conn, $file);
+
+        $sql = "UPDATE `customer` SET `profile_img`='$fileI' WHERE `user_id`=$userID";
+        if ($this->conn->query($sql) === TRUE) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 
     public function userSignUpSystem($firstName, $lastName, $phoneNumber, $email, $password, $state, $district, $connect, $post, &$res)
@@ -119,16 +182,20 @@ class UserServiceImpl
         $userPhone = mysqli_query($this->conn, "SELECT  user_phone  FROM `customer` WHERE `user_phone` = '$phoneNumberI'");
         $userConnectId = mysqli_query($this->conn, "SELECT user_email FROM `customer` WHERE `user_id` = '$connectI' ");
 
-        if (mysqli_num_rows($userConnectId) == 0) {
+
+
+        if (mysqli_num_rows($userConnectId) == 1) {
 
             if (mysqli_num_rows($userMail) < 1) {
 
-                if (mysqli_num_rows($userPhone) < 5) {
+                if (mysqli_num_rows($userPhone) < 10) {
+
 
                     $sql = " INSERT INTO customer(user_first_name,user_last_name,user_email,user_phone,state, district, user_password, connect) VALUES ('$firstNameI','$lastName', '$emailI', '$phoneNumberI', '$stateI', '$districtI', '$passwordI', '$connectI')";
 
                     if ($this->conn->query($sql) === TRUE) {
 
+                        #send mail 
 
 
                         $userLoginQuery = mysqli_query($this->conn, "SELECT user_first_name, user_id, user_last_name, user_email, user_role, user_status, user_phone  FROM `customer` WHERE `user_email` = '$emailI' ");
@@ -136,6 +203,9 @@ class UserServiceImpl
                         if (mysqli_num_rows($userLoginQuery) > 0) {
 
                             $userData = mysqli_fetch_assoc($userLoginQuery);
+                            $_POST['conID'] = $userData['user_id'];
+
+                            include "mail.php";
 
                             $user = array(
                                 'FistName' => $userData['user_first_name'],
@@ -155,45 +225,31 @@ class UserServiceImpl
                             $res["user"] = $user;
 
                             $res["message"] = '<span style="color: brown;font-size: smaller;font-style: normal;">Registered Successfully</span>';
-
                         } else {
 
                             $res["message"] = '<span style="color: #49a578;font-size: smaller;font-style: normal;">error</span>';
-
-
                         }
-
                     } else {
 
                         $res['signup'] = false;
 
                         $res["message"] = '<span style="color: brown;font-size: smaller;font-style: normal;">Failed</span>';
-
-
                     }
-
                 } else {
                     $res['signup'] = false;
 
                     $res["message"] = '<span style="color: brown;font-size: smaller;font-style: normal;">Your phone number limit has exceeded</span>';
-
-
                 }
-
             } else {
 
                 $res['signup'] = false;
 
                 $res["message"] = '<span style="color: brown;font-size: smaller;font-style: normal;">Your Mail Id limit has exceeded</span>';
-
             }
-
         } else {
             $res['signup'] = false;
 
             $res["message"] = '<span style="color: brown;font-size: smaller;font-style: normal;">Please check connectId</span>';
-
-
         }
 
         return $res;
@@ -217,14 +273,12 @@ class UserServiceImpl
             } else {
                 $res = null;
             }
-
         } else {
             $res = null;
         }
 
 
         return $res;
-
     }
 
     private function myConnectionShortListing($myConnectionTable)
@@ -237,15 +291,13 @@ class UserServiceImpl
             $rand_color = array_rand($color, 2);
 
             $res = '<div class="col-md-6 mb-4 stretch-card transparent"><div class="' . $color[$rand_color[0]] . '">
-		                <div class="card-body"> 
-			                <p class="mb-4">Invited Member</p>
-			                <p class="fs-30 mb-2"><small><a href="#" style="text-decoration: none;color: #FFF;"> ' . $myConnectionData['user_first_name'] . " " . $myConnectionData['user_last_name'] . '</a></small></p>
-			                <p> ' . $myConnectionData['user_phone'] . ' </p>
-		            </div></div></div>';
-
+                        <div class="card-body"> 
+                            <p class="mb-4">Invited Member</p>
+                            <p class="fs-30 mb-2"><small><a href="#" style="text-decoration: none;color: #FFF;"> ' . $myConnectionData['user_first_name'] . " " . $myConnectionData['user_last_name'] . '</a></small></p>
+                            <p> ' . $myConnectionData['user_phone'] . ' </p>
+                    </div></div></div>';
         }
         return $res;
-
     }
 
 
@@ -263,31 +315,70 @@ class UserServiceImpl
             $totalPayedPMF = $walletData['totalAmount'] == null ? $totalPayedPMF : $walletData['totalAmount'];
 
             $res = $totalPayedPMF / 118 * 100;
-
         } else {
             $res = $totalPayedPMF;
         }
 
         return $res;
+    }
 
+
+    public function totalGiveHelp($userID)
+    {
+
+        $totalPayedPMFAmount = mysqli_query($this->conn, "SELECT SUM(amount) AS totalAmount  FROM `pay_history` WHERE `sender_id` = '$userID' AND `receiver_id` != '$userID' AND status = 1");
+
+        $totalPayedPMF = 0;
+
+        if (mysqli_num_rows($totalPayedPMFAmount) > 0) {
+
+            $walletData = mysqli_fetch_array($totalPayedPMFAmount);
+
+            $totalPayedPMF = $walletData['totalAmount'] == null ? $totalPayedPMF : $walletData['totalAmount'];
+
+            $res = $totalPayedPMF;
+        } else {
+            $res = $totalPayedPMF;
+        }
+
+        return $res;
+    }
+
+    public function totalReceivedHelp($userID)
+    {
+
+        $totalPayedPMFAmount = mysqli_query($this->conn, "SELECT SUM(amount) AS totalAmount  FROM `pay_history` WHERE `receiver_id` = '$userID' AND `sender_id` !='$userID' AND status = 1");
+
+        $totalPayedPMF = 0;
+
+        if (mysqli_num_rows($totalPayedPMFAmount) > 0) {
+
+            $walletData = mysqli_fetch_array($totalPayedPMFAmount);
+
+            $totalPayedPMF = $walletData['totalAmount'] == null ? $totalPayedPMF : $walletData['totalAmount'];
+
+            $res = $totalPayedPMF;
+        } else {
+            $res = $totalPayedPMF;
+        }
+
+        return $res;
     }
 
     public function totalPayedTax($amount)
     {
 
         return $amount / 100 * 18;
-
     }
 
     public function myConnection($userId)
     {
 
-        $myConnectionTable = mysqli_query($this->conn, "SELECT user_first_name, user_last_name, profile_img, user_id as connect_id , user_phone, user_email FROM customer Where `connect` = '$userId' ORDER BY user_id  ASC LIMIT 4;");
+        $myConnectionTable = mysqli_query($this->conn, "SELECT user_first_name, user_last_name, profile_img, user_id as connect_id , user_phone, user_email FROM customer Where `connect` = '$userId' ORDER BY user_id  ASC;");
 
         if (mysqli_num_rows($myConnectionTable) > 0) {
 
             $res = $this->myConnectionListing($myConnectionTable);
-
         } else {
             $res = null;
         }
@@ -301,7 +392,11 @@ class UserServiceImpl
 
         while ($myConnectionData = mysqli_fetch_array($myConnectionTable)) {
 
+
+
             $VC = $this->subConnectionStatusCount($myConnectionData['connect_id']);
+
+
 
             if ($myConnectionData['profile_img'] == null) {
                 $profile = 'https://as1.ftcdn.net/v2/jpg/01/01/26/18/500_F_101261832_dc3LJnbGibseN6d95sIjFoErXP37Kmpo.jpg';
@@ -310,22 +405,21 @@ class UserServiceImpl
             }
 
             $res = '<tr>
-	            <td class="py-1"> <img src="' . $profile . '" alt="image" /> </td>
-	            <td> ' . $myConnectionData['user_first_name'] . " " . $myConnectionData['user_last_name'] . ' </td>
-	            <td> ' . $myConnectionData['connect_id'] . ' </td>
-	            <td> ' . $myConnectionData['user_phone'] . ' </td>
-	            <td> ' . $myConnectionData['user_email'] . ' </td>
-	            
-	            <td>
-	             	<div class="progress">
-			            <div class="progress-bar ' . $VC['color'] . '" role="progressbar" style="width: ' . $VC['value'] . '%" aria-valuenow="' . $VC['value'] . '" aria-valuemin="0" aria-valuemax="100"></div>
-		            </div>
-	            </td>
+                <td class="py-1"> <img src="' . $profile . '" alt="image" /> </td>
+                <td> ' . $myConnectionData['user_first_name'] . " " . $myConnectionData['user_last_name'] . ' </td>
+                <td> ' . $myConnectionData['connect_id'] . ' </td>
+                <td> ' . $myConnectionData['user_phone'] . ' </td>
+                <td> ' . $myConnectionData['user_email'] . ' </td>
+                
+                <td>
+                    <div class="progress">
+                        <div class="progress-bar ' . $VC['color'] . '" role="progressbar" style="width: ' . $VC['value'] . '%" aria-valuenow="' . $VC['value'] . '" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </td>
                 </tr>';
 
+            echo $res;
         }
-        return $res;
-
     }
 
     public function subConnectionStatusCount($userId)
@@ -340,7 +434,6 @@ class UserServiceImpl
 
             $rest['value'] = "25";
             $rest['color'] = "bg-danger";
-
         } elseif (mysqli_num_rows($myConnectionTable) == 2) {
             $rest['value'] = "50";
             $rest['color'] = "bg-warning";
@@ -364,18 +457,16 @@ class UserServiceImpl
 
 
             $res = '<tr>
-	            <td>' . $X . '</td>
-	            <td> ' . $myConnectionData['receipt_id'] . ' </td>
-	            <td> ' . $myConnectionData['PMF'] . ' </td>
-	            <td> ' . $myConnectionData['Amount'] . ' </td>
-	            <td> <label class="badge badge-success">' . $myConnectionData['status'] . '</label> </td>
-	            <td> <label class="badge badge-info"><a href="' . getenv("soPath") . $myConnectionData['receipt'] . '" style="color: #fff;text-decoration: none;">Receip</a></label></td>
+                <td>' . $X . '</td>
+                <td> ' . $myConnectionData['receipt_id'] . ' </td>
+                <td> ' . $myConnectionData['PMF'] . ' </td>
+                <td> ' . $myConnectionData['Amount'] . ' </td>
+                <td> <label class="badge badge-success">' . $myConnectionData['status'] . '</label> </td>
+                <td> <label class="badge badge-info"><a href="' . getenv("soPath") . $myConnectionData['receipt'] . '" style="color: #fff;text-decoration: none;">Receip</a></label></td>
                 </tr>';
             $X++;
-
         }
         return $res;
-
     }
 
 
@@ -383,132 +474,190 @@ class UserServiceImpl
     public function myHelp($UserId)
     {
 
+
         $myConnectionTable = mysqli_query($this->conn, "SELECT connect FROM customer Where `user_id` = '$UserId';");
-
         if (mysqli_num_rows($myConnectionTable) > 0) {
-
             $myConnectionData = mysqli_fetch_array($myConnectionTable);
-
             $MyConn = $myConnectionData['connect'];
+        }
+        $Helpher = new Helpher();
+        #Connected To
+        $siteUrl = '';
 
-            $mynTable = mysqli_query($this->conn, "SELECT user_first_name, user_last_name , user_phone, connect, `user_id`  FROM customer Where `user_id` = '$MyConn';");
+        #GET All Connect below us
+        #level 1
+        $getData = $this->getAllConnect($MyConn);
 
-            if (mysqli_num_rows($mynTable) > 0) {
+        $getDataID = $Helpher->checknotify($UserId);
 
-                $myConnectionData1 = mysqli_fetch_array($mynTable);
+        $getAllDataID = array($getDataID[0]['receiver_id'], $getDataID[1]['receiver_id'], $getDataID[2]['receiver_id'], $getDataID[3]['receiver_id'], $getDataID[4]['receiver_id']);
 
-                $mynTable = $myConnectionData1['connect'];
-
-                $mynTable1 = mysqli_query($this->conn, "SELECT user_first_name, user_last_name , user_phone, connect, `user_id`  FROM customer Where `user_id` = '$mynTable';");
-
-                if (mysqli_num_rows($mynTable1) > 0) {
-
-                    $myConnectionData2 = mysqli_fetch_array($mynTable1);
-
-                    $mynTable2 = $myConnectionData2['connect'];
-
-                    $myTable2 = mysqli_query($this->conn, "SELECT user_first_name, user_last_name , user_phone, connect, `user_id`  FROM customer Where `user_id` = '$mynTable2';");
-
-                    if (mysqli_num_rows($myTable2) > 0) {
-
-                        $myConnectionData3 = mysqli_fetch_array($myTable2);
-
-                        $mynTable3 = $myConnectionData3['connect'];
-
-                        $myTable3 = mysqli_query($this->conn, "SELECT user_first_name, user_last_name , user_phone, connect, `user_id`  FROM customer Where `user_id` = '$mynTable3';");
-
-                        if (mysqli_num_rows($myTable3) > 0) {
-
-                            $myConnectionData4 = mysqli_fetch_array($myTable3);
-
-                            $mynTable4 = $myConnectionData4['connect'];
+        if (!empty($getData)) {
+            for ($x = 1; $x <= count($getData); $x++) {
+                if (empty($getData[$x])) {
+                    continue;
+                }
+                #set Amount
+                $getData[$x]['amount'] = 500;
+                /* if (isset($getData[5])) {
+                    $getData[5]['amount'] = 800;
+                }*/
 
 
-                            $myTable4 = mysqli_query($this->conn, "SELECT user_first_name, user_last_name , user_phone, connect, `user_id`  FROM customer Where `user_id` = '$mynTable4';");
+                $status = $Helpher->getStatus($getData[$x]['user_id'], $getDataID);
 
-                            if (mysqli_num_rows($myTable4) > 0) {
-
-                                $myConnectionData5 = mysqli_fetch_array($myTable4);
-
-                                $mynTable5 = $myConnectionData5['connect'];
-
-
-                                $res = '<tr>
-	<td> 1 </td>
-	<td>'.$myConnectionData1['user_first_name']." ".$myConnectionData1['user_last_name'].' </td>
-	<td>'.$myConnectionData1['user_id'].'</td>
-	<td> ₹ 500 </td>
-	<td> <label class="badge badge-success">Pending</label> </td>
-	<td>'.$myConnectionData1['user_phone'].' </td>
-</tr>
-
-<tr>
-	<td> 2 </td>
-	<td>'.$myConnectionData2['user_first_name']." ".$myConnectionData2['user_last_name'].' </td>
-	<td>'.$myConnectionData2['user_id'].'</td>
-	<td> ₹ 500 </td>
-	<td> <label class="badge badge-success">Pending</label> </td>
-	<td>'.$myConnectionData2['user_phone'].' </td>
-</tr>
-
-<tr>
-	<td> 3 </td>
-	<td>'.$myConnectionData3['user_first_name']." ".$myConnectionData3['user_last_name'].' </td>
-	<td>'.$myConnectionData3['user_id'].'</td>
-	<td> ₹ 500 </td>
-	<td> <label class="badge badge-success">Pending</label> </td>
-	<td>'.$myConnectionData3['user_phone'].' </td>
-</tr>
+                #Status 
+                if ($x == 1) {
+                    $giveHelp[$x]['userID'] = $getData[$x]['user_id'];
+                    $giveHelp[$x]['amount'] = $getData[$x]['amount'];
 
 
-<tr>
-	<td> 2 </td>
-	<td>'.$myConnectionData4['user_first_name']." ".$myConnectionData4['user_last_name'].' </td>
-	<td>'.$myConnectionData4['user_id'].'</td>
-	<td> ₹ 500 </td>
-	<td> <label class="badge badge-success">Pending</label> </td>
-	<td>'.$myConnectionData4['user_phone'].' </td>
-</tr>
+                    $RedirectUrl = $siteUrl . 'User';
 
-
-<tr>
-	<td> 2 </td>
-	<td>'.$myConnectionData5['user_first_name']." ".$myConnectionData5['user_last_name'].' </td>
-	<td>'.$myConnectionData5['user_id'].'</td>
-	<td> ₹ 800 </td>
-	<td> <label class="badge badge-success">Pending</label> </td>
-	<td>'.$myConnectionData5['user_phone'].' </td>
-</tr>
-';
-
-
-                            } else {
-                                $res = null;
-                            }
-
-                        } else {
-                            $res = null;
-                        }
-
+                    if ($status == 'Pending') {
+                        $giveHelp[$x]['status'] = 'open';
+                        $statushtml = " <a href=" . $RedirectUrl . "><label class='badge badge-info' >Open  </label></a> ";
                     } else {
-                        $res = null;
+                        $statushtml = $status;
                     }
-
                 } else {
-                    $res = null;
+                    #redirect URL
+                    $giveHelp[$x]['userID'] = $getData[$x]['user_id'];
+                    $giveHelp[$x]['amount'] = $getData[$x]['amount'];
+
+                    $RedirectUrl = $siteUrl . 'User';
+
+                    if ($status == 'Pending') {
+                        $statushtml = " <a href=''><label class='badge badge-warning' > Pending </label></a> ";
+                    } else {
+                        $statushtml = $status;
+                    }
+                    if (isset($getDataID) && !empty($getDataID)) {
+
+                        //if(!in_array($getData[$x]['user_id'],$getAllDataID)){
+                        //     $giveHelp[$x]['status'] = 'open';
+                        //   $statushtml = " <a href=" . $RedirectUrl . "><label class='badge badge-info' >Open  </label></a> ";
+                        // $existOpen = true;
+                        //}
+
+                        $resetX = 1 + count($getDataID);
+
+                        if ($x == $resetX && $getDataID[0]['deleted'] == 1) {
+                            $giveHelp[$x]['status'] = 'open';
+                            $statushtml = " <a href=" . $RedirectUrl . "><label class='badge badge-info' >Open  </label></a> ";
+                        }
+                    }
                 }
 
-            } else {
-                $res = null;
+
+                #check pmf for user 
+                if ($getData[$x]['user_id'] != 1001)
+                    $checkPSC = $Helpher->checkPSC($getData[$x]['user_id']);
+
+                if ($checkPSC == 1) {
+
+                    $statushtml = " <a href=''><label class='badge badge-warning' > PSC - Pending </label></a> ";
+                }
+
+                $_SESSION['giveHelp'] = $giveHelp;
+
+
+                $res = "<tr>
+                        <td></td>
+                        <td>" . $getData[$x]['user_first_name'] . " " . $getData[$x]['user_last_name'] . " </td>
+                        <td>" . $getData[$x]['user_id'] . "</td>
+                        <td> " . $getData[$x]['amount'] . " </td>
+                        <td>" . $statushtml . " </td>
+                        <td>" . $getData[$x]['user_phone'] . " </td>
+                        </tr>";
+
+                echo $res;
             }
-
-        } else {
-            $res = null;
         }
-
-        return $res;
     }
 
+    public function getAllConnect($connectID)
+    {
+        $data = array();
+
+        #ref 1
+        $data[1] = $this->conQuery($connectID);
+        if (empty($data[1])) return false;
+        #ref 2
+        $data[2] = $this->conQuery($data[1]['connect']);
+        #ref 3
+        $data[3] = $this->conQuery($data[2]['connect']);
+        #ref 4
+        $data[4] = $this->conQuery($data[3]['connect']);
+        #ref 5
+        $data[5] = $this->conQuery($data[4]['connect']);
+
+        $data[6] = $this->conQuery($data[5]['connect']);
+
+
+        // #check pmf for user 
+        // $Helpher = new Helpher();
+        // $num = 0;
+        // $num = count($data) + 1;
+
+        // for ($x = 1; $x <= $num; $x++) {
+        //     if (isset($data[$x]['user_id'])) {
+        //         $checkPSC = $Helpher->checkPSC($data[$x]['user_id']);
+
+        //     }
+        // }
+        return $data;
+    }
+    public function conQuery($connectID)
+    {
+        $getConnect = mysqli_query($this->conn, "SELECT *  FROM customer Where `user_id` = '$connectID' AND user_status =1");
+        if (mysqli_num_rows($getConnect) > 0) {
+            $row = mysqli_fetch_array($getConnect);
+        }
+
+        return $row;
+    }
+
+
+    public function getPercentageConnect($connectID)
+    {
+        $stage = array();
+
+        $level = new level();
+
+        #level 1
+        $stage['level1'] = $level->level1($connectID);
+
+        #level 2
+        $stage['level2'] = $level->level2($stage['level1']);
+
+        #level 3
+        $stage['level3'] = $level->level3($stage['level2']);
+
+        #level 4
+        $stage['level4'] = $level->level4($stage['level3']);
+
+        #level 5
+        $stage['level5'] = $level->level5($stage['level4']);
+
+        #level 6
+        $stage['level6'] = $level->level6($stage['level5']);
+
+
+        return $stage;
+    }
+
+    public function getLevelStatus($levelID)
+    {
+        $userID = $_SESSION['user']['UserId'];
+
+        $getLevel = mysqli_query($this->conn, "SELECT  `status` FROM `pay_history` WHERE `receiver_id` = '$userID' AND `sender_id`='$levelID'");
+        if (mysqli_num_rows($getLevel) > 0) {
+            $row = mysqli_fetch_array($getLevel);
+        }
+
+        return $row;
+    }
 
     public function numberOfPMF($userId)
     {
@@ -524,12 +673,68 @@ class UserServiceImpl
             $totalPMF = $walletData['totalPMFCOUNT'] == null ? $totalPMF : $walletData['totalPMFCOUNT'];
 
             $res = $totalPMF;
-
         } else {
             $res = $totalPMF;
         }
 
         return $res;
+    }
+    public function checkEmail($email)
+    {
+        $res = array();
+        $getUser = mysqli_query($this->conn, "SELECT * FROM `customer` WHERE user_email = '$email' AND user_status = 1");
 
+
+        if (mysqli_num_rows($getUser) > 0) {
+            $user = mysqli_fetch_array($getUser);
+
+            // generate OTP
+            $otp = rand(100000, 999999);
+            // Send OTP
+            $mail_status = sendOTP($email, $otp);
+
+            if ($mail_status == 1) {
+
+                $result = mysqli_query($this->conn, "INSERT INTO otp_expiry(otp,is_expired,create_at) VALUES ('" . $otp . "', 0, '" . date("Y-m-d H:i:s") . "')");
+                $current_id = mysqli_insert_id($this->conn);
+                if (!empty($current_id)) {
+                    $res['success'] = 1;
+                    $res['otp_id'] = $current_id;
+                    $_SESSION['userID'] = $user['user_id'];
+
+
+                    $res['message'] =
+                        '<span style="color: brown;font-size: smaller;font-style: normal;">Please Check Your Mail For OTP</span>';
+                } else {
+                    $res['success'] = 0;
+                    $res['message'] = '<span style="color: brown;font-size: smaller;font-style: normal;">Something went wrong , Please check again Later</span>';
+                }
+            } else {
+                $res['success'] = 0;
+                $res['message'] = '<span style="color: brown;font-size: smaller;font-style: normal;">Something went wrong , Please check again Later</span>';
+            }
+        } else {
+            $res['success'] = 0;
+            $res['message'] = '<span style="color: brown;font-size: smaller;font-style: normal;">Please enter Valid EmailID</span>';
+        }
+
+        return $res;
+    }
+
+    public function otpVerification($otp)
+    {
+        $res = array();
+        $result = mysqli_query($this->conn, "SELECT * FROM otp_expiry WHERE otp='" . $otp . "' AND is_expired!=1 AND NOW() <= DATE_ADD(create_at, INTERVAL 24 HOUR)");
+        $count  = mysqli_num_rows($result);
+        if (!empty($count)) {
+            $result = mysqli_query($this->conn, "UPDATE otp_expiry SET is_expired = 1 WHERE otp = '" . $otp . "'");
+            $res['success'] = 2;
+        } else {
+            $res['$success'] = 1;
+            $res['message'] =
+                '<span style="color: brown;font-size: smaller;font-style: normal;">Invalid OTP!</span>';
+        }
+
+        return $res;
     }
 }

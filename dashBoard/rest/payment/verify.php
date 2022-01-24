@@ -25,7 +25,7 @@ $success = true;
 
 $error = "Payment Failed";
 
-if (!isset($_SESSION["user"])){
+if (!isset($_SESSION["user"])) {
     header("location: login");
     unset($_SESSION["login"]);
     unset($_SESSION["signup"]);
@@ -74,18 +74,17 @@ if ($success === true) {
     $pdfStore = $rootFolder . $pdf_upload_dir;
 
     $status = file_put_contents($pdfStore, $pdf);
+    
+   
 
     if ($status) {
-
 
         if (isset($_SESSION["user"])) {
 
             $userId = $_SESSION["user"]['UserId'];
             $rep_id = $_SESSION["Pay1-re"];
 
-
             return $payment->paymentRegister($userId, $attributes, $rep_id, $pdf_upload_dir, 1);
-
         } else {
 
             echo "session not found";
@@ -93,7 +92,6 @@ if ($success === true) {
     } else {
         echo "Server Error";
     }
-
 } else {
     $html = "<p>Your payment failed</p>
              <p>{$error}</p>";
@@ -120,5 +118,4 @@ function templateInvoice($order_id)
     $orderId = ltrim($order_id, 'order_');
 
     return invoiceTemplate($userData, $_SESSION["Pay1-re"], $orderId, $_SESSION['PMF1_amount'], 1);
-
 }

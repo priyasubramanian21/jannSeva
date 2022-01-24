@@ -22,7 +22,7 @@ $api = new Api($keyId, $keySecret);
 $session = new session();
 $user = new user();
 $session->start();
-$session->notSet('../login/');
+$session->notSet('login');
 
 $success = true;
 
@@ -80,10 +80,9 @@ if ($success === true) {
             $rep_id = $_SESSION["PayCus-re"];
 
 
-           // echo "Done";
+            // echo "Done";
 
             return $payment->PMFPay($userId, $attributes, $rep_id, $pdf_upload_dir, $_SESSION['PMF_count']);
-
         } else {
 
             echo "session not found";
@@ -91,7 +90,6 @@ if ($success === true) {
     } else {
         echo "Server Error";
     }
-
 } else {
     echo $html = "<p>Your payment failed</p>
              <p>{$error}</p>";
@@ -117,5 +115,4 @@ function templateInvoice($order_id)
     $orderId = ltrim($order_id, 'order_');
 
     return invoiceTemplate($userData, $_SESSION["PayCus-re"], $orderId, $_SESSION['PMF_amount'], $_SESSION['PMF_count']);
-
 }
