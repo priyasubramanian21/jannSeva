@@ -222,7 +222,43 @@ if (isset($_POST['api_url'])) {
 
                                             <?php }
                                         } ?>
-                                    <?php } ?>
+                                    <?php } elseif ($_GET['level'] == 6) { ?>
+
+                                            <?php
+                                            if (isset($arrayVal['level6']['data'])) {
+                                                for ($x = 0; $x < count($arrayVal['level6']['data']); $x++) {  ?>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td> <?php
+
+                                                                echo $arrayVal['level6']['data'][$x]['user_first_name'] . " " . $arrayVal['level6']['data'][$x]['user_last_name'] ?> </td>
+                                                        <td> <?php
+
+                                                                echo $arrayVal['level6']['data'][$x]['user_id'] ?></td>
+                                                        <td> ₹ 800 </td>
+                                                        <td> <?php
+
+                                                                $status = $user->getLevelStatus($arrayVal['level6']['data'][$x]['user_id']);
+
+
+                                                                if ($status['status'] == 1) { ?>
+                                                                <label class='badge badge-success'>Completed</label>
+                                                            <?php  } else { ?>
+                                                                <label class='badge badge-warning'>Payment Pending</label>
+
+                                                            <?php   } ?>
+
+
+                                                        </td>
+
+                                                        <td> <?php
+
+                                                                echo $arrayVal['level6']['data'][$x]['user_phone'] ?></td>
+                                                    </tr>
+
+                                            <?php  }
+                                            } ?>
+                                        <?php } ?>
                                     </tbody>
                                 </table>
 

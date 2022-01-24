@@ -82,6 +82,12 @@ var st5orange = document.getElementById("st5orange").value;
 var st5yellow = document.getElementById("st5yellow").value;
 var st5green = document.getElementById("st5green").value;
 
+var st6orange = document.getElementById("st6orange").value;
+var st6yellow = document.getElementById("st6yellow").value;
+var st6green = document.getElementById("st6green").value;
+var st6red = document.getElementById("st6red").value;
+
+var st6per = document.getElementById("st6per").value;
 var st1per = document.getElementById("st1per").value;
 var st2per = document.getElementById("st2per").value;
 var st3per = document.getElementById("st3per").value;
@@ -97,32 +103,33 @@ var myChart = new Chart(ctx, {
 			"3 Stage",
 			"4 Stage",
 			"5 Stage",
+			"6 Stage",
 		],
 
 		datasets: [
 			{
-				data: [st1red, st2red, st3red, st4red, st5red],
+				data: [st1red, st2red, st3red, st4red, st5red, st6red],
 				backgroundColor: "#ffa5a9",
 
 				// hoverBackgroundColor: "rgba(50,90,100,1)"
 			},
 			{
-				data: [st1orange, st2orange, st3orange, st4orange, st5orange],
+				data: [st1orange, st2orange, st3orange, st4orange, st5orange, st6orange],
 				backgroundColor: "#e6c669",
 				// hoverBackgroundColor: "rgba(140,85,100,1)"
 			},
 			{
-				data: [st1yellow, st2yellow, st3yellow, st4yellow, st5yellow],
+				data: [st1yellow, st2yellow, st3yellow, st4yellow, st5yellow, st6yellow],
 				backgroundColor: "#69b2ca",
 				// hoverBackgroundColor: "rgba(140,85,100,1)"
 			},
 			{
-				data: [st1green, st2green, st3green, st4green, st5green],
+				data: [st1green, st2green, st3green, st4green, st5green, st6green],
 				backgroundColor: "#64b061",
 				// hoverBackgroundColor: "rgba(46,185,235,1)"
 			},
 			{
-				data: [20, 40, 60, 80, 100],
+				data: [20, 40, 60, 80, 100, 120],
 				backgroundColor: "#00000000",
 				// hoverBackgroundColor: "rgba(46,185,235,1)"
 			},

@@ -19,9 +19,101 @@ class Level
     }
     public function conQuery($connectID, $limit)
     {
-        $getConnect = mysqli_query($this->conn, "SELECT *  FROM customer Where `connect` = '$connectID' LIMIT $limit");
+        $getConnect = mysqli_query($this->conn, "SELECT *  FROM customer Where `connect` = '$connectID' ");
         return $getConnect;
     }
+    
+     public function level6($getLevel5)
+    {
+        $data = array();
+        $count = $count1 = $count2 = $count3 = 0;
+        #red 
+        if (isset($getLevel5[0])) {
+            for ($x = 0; $x < count($getLevel5[0]); $x++) {
+
+                $getData = $this->conQuery($getLevel5[0][$x], 1024);
+                if (mysqli_num_rows($getData) > 0) {
+                    while ($row = mysqli_fetch_array($getData)) {
+                        $rowval[] = $row['user_id'];
+                        $data['data'][] = $row;
+                    }
+                }
+            }
+            if (isset($rowval)) {
+                $count = count($rowval);
+                $data[0] = $rowval;
+            }
+            $data['st6red'] = $count * 0.0146484375;
+        }
+
+        #Orange 
+        if (isset($getLevel5[1])) {
+
+            for ($x = 0; $x < count($getLevel5[1]); $x++) {
+
+                $getData = $this->conQuery($getLevel5[1][$x], 1024);
+                if (mysqli_num_rows($getData) > 0) {
+                    while ($row = mysqli_fetch_array($getData)) {
+                        $rowval2[] = $row['user_id'];
+                        $data['data'][] = $row;
+                    }
+                }
+            }
+            if (isset($rowval2)) {
+                $count2 = count($rowval2);
+                $data[1] = $rowval2;
+            }
+            $data['st6orange'] = $count2 * 0.0146484375;
+        }
+        #Yellow 
+        if (isset($getLevel5[2])) {
+
+            for ($x = 0; $x < count($getLevel5[2]); $x++) {
+
+                $getData = $this->conQuery($getLevel5[2][$x], 1024);
+                if (mysqli_num_rows($getData) > 0) {
+                    while ($row = mysqli_fetch_array($getData)) {
+                        $rowval3[] = $row['user_id'];
+                        $data['data'][] = $row;
+                    }
+                }
+            }
+            if (isset($rowval3)) {
+                $count3 = count($rowval3);
+                $data[2] = $rowval3;
+            }
+            $data['st6yellow'] = $count3 * 0.0146484375;
+        }
+        #green 
+        if (isset($getLevel5[3])) {
+
+            for ($x = 0; $x < count($getLevel5[3]); $x++) {
+
+                $getData = $this->conQuery($getLevel5[3][$x], 1024);
+                if (mysqli_num_rows($getData) > 0) {
+                    while ($row = mysqli_fetch_array($getData)) {
+                        $rowval4[] = $row['user_id'];
+                        $data['data'][] = $row;
+                    }
+                }
+            }
+            if (isset($rowval4)) {
+                $count4 = count($rowval4);
+                $data[3] = $rowval4;
+            }
+            $data['st6green'] = $count4 * 0.0146484375;
+        }
+
+        if (isset($data['data'])) {
+            $data['percent'] = (count($data['data']) / 4096) * 100;
+        } else {
+
+            $data['percent'] = 0;
+        }
+        return $data;
+    }
+
+
     public function level5($getLevel4)
     {
         $data = array();

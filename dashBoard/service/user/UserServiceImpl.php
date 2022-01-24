@@ -631,6 +631,10 @@ class UserServiceImpl
         #level 5
         $stage['level5'] = $level->level5($stage['level4']);
 
+        #level 6
+        $stage['level6'] = $level->level6($stage['level5']);
+
+
         return $stage;
     }
 

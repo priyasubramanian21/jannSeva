@@ -32,6 +32,7 @@ $arrayVal = $user->getPercentageConnect($connectID);
                     <input id="st5per" value="" type="hidden"/>
 
 
+
                     <input id="st1red" value="100" type="hidden"/>
                     <input id="st1orange" value="0" type="hidden"/>
                     <input id="st1yellow" value="0" type="hidden"/>
@@ -41,7 +42,7 @@ $arrayVal = $user->getPercentageConnect($connectID);
 
                     <input id="st2orange" value="0" type="hidden"/>
                     <input id="st2yellow" value="100" type="hidden"/>
-                    <input id="st2green" value=0" type="hidden"/>
+                    <input id="st2green" value="0" type="hidden"/>
                     <input id="st2green" value="0" type="hidden"/>
 
                     <input id="st3red" value="0" type="hidden"/>
@@ -59,6 +60,12 @@ $arrayVal = $user->getPercentageConnect($connectID);
                     <input id="st5orange" value="100" type="hidden"/>
                     <input id="st5yellow" value="0" type="hidden"/>
                     <input id="st5green" value="0" type="hidden"/>
+
+
+                    <input id="st6red" value="0" type="hidden"/>
+                    <input id="st6orange" value="100" type="hidden"/>
+                    <input id="st6yellow" value="0" type="hidden"/>
+                    <input id="st6green" value="0" type="hidden"/>
 
 
                     <div class="graph_container">
